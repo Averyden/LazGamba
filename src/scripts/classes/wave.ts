@@ -1,8 +1,4 @@
-const canvas = document.getElementById("waterBackground") as HTMLCanvasElement
-const ctx = canvas.getContext("2d") as CanvasRenderingContext2D
-
-
-class Wave {
+export class Wave {
     amplitude: number
     waveLen: number
     freq: number
@@ -27,7 +23,7 @@ class Wave {
     }
 
     getGradientColor(): string {
-        const gradient = ctx.createLinearGradient(0,0,0,this.ch)
+        const gradient = this.ctx.createLinearGradient(0,0,0,this.ch)
         gradient.addColorStop(0, "rgba(0,162,232,0.8)")
         gradient.addColorStop(0, "rgba(0,117,178,0.6)")
         return gradient.toString()
@@ -38,18 +34,18 @@ class Wave {
     }
 
     draw(): void {
-        ctx.beginPath()
-        ctx.moveTo(0, this.ch/2)
+        this.ctx.beginPath()
+        this.ctx.moveTo(0, this.ch/2)
 
         for (let x = 0; x<this.cw; x++) {
             const y = this.ch / 2 + this.amplitude * Math.sin((x/this.waveLen) * Math.PI * 2 + this.phase)
             
-            ctx.lineTo(this.cw,this.ch)
-            ctx.lineTo(0,this.ch)
-            ctx.closePath()
+            this.ctx.lineTo(this.cw,this.ch)
+            this.ctx.lineTo(0,this.ch)
+            this.ctx.closePath()
 
-            ctx.fillStyle = this.color
-            ctx.fill()
+            this.ctx.fillStyle = this.color
+            this.ctx.fill()
         }
     }
 }
