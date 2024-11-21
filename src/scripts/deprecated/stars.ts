@@ -1,4 +1,4 @@
-//* Fetch canvas and set up the init sizes
+//! THIS CODE IS NO LONGER USED, AND IS PURELY HERE FOR ARCHIVAL PURPOSES
 const canvas = document.getElementById("starfield") as HTMLCanvasElement
 const ctx = canvas.getContext("2d") as CanvasRenderingContext2D
 
