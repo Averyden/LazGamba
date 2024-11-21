@@ -1,5 +1,10 @@
-import gambaStatusMessages from "../../dictionaries/mainGambaDictionaries.json";
+const loadGambaMessages = async () => {
+    const response = await fetch("../../dictionaries/mainGambaDictionaries.json");
+    const gambaMessages = await response.json();
+    console.log(gambaMessages);  // Now you can use gambaMessages in your logic.
+};
 
+loadGambaMessages();
 
 const images = [
     {name: "loss", path: "assets/img/GAMBA imgs/loss.webp"}, // User didnt win anything.
