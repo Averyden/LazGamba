@@ -26,9 +26,10 @@
     } 
     100% {
         opacity: 0;
+        visibility: hidden;
     }
 }
 
 .disappear {
-    animation: spinningAnim 3s ease-in-out
+    animation: disappear 3s ease-in-out forwards
 }
