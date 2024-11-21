@@ -52,12 +52,22 @@ canvas {
 }
 
 
+#gambaStatus {
+    min-height: 50px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 #mainDiv {
     display: flex;
     flex-direction: column;
     align-items: center;
     font-family: 'Roboto', sans-serif;
+    justify-content: center; 
+    height: 100%; 
 }
+
 
 .mainItems {
     margin-top: 10px;
