@@ -24,39 +24,48 @@ gamba.addEventListener("click", () => handleGambaCalc())
 const jackpotNumber = 3
 
 function handleGambaCalc(): void {
-    var gambaWin = false
     gambaImg.src = images.find((img) => img.name === "spinning")!.path
     gambaImg.classList.add('spinningAnim')
+    const chance = Math.round(Math.random() * 3)
+
+    const gambaWin = chance === jackpotNumber
+
 
     setTimeout(() => {
-        const chance = Math.round(Math.random() * 3)
+        
 
-        if (chance == jackpotNumber) {
-            
+        if (gambaWin) {
             gambaImg.src = images.find((img) => img.name === "win")!.path
+          
         } else {
             gambaImg.src = images.find((img) => img.name === "loss")!.path
         } // should give us a range that makes sense?
-        
-
-        
 
     }, 1750);
     
     // THIS IS ONLY HERE SO THAT THE ANIMATION ISNT JUST STOPPED AFTER THE TIMEOUT.
     setTimeout(() => {
         gambaImg.classList.remove('spinningAnim')
+
+        if (gambaWin) {
+            
+        }
+
+
     }, (2000));
 
 
     //Reset the label
     setTimeout(() => {
-        if (gambaWin === true) {
-            gambaStatus.innerHTML = "YOU HIT THE JACKPOT!"
-        } else {
-            gambaStatus.innerHTML = ""
-        }
+       
+        gambaStatus.innerHTML = "maybe you should spin again >:3"
+      
     }, 7000);
+}
 
-    
+function getRanMessage(type: "win" | "loss"): string {
+    const filteredMesage = gambaStatusMessages[type === "win" ? "winMessages" : "lossMessages"]
+    const randomIndex = Math.floor(Math.random() * filteredMesage.length)
+    return filteredMesage[randomIndex].message
+
 }
