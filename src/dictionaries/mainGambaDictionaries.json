@@ -1,0 +1,24 @@
+{
+    "facts": [
+        {"id": 0, "fact": "Did you know, that 99% of gamblers quit right before they hit that sweet sweet jackpot?", "mood": "cool"},
+        {"id": 1, "fact": "did you know that tsuna once schizoed out from lilys BGM during the Cup-A-Thon?", "mood": "bully"}
+
+    ],
+
+    "winMessages": [
+        { "id": 0, "message": "YOU HIT THE JACKPOT!", "type": "win"},
+        { "id": 1, "message": "Congratulations! You’re a winner!", "type": "win"},
+        { "id": 2, "message": "JACKPOT! Incredible luck!", "type": "win"},
+        { "id": 3, "message": "🎉 YOU WON! Celebrate!", "type": "win"},
+        { "id": 4, "message": "Falla smiled upon you!", "type": "win"}
+    ],
+
+    "lossMessages": [
+        { "id": 5, "message": "Better luck next time!", "type": "loss" },
+        { "id": 6, "message": "Oh no! You lost this round!", "type": "loss" },
+        { "id": 7, "message": "Keep spinning! The jackpot awaits!", "type": "loss" },
+        { "id": 8, "message": "Close, but not this time.", "type": "loss" },
+        { "id": 9, "message": "HAH think about how much chat would be laughing rn", "type": "loss" }
+    ]
+}
+
