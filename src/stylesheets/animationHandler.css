@@ -1,1 +1,17 @@
-@keyframes spinningAnim
+@keyframes spinningAnim {
+    0% {
+        transform: scale(0.5) rotate(0deg)
+    }
+
+    50% {
+        transform: scale(1) rotate(360deg);
+    }
+
+    100% {
+        transform: scale(1) rotate(720deg);
+    }
+}
+
+.spinningAnim {
+    animation: spinningAnim 2s ease-in-out
+}
