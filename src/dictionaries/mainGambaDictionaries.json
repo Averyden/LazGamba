@@ -18,7 +18,7 @@
         { "id": 6, "message": "Oh no! You lost this round!", "type": "loss" },
         { "id": 7, "message": "Keep spinning! The jackpot awaits!", "type": "loss" },
         { "id": 8, "message": "Close, but not this time.", "type": "loss" },
-        { "id": 9, "message": "Don’t give up yet! Try again.", "type": "loss" }
+        { "id": 9, "message": "HAH think about how much chat would be laughing rn", "type": "loss" }
     ]
 }
 
