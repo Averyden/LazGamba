@@ -37,7 +37,7 @@ gamba.addEventListener("click", () => handleGambaCalc())
 let finalMessageTimeout: number | undefined;
 
 // constants related to gamba logic
-const jackpotNumber = 3
+const jackpotNumber = 2
 
 async function handleGambaCalc(): Promise<void> {
 
@@ -51,7 +51,7 @@ async function handleGambaCalc(): Promise<void> {
 
     gambaImg.src = images.find((img) => img.name === "spinning")!.path
     gambaImg.classList.add('spinningAnim')
-    const chance = Math.round(Math.random() * 3)
+    const chance = Math.round(Math.random() * 2)
 
     const gambaWin = chance === jackpotNumber
 
