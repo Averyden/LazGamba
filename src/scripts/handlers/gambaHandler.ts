@@ -1,3 +1,6 @@
+import gambaStatusMessages from "../../dictionaries/mainGambaDictionaries.json";
+
+
 const images = [
     {name: "loss", path: "assets/img/GAMBA imgs/loss.webp"}, // User didnt win anything.
     {name: "spinning", path: "assets/img/GAMBA imgs/speen.webp"}, // for when the user has pressed the button and we are calculating the chances of a win. 
@@ -6,8 +9,12 @@ const images = [
     {name: "waiting", path: "assets/img/GAMBA imgs/waiting.webp"}
 ]
 
+
+
 const gamba = document.getElementById("gambaBtn") as HTMLButtonElement
 const gambaImg = document.getElementById("gambaStatusImg") as HTMLImageElement
+
+const gambaStatus = document.getElementById("gambaStatus") as HTMLHeadingElement 
 
 gamba.addEventListener("click", () => handleGambaCalc())
 
@@ -17,6 +24,7 @@ gamba.addEventListener("click", () => handleGambaCalc())
 const jackpotNumber = 3
 
 function handleGambaCalc(): void {
+    var gambaWin = false
     gambaImg.src = images.find((img) => img.name === "spinning")!.path
     gambaImg.classList.add('spinningAnim')
 
@@ -24,7 +32,7 @@ function handleGambaCalc(): void {
         const chance = Math.round(Math.random() * 3)
 
         if (chance == jackpotNumber) {
-            console.log("WINNER")
+            
             gambaImg.src = images.find((img) => img.name === "win")!.path
         } else {
             gambaImg.src = images.find((img) => img.name === "loss")!.path
@@ -40,6 +48,15 @@ function handleGambaCalc(): void {
         gambaImg.classList.remove('spinningAnim')
     }, (2000));
 
+
+    //Reset the label
+    setTimeout(() => {
+        if (gambaWin === true) {
+            gambaStatus.innerHTML = "YOU HIT THE JACKPOT!"
+        } else {
+            gambaStatus.innerHTML = ""
+        }
+    }, 7000);
 
     
 }
