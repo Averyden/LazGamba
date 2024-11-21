@@ -14,14 +14,14 @@ gamba.addEventListener("click", () => handleGambaCalc())
 //TODO: implement a sort of pity system.
 
 // constants related to gamba logic
-const jackpotNumber = 1500
+const jackpotNumber = 3
 
 function handleGambaCalc(): void {
     gambaImg.src = images.find((img) => img.name === "spinning")!.path
     gambaImg.classList.add('spinningAnim')
 
     setTimeout(() => {
-        const chance = Math.round(Math.random() * 3000)
+        const chance = Math.round(Math.random() * 3)
 
         if (chance == jackpotNumber) {
             console.log("WINNER")
@@ -31,9 +31,14 @@ function handleGambaCalc(): void {
         } // should give us a range that makes sense?
         
 
-        gambaImg.classList.remove('spinningAnim')
+        
 
-    }, 2000);
+    }, 1750);
+    
+    // THIS IS ONLY HERE SO THAT THE ANIMATION ISNT JUST STOPPED AFTER THE TIMEOUT.
+    setTimeout(() => {
+        gambaImg.classList.remove('spinningAnim')
+    }, (2000));
 
 
     
