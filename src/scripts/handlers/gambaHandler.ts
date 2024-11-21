@@ -7,6 +7,7 @@ const images = [
 ]
 
 const gamba = document.getElementById("gambaBtn") as HTMLButtonElement
+const gambaImg = document.getElementById("gambaStatusImg") as HTMLImageElement
 
 gamba.addEventListener("click", () => handleGambaCalc())
 
@@ -16,10 +17,24 @@ gamba.addEventListener("click", () => handleGambaCalc())
 const jackpotNumber = 1500
 
 function handleGambaCalc(): void {
-    let chance = Math.round(Math.random() * 3000)
+    gambaImg.src = images.find((img) => img.name === "spinning")!.path
+    gambaImg.classList.add('spinningAnim')
 
-    if (chance == jackpotNumber) {
-        console.log("WINNER") // we are going to implement images later.
-    } // should give us a range that makes sense?
+    setTimeout(() => {
+        const chance = Math.round(Math.random() * 3000)
 
+        if (chance == jackpotNumber) {
+            console.log("WINNER")
+            gambaImg.src = images.find((img) => img.name === "win")!.path
+        } else {
+            gambaImg.src = images.find((img) => img.name === "loss")!.path
+        } // should give us a range that makes sense?
+        
+
+        gambaImg.classList.remove('spinningAnim')
+
+    }, 2000);
+
+
+    
 }
