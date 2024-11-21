@@ -34,10 +34,21 @@ gamba.addEventListener("click", () => handleGambaCalc())
 
 //TODO: implement a sort of pity system.
 
+let finalMessageTimeout: number | undefined;
+
 // constants related to gamba logic
 const jackpotNumber = 3
 
 async function handleGambaCalc(): Promise<void> {
+
+    gambaStatus.classList.remove("disappear")
+    gambaStatus.innerHTML = ""
+
+
+    if (finalMessageTimeout !== undefined) {
+        clearTimeout(finalMessageTimeout); 
+    }
+
     gambaImg.src = images.find((img) => img.name === "spinning")!.path
     gambaImg.classList.add('spinningAnim')
     const chance = Math.round(Math.random() * 3)
@@ -74,12 +85,13 @@ async function handleGambaCalc(): Promise<void> {
     }, (2000));
 
 
-    //Reset the label
-    setTimeout(() => {
-       
+
+    
+    finalMessageTimeout = setTimeout(() => {
         gambaStatus.innerHTML = "maybe you should spin again >:3"
-      
+        gambaStatus.classList.add("disappear")
     }, 7000);
+    
 }
 
 function getRanMessage(type: "win" | "loss"): string {
