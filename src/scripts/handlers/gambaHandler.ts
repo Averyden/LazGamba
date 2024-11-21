@@ -48,10 +48,10 @@ function handleGambaCalc(): void {
         gambaImg.classList.remove('spinningAnim')
 
         if (gambaWin) {
-            
+            gambaStatus.innerHTML = getRanMessage("win")
+        } else {
+            gambaStatus.innerHTML = getRanMessage("loss")
         }
-
-
     }, (2000));
 
 
