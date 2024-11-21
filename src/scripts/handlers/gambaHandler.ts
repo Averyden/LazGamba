@@ -1,8 +1,17 @@
+let gambaMessages: any = {}
+
 const loadGambaMessages = async () => {
-    const response = await fetch("../../dictionaries/mainGambaDictionaries.json");
-    const gambaMessages = await response.json();
-    console.log(gambaMessages);  // Now you can use gambaMessages in your logic.
+    try {
+        const response = await fetch("src/dictionaries/mainGambaDictionaries.json");
+        const text = await response.text();  
+        console.log('Raw Response:', text);  
+        gambaMessages = JSON.parse(text);
+        console.log('Parsed Messages:', gambaMessages);
+    } catch (error) {
+        console.error('Error loading or parsing JSON:', error);
+    }
 };
+
 
 loadGambaMessages();
 
@@ -28,12 +37,17 @@ gamba.addEventListener("click", () => handleGambaCalc())
 // constants related to gamba logic
 const jackpotNumber = 3
 
-function handleGambaCalc(): void {
+async function handleGambaCalc(): Promise<void> {
     gambaImg.src = images.find((img) => img.name === "spinning")!.path
     gambaImg.classList.add('spinningAnim')
     const chance = Math.round(Math.random() * 3)
 
     const gambaWin = chance === jackpotNumber
+
+    if (Object.keys(gambaMessages).length === 0) {
+        console.log('Loading messages...');
+        await loadGambaMessages(); // This ensures that messages are loaded
+    }
 
 
     setTimeout(() => {
@@ -69,8 +83,11 @@ function handleGambaCalc(): void {
 }
 
 function getRanMessage(type: "win" | "loss"): string {
-    const filteredMesage = gambaStatusMessages[type === "win" ? "winMessages" : "lossMessages"]
-    const randomIndex = Math.floor(Math.random() * filteredMesage.length)
-    return filteredMesage[randomIndex].message
+    if (!gambaMessages[type === "win" ? "winMessages" : "lossMessages"]) {
+        return "Message not available.";
+    }
 
+    const filteredMessage = gambaMessages[type === "win" ? "winMessages" : "lossMessages"];
+    const randomIndex = Math.floor(Math.random() * filteredMessage.length);
+    return filteredMessage[randomIndex].message;
 }
