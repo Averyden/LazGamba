@@ -19,3 +19,16 @@
 .spinningAnim {
     animation: spinningAnim 2s ease-in-out
 }
+
+@keyframes disappear {
+    0% {
+        opacity: 1;
+    } 
+    100% {
+        opacity: 0;
+    }
+}
+
+.disappear {
+    animation: spinningAnim 3s ease-in-out
+}
