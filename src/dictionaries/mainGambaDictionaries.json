@@ -17,12 +17,5 @@
         { "id": 8, "message": "Close, but not this time.", "type": "loss" },
         { "id": 9, "message": "Don’t give up yet! Try again.", "type": "loss" }
     ]
-
-
-
-
-
-
-
 }
 
