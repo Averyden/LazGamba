@@ -6,7 +6,7 @@
 
 body {
     padding: 0;
-    background-color: #000000;
+    background-color: #8d83d4;
 }
 
 html, body {
@@ -49,4 +49,20 @@ canvas {
 
 #gambaBtn:hover {
     background: #d823cf;
+}
+
+
+#mainDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.mainItems {
+    margin-top: 10px;
+    margin-bottom:10px;
+}
+
+h1 {
+    color:#FFF
 }
