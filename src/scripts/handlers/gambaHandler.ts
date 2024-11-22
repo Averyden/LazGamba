@@ -24,7 +24,6 @@ const images = [
 ]
 
 
-
 const gamba = document.getElementById("gambaBtn") as HTMLButtonElement
 const gambaImg = document.getElementById("gambaStatusImg") as HTMLImageElement
 
