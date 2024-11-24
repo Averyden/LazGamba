@@ -4,6 +4,14 @@ initCoins()
 
 const lblCoins = document.getElementById("coinLabel") as HTMLDivElement
 
+const updateCoinDisplay = (): void => {
+    if (lblCoins) {
+        lblCoins.innerText = `L-coins: ${lCoins}`
+    }
+}
+
+updateCoinDisplay()
+
 let gambaMessages: any = {}
 
 const loadGambaMessages = async () => {
