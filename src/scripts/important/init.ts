@@ -1,5 +1,7 @@
 // This may seem redundant, but this is just initializing stuff for the site, like setting currency and such. 
-// This is only so that the handlers dont get cluttered with useless stuff.initCoins()
+// This is only so that the handlers dont get cluttered with useless stuff
+
+initCoins()
 
 const lblCoins = document.getElementById("coinLabel") as HTMLDivElement
 
@@ -8,6 +10,14 @@ const updateCoinDisplay = (): void => {
         lblCoins.innerText = `L-coins: ${lCoins}`
     }
 }
+
+if (dailyBonus()) {
+    console.log("Awarded daily bonus/reset")
+    updateCoinDisplay()
+} else {
+    console.log("Daily bonus/reset is already claimed.")
+}
+
 
 updateCoinDisplay()
 
@@ -37,6 +47,3 @@ const images = [
     {name: "noMoney", path: "assets/img/GAMBA imgs/noMoreMoney.webp"}, // User lost it all for the day.
     {name: "waiting", path: "assets/img/GAMBA imgs/waiting.webp"}
 ]
-
-
-dailyBonus()
