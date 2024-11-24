@@ -23,3 +23,15 @@ const adjustCoins = (amount: number): boolean => {
 const initCoins = (): void => {
     lCoins = loadCoins()
 }
+
+const dailyBonus = (): boolean => {
+    const lastBonus = localStorage.getItem("lastBonusDate")
+    const today = new Date().toDateString()
+
+    if (lastBonus !== today) {
+        adjustCoins(300) 
+        localStorage.setItem("lastBonusDate", today)
+        return true
+    }
+    return false
+}
