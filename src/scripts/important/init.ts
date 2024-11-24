@@ -37,3 +37,6 @@ const images = [
     {name: "noMoney", path: "assets/img/GAMBA imgs/noMoreMoney.webp"}, // User lost it all for the day.
     {name: "waiting", path: "assets/img/GAMBA imgs/waiting.webp"}
 ]
+
+
+dailyBonus()
