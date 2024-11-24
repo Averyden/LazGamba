@@ -15,3 +15,9 @@
 
 
 - Currency: L-coins (haha. get it?) [DONE]  
+
+# Special thanks
+Lazar710, for the idea itself. While not directly giving me the idea yourself, it was still a funny idea that popped up in my head because of you.
+BluTsunami, for the idea with the whole L-Coins thing, really creative pun and gave me the motivation to implement the currency itself.
+Fallanis, for being the GAMBA master himself.
+Shylily, for having this amazing community, idk where I would be had I not stumbled into this community.
