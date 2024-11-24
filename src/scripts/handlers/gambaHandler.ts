@@ -1,27 +1,4 @@
-let gambaMessages: any = {}
-
-const loadGambaMessages = async () => {
-    try {
-        const response = await fetch("src/dictionaries/mainGambaDictionaries.json");
-        const text = await response.text();  
-        console.log('Raw Response:', text);  
-        gambaMessages = JSON.parse(text);
-        console.log('Parsed Messages:', gambaMessages);
-    } catch (error) {
-        console.error('Error loading or parsing JSON:', error);
-    }
-};
-
-
-loadGambaMessages();
-
-const images = [
-    {name: "loss", path: "assets/img/GAMBA imgs/loss.webp"}, // User didnt win anything.
-    {name: "spinning", path: "assets/img/GAMBA imgs/speen.webp"}, // for when the user has pressed the button and we are calculating the chances of a win. 
-    {name: "win", path: "assets/img/GAMBA imgs/win.png"}, // static win image because paint.net cant make gifs!
-    {name: "noMoney", path: "assets/img/GAMBA imgs/noMoreMoney.webp"}, // User lost it all for the day.
-    {name: "waiting", path: "assets/img/GAMBA imgs/waiting.webp"}
-]
+const pricePerGamba = 50
 
 
 const gamba = document.getElementById("gambaBtn") as HTMLButtonElement
@@ -36,9 +13,18 @@ gamba.addEventListener("click", () => handleGambaCalc())
 let finalMessageTimeout: number | undefined;
 
 // constants related to gamba logic
-const jackpotNumber = 2
+const jackpotNumber = 3
 
 async function handleGambaCalc(): Promise<void> {
+    let timeOutCancel = false // This is purely just to fucking make sure the teasing "maybe you should spin again >:3" doesnt appear if there is no money left.
+    if (!adjustCoins(-pricePerGamba)) {
+        gambaStatus.innerHTML = "HAH you're poor! come back tomorrow."
+        gambaImg.src = images.find((img) => img.name === "noMoney")!.path
+        timeOutCancel = true
+        return
+    }
+
+    updateCoinDisplay()
 
     gambaStatus.classList.remove("disappear")
     gambaStatus.innerHTML = ""
@@ -50,7 +36,8 @@ async function handleGambaCalc(): Promise<void> {
 
     gambaImg.src = images.find((img) => img.name === "spinning")!.path
     gambaImg.classList.add('spinningAnim')
-    const chance = Math.round(Math.random() * 2)
+    const chance = Math.round(Math.random()*5)
+    
 
     const gambaWin = chance === jackpotNumber
 
@@ -64,9 +51,10 @@ async function handleGambaCalc(): Promise<void> {
         
 
         if (gambaWin) {
+            console.log(chance)
             gambaImg.src = images.find((img) => img.name === "win")!.path
-          
         } else {
+            console.log(chance)
             gambaImg.src = images.find((img) => img.name === "loss")!.path
         } // should give us a range that makes sense?
 
@@ -78,6 +66,10 @@ async function handleGambaCalc(): Promise<void> {
 
         if (gambaWin) {
             gambaStatus.innerHTML = getRanMessage("win")
+            adjustCoins(pricePerGamba*2)
+            updateCoinDisplay()
+
+            //TODO: implement a super rare chance to get a 50x of your gamba, for now it just doubles what you invested.
         } else {
             gambaStatus.innerHTML = getRanMessage("loss")
         }
@@ -87,8 +79,10 @@ async function handleGambaCalc(): Promise<void> {
 
     
     finalMessageTimeout = setTimeout(() => {
-        gambaStatus.innerHTML = "maybe you should spin again >:3"
-        gambaStatus.classList.add("disappear")
+        if (!timeOutCancel) {
+            gambaStatus.innerHTML = "maybe you should spin again >:3"
+            gambaStatus.classList.add("disappear")
+        }   
     }, 7000);
     
 }
