@@ -92,7 +92,7 @@ canvas {
 
 #resetLabel {
     font-size: 0.9rem;  
-    color: gray;      
+    color: rgb(165, 165, 165);      
     margin-top: 5px;   
     background-color: rgba(0, 0, 0, 0.3); 
     border-radius: 5px;
