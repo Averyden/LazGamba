@@ -54,9 +54,11 @@ let finalMessageTimeout: number | undefined;
 const jackpotNumber = 3
 
 async function handleGambaCalc(): Promise<void> {
+    let timeOutCancel = false // This is purely just to fucking make sure the teasing "maybe you should spin again >:3" doesnt appear if there is no money left.
     if (!adjustCoins(-pricePerGamba)) {
         gambaStatus.innerHTML = "HAH you're poor! come back tomorrow."
         gambaImg.src = images.find((img) => img.name === "noMoney")!.path
+        timeOutCancel = true
         return
     }
 
@@ -115,8 +117,10 @@ async function handleGambaCalc(): Promise<void> {
 
     
     finalMessageTimeout = setTimeout(() => {
-        gambaStatus.innerHTML = "maybe you should spin again >:3"
-        gambaStatus.classList.add("disappear")
+        if (!timeOutCancel) {
+            gambaStatus.innerHTML = "maybe you should spin again >:3"
+            gambaStatus.classList.add("disappear")
+        }   
     }, 7000);
     
 }
