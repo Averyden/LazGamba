@@ -1,6 +1,12 @@
+@font-face {
+    font-family: "Roboto";
+    src: url("/assets/fonts/Roboto-Regular.ttf");
+}
+
+
 body {
     padding: 0;
-    background-color: #000000;
+    background-color: #8d83d4;
 }
 
 html, body {
@@ -22,4 +28,82 @@ canvas {
     width: 100vw;
     height: 100vh;
     pointer-events: none;
+}
+
+#gambaBtn {
+    margin: 8px;
+    min-width: 125px;
+    width: auto;
+    height: 50px;
+    border: none;
+    border-radius: 15px;
+   
+    font-size: 32px;
+    transition: background 0.3s;
+    cursor: pointer;
+
+    background-color: #f13ce8;
+    color: #FFF;
+    transition: background 0.3s;
+}
+
+#gambaBtn:hover {
+    background: #d823cf;
+}
+
+
+#gambaStatus {
+    min-height: 50px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#mainDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Roboto', sans-serif;
+    justify-content: center; 
+    height: 100%; 
+}
+
+#currencyContainer {
+    position: fixed;
+    top: 10px;       
+    right: 10px;     
+    z-index: 100;   
+    text-align: right; 
+}
+
+#coinLabel {
+    /* position: fixed; */
+    top: 10px;      
+    right: 10px;    
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    color: #FFF;
+    background-color: rgba(0, 0, 0, 0.5); 
+    padding: 5px 10px; 
+    border-radius: 5px; 
+    z-index: 100; 
+}
+
+
+#resetLabel {
+    font-size: 0.9rem;  
+    color: rgb(165, 165, 165);      
+    margin-top: 5px;   
+    background-color: rgba(0, 0, 0, 0.3); 
+    border-radius: 5px;
+    padding: 2px 8px;  
+}
+
+.mainItems {
+    margin-top: 10px;
+    margin-bottom:10px;
+}
+
+h1 {
+    color:#FFF
 }

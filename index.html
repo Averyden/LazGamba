@@ -5,10 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="/src/stylesheets/main.css">
+    <link rel="stylesheet" href="/src/stylesheets/animationHandler.css">
+
+    <!-- THESE HANDLERS ARENT DEPENDANT ON ANY ELEMENTS BEING LOADED, THEREFORE WE PUT THEM HERE SO THE MAIN HANDLERS CAN UTILIZE THEM! -->
+
+    <script src="/src/scripts/compiledJS/handlers/currencyHandler.js" defer></script>
+    <script src="/src/scripts/compiledJS/important/init.js" defer></script>
+    
+    
   
 </head>
 <body>
     <canvas id="starfield" style="z-index: -10;"></canvas>
-    <script src="/src\scripts\compiledJS\stars.js"></script>
+<!-- For future reference, you could potentially buy better gambas and the background changed accordingly to a certain one, the best "case" could reactivate the starfield maybe???? -->
+    <div id="currencyContainer">
+        <div id="coinLabel">Error fetching currency...</div>
+        <div id="resetLabel">Error fetching daily bonus timer...</div>
+    </div>
+
+
+
+    <div id="mainDiv"> 
+        <h1 class="mainItems" id="gambaStatus"></h1>
+
+        <img class="mainItems"  id="gambaStatusImg" src="assets/img/GAMBA imgs/waiting.webp">
+
+
+        <button class="mainItems"  id="gambaBtn">GAMBA</button>
+    </div>
+
+    <!-- it needs to load down here as its dependant on the button being loaded. -->
+    <script src="/src/scripts/compiledJS/handlers/gambaHandler.js"></script>
+    <script src="/src/scripts/compiledJS/handlers/dailyResetHandler.js" defer></script>
+
 </body>
 </html>

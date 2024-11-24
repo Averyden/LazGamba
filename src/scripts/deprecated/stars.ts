@@ -1,4 +1,4 @@
-//* Fetch canvas and set up the init sizes
+//! THIS CODE IS NO LONGER USED, AND IS PURELY HERE FOR ARCHIVAL PURPOSES
 const canvas = document.getElementById("starfield") as HTMLCanvasElement
 const ctx = canvas.getContext("2d") as CanvasRenderingContext2D
 
@@ -76,13 +76,13 @@ class Star {
     assignColor(): void { //* Override the default colors for the string variants... because those exist for some reason
         switch(this.color) {
             case "pink":
-                this.color = "rgb(255, 150, 200)"
+                this.color = "rgb(0, 150, 200)"
                 break
             case "purple":
-                this.color = "rgb(194, 110, 194)" 
+                this.color = "rgb(0, 110, 194)" 
                 break
             default:
-                this.color = "rgb(255,255,255)"
+                this.color = "rgb(0,255,255)"
                 break
         }
     }
