@@ -54,6 +54,12 @@ let finalMessageTimeout: number | undefined;
 const jackpotNumber = 0
 
 async function handleGambaCalc(): Promise<void> {
+    if (!adjustCoins(-pricePerGamba)) {
+        gambaStatus.innerHTML = "HAH you're poor! come back tomorrow."
+        return
+    }
+
+    updateCoinDisplay()
 
     gambaStatus.classList.remove("disappear")
     gambaStatus.innerHTML = ""
@@ -82,7 +88,9 @@ async function handleGambaCalc(): Promise<void> {
         if (gambaWin) {
             console.log(chance)
             gambaImg.src = images.find((img) => img.name === "win")!.path
-          
+            
+
+
         } else {
             console.log(chance)
             gambaImg.src = images.find((img) => img.name === "loss")!.path
