@@ -1,3 +1,9 @@
+const pricePerGamba = 50
+
+initCoins()
+
+const lblCoins = document.getElementById("coinLabel") as HTMLDivElement
+
 let gambaMessages: any = {}
 
 const loadGambaMessages = async () => {
