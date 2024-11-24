@@ -88,9 +88,6 @@ async function handleGambaCalc(): Promise<void> {
         if (gambaWin) {
             console.log(chance)
             gambaImg.src = images.find((img) => img.name === "win")!.path
-            
-
-
         } else {
             console.log(chance)
             gambaImg.src = images.find((img) => img.name === "loss")!.path
@@ -104,6 +101,10 @@ async function handleGambaCalc(): Promise<void> {
 
         if (gambaWin) {
             gambaStatus.innerHTML = getRanMessage("win")
+            adjustCoins(pricePerGamba*2)
+            updateCoinDisplay()
+
+            //TODO: implement a super rare chance to get a 50x of your gamba, for now it just doubles what you invested.
         } else {
             gambaStatus.innerHTML = getRanMessage("loss")
         }
