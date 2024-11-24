@@ -68,8 +68,16 @@ canvas {
     height: 100%; 
 }
 
-#coinLabel {
+#currencyContainer {
     position: fixed;
+    top: 10px;       
+    right: 10px;     
+    z-index: 100;   
+    text-align: right; 
+}
+
+#coinLabel {
+    /* position: fixed; */
     top: 10px;      
     right: 10px;    
     font-family: 'Roboto', sans-serif;
@@ -81,6 +89,15 @@ canvas {
     z-index: 100; 
 }
 
+
+#resetLabel {
+    font-size: 0.9rem;  
+    color: gray;      
+    margin-top: 5px;   
+    background-color: rgba(0, 0, 0, 0.3); 
+    border-radius: 5px;
+    padding: 2px 8px;  
+}
 
 .mainItems {
     margin-top: 10px;
