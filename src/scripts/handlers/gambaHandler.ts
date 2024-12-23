@@ -23,16 +23,21 @@ class GambaHandler {
             this.curCase = curCase
         }
 
-        this.pricePerGamba = this.curCase.cost
-        this.winMult = this.curCase.winMult
-
-        //* We set the range here based on variables within the dictionary.
-        const baseLength = Math.max(100, Math.round(this.curCase.rate * 10));
-        this.jackpotRange = Array.from({ length: baseLength }, (_, i) => i);
+        this.pricePerGamba = this.curCase.cost;
+        this.winMult = this.curCase.winMult;
+    
+        //* Adjusted logic for jackpot range.
+        const jackpotLength = Math.round(100 / this.curCase.rate);
+        const minLength = 10; 
+        const maxLength = 1000; 
+        const finalLength = Math.min(Math.max(jackpotLength, minLength), maxLength); 
+    
+        this.jackpotRange = Array.from({ length: finalLength }, (_, i) => i);
+    
         this.jackpotNumber = this.jackpotRange[Math.floor(Math.random() * this.jackpotRange.length)];
-
+    
         console.log(`Updated to case:`, this.curCase);
-        console.log(`Jackpot number(s):`, this.jackpotRange);
+        console.log(`Jackpot number(s):`, this.jackpotRange)
     }
 
     async handleGambaCalc(): Promise<void> {
