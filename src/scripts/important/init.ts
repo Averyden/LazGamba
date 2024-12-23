@@ -18,7 +18,7 @@ const initializeSelectedGambaCase = async (gId: number): Promise<void> => {
         
         const gambaCases = jsonData.gambaCases
         selectedGambaCase = gambaCases.find((gCase: any) => gCase.gId === gId)
-        caseID = gId // YES WE ARE SETTING IT TWICE BUT WHO FUCKING CARES GRAAAAAAAAAA IM TOO LAZY TO FIGURE SOMETHING ELSE OUT.
+        caseID = gId // YES WE ARE SETTING IT TWICE BUT WHO CARES GRAAAAAAAAAA IM TOO LAZY TO FIGURE SOMETHING ELSE OUT.
         body.style.background = selectedGambaCase.background
         pricelbl.innerHTML = `Price to spin: ${selectedGambaCase.cost}` 
 
