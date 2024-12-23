@@ -24,8 +24,17 @@ const initializeSelectedGambaCase = async (gId: number): Promise<void> => {
     }
 };
 
+const initializeHandler = async () => {
+    await initializeSelectedGambaCase(0);
+    if (selectedGambaCase) {
+        handler = new GambaHandler();
+        console.log('Handler initialized');
+    } else {
+        console.error('Error: selectedGambaCase is still null, handler cannot be initialized.');
+    }
+};
 
-initializeSelectedGambaCase(1);
+initializeHandler();
 
 const lblCoins = document.getElementById("coinLabel") as HTMLDivElement
 
