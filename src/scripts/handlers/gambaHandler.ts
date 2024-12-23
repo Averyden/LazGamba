@@ -140,6 +140,7 @@ function getRanMessage(type: "win" | "loss"): string {
 }
 
 function handleChange(direction: string): void {
+    
     switch(direction) {
         case "left":
             console.log("left")
@@ -148,7 +149,7 @@ function handleChange(direction: string): void {
                 changeLeft.style.transform = "translateY(10000%)"
             }
             break
-            
+
         case "right":
             console.log("right")
             console.log(caseID)
