@@ -3,34 +3,36 @@
 
 initCoins()
 
-let selectedGambaCase: any = null;
+let selectedGambaCase: any = null
+let caseID: number = -1
 
 
 const initializeSelectedGambaCase = async (gId: number): Promise<void> => {
     try {
-        const response = await fetch("src/dictionaries/gambaSelection.json");
-        const jsonData = await response.json();
+        const response = await fetch("src/dictionaries/gambaSelection.json")
+        const jsonData = await response.json()
         
-        const gambaCases = jsonData.gambaCases;
-        selectedGambaCase = gambaCases.find((gCase: any) => gCase.gId === gId);
+        const gambaCases = jsonData.gambaCases
+        selectedGambaCase = gambaCases.find((gCase: any) => gCase.gId === gId)
+        caseID = gId
 
         if (selectedGambaCase) {
-            console.log(`Selected Gamba Case:`, selectedGambaCase);
+            console.log(`Selected Gamba Case:`, selectedGambaCase)
         } else {
-            console.warn(`No Gamba Case found with gId: ${gId}`);
+            console.warn(`No Gamba Case found with gId: ${gId}`)
         }
     } catch (error) {
-        console.error("Error loading or parsing gambaSelection.json:", error);
+        console.error("Error loading or parsing gambaSelection.json:", error)
     }
 };
 
 const initializeHandler = async () => {
-    await initializeSelectedGambaCase(0);
+    await initializeSelectedGambaCase(0)
     if (selectedGambaCase) {
-        handler = new GambaHandler();
-        console.log('Handler initialized');
+        handler = new GambaHandler()
+        console.log('Handler initialized')
     } else {
-        console.error('Error: selectedGambaCase is still null, handler cannot be initialized.');
+        console.error('Error: selectedGambaCase is still null, handler cannot be initialized.')
     }
 };
 
@@ -60,13 +62,13 @@ let gambaMessages: any = {}
 
 const loadGambaMessages = async () => {
     try {
-        const response = await fetch("src/dictionaries/mainGambaDictionaries.json");
-        const text = await response.text();  
-        console.log('Raw Response:', text);  
-        gambaMessages = JSON.parse(text);
-        console.log('Parsed Messages:', gambaMessages);
+        const response = await fetch("src/dictionaries/mainGambaDictionaries.json")
+        const text = await response.text()
+        console.log('Raw Response:', text)
+        gambaMessages = JSON.parse(text)
+        console.log('Parsed Messages:', gambaMessages)
     } catch (error) {
-        console.error('Error loading or parsing JSON:', error);
+        console.error('Error loading or parsing JSON:', error)
     }
 };
 
