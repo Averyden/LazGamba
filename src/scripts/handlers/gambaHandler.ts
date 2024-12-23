@@ -1,99 +1,119 @@
-// const pricePerGamba = 50
-// THIS IS OLD ARCHIVE CODE JUST INCASE I NEED TO GO BACK
 
 
-// const gamba = document.getElementById("gambaBtn") as HTMLButtonElement
-// const gambaImg = document.getElementById("gambaStatusImg") as HTMLImageElement
+class GambaHandler {
+    private pricePerGamba: number = 50
+    private jackpotNumber: number = 0
+    private jackpotRange: number[] = []
+    private winMult: number = 2 
+    private curCase: any
 
-// const gambaStatus = document.getElementById("gambaStatus") as HTMLHeadingElement 
+    constructor() {
 
-// gamba.addEventListener("click", () => handleGambaCalc())
+    }
 
-// //TODO: implement a sort of pity system.
+    updateCase(curCase: any): void {
+        if (!curCase) {
+            console.error("Error in updating variables:\nNo case was selected\n\nDefaulting...")
+            this.curCase = {gId: -1, cost: 50, winMult: 2, rate: 10}
+        } else {
+            this.curCase = curCase
+        }
 
-// let finalMessageTimeout: number | undefined;
+        this.pricePerGamba = this.curCase.cost
+        this.winMult = this.curCase.winMult
 
-// // constants related to gamba logic
-// const jackpotNumber = 3
+        //* We set the range here based on variables within the dictionary.
+        const chanceBase = Math.round(100 / this.curCase.rate)
+        this.jackpotRange = Array.from({length: Math.round(this.curCase.rate / 100 * chanceBase)}, (_, i) => i)
+        this.jackpotNumber = this.jackpotRange[Math.floor(Math.random() * this.jackpotRange.length)]
 
-// async function handleGambaCalc(): Promise<void> {
-//     let timeOutCancel = false // This is purely just to fucking make sure the teasing "maybe you should spin again >:3" doesnt appear if there is no money left.
-//     if (!adjustCoins(-pricePerGamba)) {
-//         gambaStatus.innerHTML = "HAH you're poor! come back tomorrow."
-//         gambaImg.src = images.find((img) => img.name === "noMoney")!.path
-//         timeOutCancel = true
-//         return
-//     }
+        console.log(`Updated to the following case: ${this.curCase}`)
+        console.log(`jackPotNum(s) have been adjusted to: ${this.jackpotRange}`)
+    }
 
-//     updateCoinDisplay()
+    async handleGambaCalc(): Promise<void> {
+        const gamba = document.getElementById("gambaBtn") as HTMLButtonElement;
+        const gambaImg = document.getElementById("gambaStatusImg") as HTMLImageElement;
+        const gambaStatus = document.getElementById("gambaStatus") as HTMLHeadingElement;
 
-//     gambaStatus.classList.remove("disappear")
-//     gambaStatus.innerHTML = ""
+        let timeOutCancel = false;
 
+        if (!adjustCoins(-this.pricePerGamba)) {
+            gambaStatus.innerHTML = "HAH you're poor! come back tomorrow.";
+            gambaImg.src = images.find((img) => img.name === "noMoney")!.path;
+            timeOutCancel = true;
+            return;
+        }
 
-//     if (finalMessageTimeout !== undefined) {
-//         clearTimeout(finalMessageTimeout); 
-//     }
+        updateCoinDisplay();
 
-//     gambaImg.src = images.find((img) => img.name === "spinning")!.path
-//     gambaImg.classList.add('spinningAnim')
-//     const chance = Math.round(Math.random()*5)
-    
+        gambaStatus.classList.remove("disappear");
+        gambaStatus.innerHTML = "";
 
-//     const gambaWin = chance === jackpotNumber
+        if (finalMessageTimeout !== undefined) {
+            clearTimeout(finalMessageTimeout);
+        }
 
-//     if (Object.keys(gambaMessages).length === 0) {
-//         console.log('Loading messages...');
-//         await loadGambaMessages(); // This ensures that messages are loaded
-//     }
+        gambaImg.src = images.find((img) => img.name === "spinning")!.path;
+        gambaImg.classList.add("spinningAnim");
+        const chance = Math.floor(Math.random() * 100);
 
+        // Check if the chance falls into the jackpot range
+        const gambaWin = this.jackpotRange.includes(chance);
 
-//     setTimeout(() => {
-        
+        if (Object.keys(gambaMessages).length === 0) {
+            console.log("Loading messages...");
+            await loadGambaMessages(); // This ensures that messages are loaded
+        }
 
-//         if (gambaWin) {
-//             console.log(chance)
-//             gambaImg.src = images.find((img) => img.name === "win")!.path
-//         } else {
-//             console.log(chance)
-//             gambaImg.src = images.find((img) => img.name === "loss")!.path
-//         } // should give us a range that makes sense?
+        setTimeout(() => {
+            if (gambaWin) {
+                console.log(`Winning chance: ${chance}`);
+                gambaImg.src = images.find((img) => img.name === "win")!.path;
+            } else {
+                console.log(`Losing chance: ${chance}`);
+                gambaImg.src = images.find((img) => img.name === "loss")!.path;
+            }
+        }, 1750);
 
-//     }, 1750);
-    
-//     // THIS IS ONLY HERE SO THAT THE ANIMATION ISNT JUST STOPPED AFTER THE TIMEOUT.
-//     setTimeout(() => {
-//         gambaImg.classList.remove('spinningAnim')
+        setTimeout(() => {
+            gambaImg.classList.remove("spinningAnim");
 
-//         if (gambaWin) {
-//             gambaStatus.innerHTML = getRanMessage("win")
-//             adjustCoins(pricePerGamba*2)
-//             updateCoinDisplay()
+            if (gambaWin) {
+                gambaStatus.innerHTML = getRanMessage("win");
+                adjustCoins(this.pricePerGamba * this.winMult);
+                updateCoinDisplay();
+            } else {
+                gambaStatus.innerHTML = getRanMessage("loss");
+            }
+        }, 2000);
 
-//             //TODO: implement a super rare chance to get a 50x of your gamba, for now it just doubles what you invested.
-//         } else {
-//             gambaStatus.innerHTML = getRanMessage("loss")
-//         }
-//     }, (2000));
+        finalMessageTimeout = setTimeout(() => {
+            if (!timeOutCancel) {
+                gambaStatus.innerHTML = "maybe you should spin again >:3";
+                gambaStatus.classList.add("disappear");
+            }
+        }, 7000);
+    }
+}
 
+const gamba = document.getElementById("gambaBtn") as HTMLButtonElement
+const gambaImg = document.getElementById("gambaStatusImg") as HTMLImageElement
 
+const gambaStatus = document.getElementById("gambaStatus") as HTMLHeadingElement 
 
-    
-//     finalMessageTimeout = setTimeout(() => {
-//         if (!timeOutCancel) {
-//             gambaStatus.innerHTML = "maybe you should spin again >:3"
-//             gambaStatus.classList.add("disappear")
-//         }   
-//     }, 7000);
-    
-// }
+gamba.addEventListener("click", () => handleGambaCalc())
 
-// function getRanMessage(type: "win" | "loss"): string {
-//     if (!gambaMessages[type === "win" ? "winMessages" : "lossMessages"]) {
-//         return "Message not available.";
-//     }
+//TODO: implement a sort of pity system.
 
-//     const filteredMessage = gambaMessages[type === "win" ? "winMessages" : "lossMessages"];
-//     const randomIndex = Math.floor(Math.random() * filteredMessage.length);
-//     return filteredMessage[randomIndex].message;
-// }
+let finalMessageTimeout: number | undefined;
+
+function getRanMessage(type: "win" | "loss"): string {
+    if (!gambaMessages[type === "win" ? "winMessages" : "lossMessages"]) {
+        return "Message not available.";
+    }
+
+    const filteredMessage = gambaMessages[type === "win" ? "winMessages" : "lossMessages"];
+    const randomIndex = Math.floor(Math.random() * filteredMessage.length);
+    return filteredMessage[randomIndex].message;
+}
