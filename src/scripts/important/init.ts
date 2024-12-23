@@ -3,6 +3,30 @@
 
 initCoins()
 
+let selectedGambaCase: any = null;
+
+
+const initializeSelectedGambaCase = async (gId: number): Promise<void> => {
+    try {
+        const response = await fetch("src/dictionaries/gambaSelection.json");
+        const jsonData = await response.json();
+        
+        const gambaCases = jsonData.gambaCases;
+        selectedGambaCase = gambaCases.find((gCase: any) => gCase.gId === gId);
+
+        if (selectedGambaCase) {
+            console.log(`Selected Gamba Case:`, selectedGambaCase);
+        } else {
+            console.warn(`No Gamba Case found with gId: ${gId}`);
+        }
+    } catch (error) {
+        console.error("Error loading or parsing gambaSelection.json:", error);
+    }
+};
+
+
+initializeSelectedGambaCase(1);
+
 const lblCoins = document.getElementById("coinLabel") as HTMLDivElement
 
 const updateCoinDisplay = (): void => {
