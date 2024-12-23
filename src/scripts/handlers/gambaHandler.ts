@@ -105,7 +105,9 @@ class GambaHandler {
     }
 }
 
-
+//* Get document elements
+const changeRight = document.getElementById("changeCaseRight") as HTMLButtonElement
+const changeLeft = document.getElementById("changeCaseleft") as HTMLButtonElement
 const gamba = document.getElementById("gambaBtn") as HTMLButtonElement
 
 let handler: GambaHandler;
@@ -117,6 +119,12 @@ gamba.addEventListener("click", () => {
     }
     handler.handleGambaCalc();
 });
+
+changeLeft.addEventListener("click", () => handleChange("left"))
+changeRight.addEventListener("click", () => handleChange("right"))
+
+
+
 //TODO: implement a sort of pity system.
 
 let finalMessageTimeout: number | undefined;
@@ -129,4 +137,17 @@ function getRanMessage(type: "win" | "loss"): string {
     const filteredMessage = gambaMessages[type === "win" ? "winMessages" : "lossMessages"];
     const randomIndex = Math.floor(Math.random() * filteredMessage.length);
     return filteredMessage[randomIndex].message;
+}
+
+function handleChange(direction: string): void {
+    switch(direction) {
+        case "left":
+            console.log("left")
+            break
+        case "right":
+            console.log("right")
+            break
+        default:
+            console.error("invalid.")
+        }
 }
