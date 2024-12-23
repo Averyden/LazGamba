@@ -143,11 +143,24 @@ function handleChange(direction: string): void {
     switch(direction) {
         case "left":
             console.log("left")
+            initializeSelectedGambaCase(caseID-=1)
+            if (caseID <= 0) {
+                changeLeft.style.transform = "translateY(10000%)"
+            }
             break
+            
         case "right":
             console.log("right")
+            console.log(caseID)
+            if (caseID <= 0) {
+                changeLeft.style.transform = "translateY(0%)"
+            }
+            
+            initializeSelectedGambaCase(caseID+=1)
+            
             break
         default:
-            console.error("invalid.")
-        }
+            console.error("Invalid request sent to change")
+            break
+    }
 }
