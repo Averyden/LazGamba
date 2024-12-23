@@ -33,10 +33,17 @@
 
 
         <button class="mainItems"  id="gambaBtn">GAMBA</button>
+        <h2 class="mainItems" id="gambaCost">Error fetching price...</h2>
+    </div>
+
+    <div id="sideButtons">
+        <button id="changeCaseleft"><</button>
+        <button id="changeCaseRight">></button>
+
     </div>
 
     <!-- it needs to load down here as its dependant on the button being loaded. -->
-    <script src="/src/scripts/compiledJS/handlers/gambaHandler.js"></script>
+    <script src="/src/scripts/compiledJS/handlers/gambaHandler.js" defer></script>
     <script src="/src/scripts/compiledJS/handlers/dailyResetHandler.js" defer></script>
 
 </body>
