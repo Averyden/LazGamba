@@ -14,7 +14,7 @@ const initializeSelectedGambaCase = async (gId: number): Promise<void> => {
         
         const gambaCases = jsonData.gambaCases
         selectedGambaCase = gambaCases.find((gCase: any) => gCase.gId === gId)
-        caseID = gId
+        caseID = gId // YES WE ARE SETTING IT TWICE BUT WHO FUCKING CARES GRAAAAAAAAAA IM TOO LAZY TO FIGURE SOMETHING ELSE OUT.
 
         if (selectedGambaCase) {
             console.log(`Selected Gamba Case:`, selectedGambaCase)
