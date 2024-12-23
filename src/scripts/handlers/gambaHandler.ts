@@ -1,5 +1,3 @@
-
-
 class GambaHandler {
     private pricePerGamba: number = 50
     private jackpotNumber: number = 0
@@ -8,7 +6,13 @@ class GambaHandler {
     private curCase: any
 
     constructor() {
-        this.updateCase(selectedGambaCase)
+        if (!selectedGambaCase) {
+            console.warn("selectedGambaCase is not yet defined, using default case.");
+            this.updateCase({gId: -1, cost: 50, winMult: 2, rate: 10});
+        } else {
+            this.updateCase(selectedGambaCase);
+            
+        }
     }
 
     updateCase(curCase: any): void {
@@ -23,12 +27,12 @@ class GambaHandler {
         this.winMult = this.curCase.winMult
 
         //* We set the range here based on variables within the dictionary.
-        const chanceBase = Math.round(100 / this.curCase.rate)
-        this.jackpotRange = Array.from({length: Math.round(this.curCase.rate / 100 * chanceBase)}, (_, i) => i)
-        this.jackpotNumber = this.jackpotRange[Math.floor(Math.random() * this.jackpotRange.length)]
+        const baseLength = Math.max(100, Math.round(this.curCase.rate * 10));
+        this.jackpotRange = Array.from({ length: baseLength }, (_, i) => i);
+        this.jackpotNumber = this.jackpotRange[Math.floor(Math.random() * this.jackpotRange.length)];
 
-        console.log(`Updated to the following case: ${this.curCase}`)
-        console.log(`jackPotNum(s) have been adjusted to: ${this.jackpotRange}`)
+        console.log(`Updated to case:`, this.curCase);
+        console.log(`Jackpot number(s):`, this.jackpotRange);
     }
 
     async handleGambaCalc(): Promise<void> {
@@ -99,10 +103,15 @@ class GambaHandler {
 
 const gamba = document.getElementById("gambaBtn") as HTMLButtonElement
 
-const handler = new GambaHandler() 
+let handler: GambaHandler;
 
-gamba.addEventListener("click", () => handler.handleGambaCalc())
-
+gamba.addEventListener("click", () => {
+    if (!handler) {
+        console.error("Handler not initialized yet.");
+        return;
+    }
+    handler.handleGambaCalc();
+});
 //TODO: implement a sort of pity system.
 
 let finalMessageTimeout: number | undefined;
