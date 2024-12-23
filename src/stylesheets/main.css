@@ -47,6 +47,32 @@ canvas {
     transition: background 0.3s;
 }
 
+#sideButtons {
+    position: fixed;
+    top: 50%;
+    width: 100%;
+    transform: translateY(-50%);
+    z-index: 200;
+    display: flex;
+    justify-content: space-between;
+}
+
+#changeCaseRight,
+#changeCaseleft {
+    margin: 8px;
+    min-width: 50px;
+    height: 45px;
+    border: none;
+    border-radius: 15px;
+    font-size: 32px;
+    transition: background 0.3s;
+    cursor: pointer;
+    background-color: #f13ce8;
+    color: #FFF;
+}
+
+#changeCaseleft:hover,
+#changeCaseRight:hover,
 #gambaBtn:hover {
     background: #d823cf;
 }
