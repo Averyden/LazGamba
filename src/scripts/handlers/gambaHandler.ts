@@ -8,7 +8,7 @@ class GambaHandler {
     private curCase: any
 
     constructor() {
-
+        this.updateCase(selectedGambaCase)
     }
 
     updateCase(curCase: any): void {
@@ -32,7 +32,6 @@ class GambaHandler {
     }
 
     async handleGambaCalc(): Promise<void> {
-        const gamba = document.getElementById("gambaBtn") as HTMLButtonElement;
         const gambaImg = document.getElementById("gambaStatusImg") as HTMLImageElement;
         const gambaStatus = document.getElementById("gambaStatus") as HTMLHeadingElement;
 
@@ -58,12 +57,12 @@ class GambaHandler {
         gambaImg.classList.add("spinningAnim");
         const chance = Math.floor(Math.random() * 100);
 
-        // Check if the chance falls into the jackpot range
+   
         const gambaWin = this.jackpotRange.includes(chance);
 
         if (Object.keys(gambaMessages).length === 0) {
             console.log("Loading messages...");
-            await loadGambaMessages(); // This ensures that messages are loaded
+            await loadGambaMessages();
         }
 
         setTimeout(() => {
@@ -97,12 +96,12 @@ class GambaHandler {
     }
 }
 
+
 const gamba = document.getElementById("gambaBtn") as HTMLButtonElement
-const gambaImg = document.getElementById("gambaStatusImg") as HTMLImageElement
 
-const gambaStatus = document.getElementById("gambaStatus") as HTMLHeadingElement 
+const handler = new GambaHandler() 
 
-gamba.addEventListener("click", () => handleGambaCalc())
+gamba.addEventListener("click", () => handler.handleGambaCalc())
 
 //TODO: implement a sort of pity system.
 
