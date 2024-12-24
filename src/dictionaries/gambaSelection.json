@@ -2,6 +2,7 @@
     "gambaCases": [ 
         {"gId": 0, "name": "default", "cost": 50, "winMult": 2, "rate": 10, "background": "#8d83d4", "price": 0},
         {"gId": 1, "name": "classy", "cost": 100, "winMult": 3, "rate": 35, "background": "#83cfd4", "price": 1000 },
-        {"gId": 2, "name": "tooScared", "cost": 1, "winMult": 1, "rate":2, "background": "#ebffd1", "price": 500}
+        {"gId": 2, "name": "tooScared", "cost": 1, "winMult": 1, "rate":2, "background": "#ebffd1", "price": 500},
+        {"gId": 3, "name": "Debug", "cost": 100, "winMult": 1000, "rate":2, "background": "#000000", "price": 500}
     ]
 }
