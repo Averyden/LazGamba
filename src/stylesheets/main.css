@@ -148,6 +148,11 @@ canvas {
     text-align: right;
 }
 
+
+.notUnlocked {
+    background-color: #707070 !important;
+}
+
 .mainItems {
     margin-top: 10px;
     margin-bottom:10px;
