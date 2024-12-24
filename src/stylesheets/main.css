@@ -134,6 +134,20 @@ canvas {
     padding: 2px 8px;  
 }
 
+#caseName {
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+    opacity: 0.75;
+}
+
+#top {
+    position: fixed;
+    top: 0px;
+    
+    z-index: 100;
+    text-align: right;
+}
+
 .mainItems {
     margin-top: 10px;
     margin-bottom:10px;
