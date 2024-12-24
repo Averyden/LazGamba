@@ -9,6 +9,8 @@ let caseID: number = -1
 const body = document.body
 body.style.transition = "background-color 1s ease"
 const pricelbl = document.getElementById("gambaCost") as HTMLHeadingElement
+const namelbl = document.getElementById("caseName") as HTMLHeadingElement
+
 
 
 const initializeSelectedGambaCase = async (gId: number): Promise<void> => {
@@ -21,13 +23,35 @@ const initializeSelectedGambaCase = async (gId: number): Promise<void> => {
         caseID = gId // YES WE ARE SETTING IT TWICE BUT WHO CARES GRAAAAAAAAAA IM TOO LAZY TO FIGURE SOMETHING ELSE OUT.
         body.style.background = selectedGambaCase.background
         pricelbl.innerHTML = `Price to spin: ${selectedGambaCase.cost}` 
+        if (namelbl.innerHTML == "Error fetching name of gamba...") {
+            namelbl.innerHTML = selectedGambaCase.name // Set it to the name if it isnt loaded yet.
+        }
+        
 
         if (selectedGambaCase) {
             console.log(`Selected Gamba Case:`, selectedGambaCase)
             handler.updateCase(selectedGambaCase)
+            namelbl.classList.add("outInFadeName")
+
+            changeLeft.disabled = true
+            changeRight.disabled = true
+            
+
+            setTimeout(() => {
+                namelbl.innerHTML = selectedGambaCase.name
+            }, 500);
+
+            setTimeout(() => {
+                namelbl.classList.remove("outInFadeName")
+                changeLeft.disabled = false
+                changeRight.disabled = false
+            }, 1000);
+            
         } else {
             console.warn(`No Gamba Case found with gId: ${gId}`)
         }
+
+        
     } catch (error) {
         console.error("Error loading or parsing gambaSelection.json:", error)
     }
