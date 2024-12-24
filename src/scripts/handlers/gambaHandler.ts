@@ -140,6 +140,7 @@ function getRanMessage(type: "win" | "loss"): string {
 }
 
 function handleChange(direction: string): void {
+    const maxCases = 3 // this is a shitty temporary fix until i find out how i can get it dynamically.
     
     switch(direction) {
         case "left":
@@ -148,6 +149,11 @@ function handleChange(direction: string): void {
             if (caseID <= 0) {
                 changeLeft.style.transform = "translateY(10000%)"
             }
+
+            if (caseID < maxCases) {
+                changeRight.style.transform = "translateY(0%)"
+            }
+
             break
 
         case "right":
@@ -155,6 +161,11 @@ function handleChange(direction: string): void {
             console.log(caseID)
             if (caseID <= 0) {
                 changeLeft.style.transform = "translateY(0%)"
+            }
+
+            
+            if (caseID >= maxCases-1) { // we remove 1 from it because it doesnt actually update, woops
+                changeRight.style.transform = "translateY(10000%)"
             }
             
             initializeSelectedGambaCase(caseID+=1)
