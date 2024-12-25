@@ -145,8 +145,10 @@ function handleChange(direction: string): void {
     switch(direction) {
         case "left":
             console.log("left")
+            console.log(caseID)
             initializeSelectedGambaCase(caseID-=1)
-            if (caseID <= 0) {
+
+            if (caseID < 0) {
                 changeLeft.style.transform = "translateY(10000%)"
             }
 
@@ -159,6 +161,7 @@ function handleChange(direction: string): void {
         case "right":
             console.log("right")
             console.log(caseID)
+            
             if (caseID <= 0) {
                 changeLeft.style.transform = "translateY(0%)"
             }
@@ -175,4 +178,18 @@ function handleChange(direction: string): void {
             console.error("Invalid request sent to change")
             break
     }
+    updateButtonState(caseID);
+}
+
+function updateButtonState(gId: number): void {
+    const isUnlocked = isGambaUnlocked(gId)
+    
+    if (isUnlocked) {
+        gamba.disabled = false
+        gamba.style.opacity = "1"
+    } else {
+        gamba.disabled = true
+        gamba.style.opacity = "0.5"
+    }
+
 }
