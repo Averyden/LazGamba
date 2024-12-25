@@ -2,6 +2,8 @@
 // This is only so that the handlers dont get cluttered with useless stuff
 
 initCoins()
+const bah = fetchUnlockedCases()
+saveUnlocked(bah)
 
 let selectedGambaCase: any = null
 let caseID: number = -1
