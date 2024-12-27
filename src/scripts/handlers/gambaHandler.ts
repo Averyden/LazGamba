@@ -179,16 +179,18 @@ function updateButtonState(gId: number): void {
     const isUnlocked = isGambaUnlocked(gId)
     
     if (isUnlocked) {
+        purchaseBtn.disabled = false
         
         gamba.disabled = false
         gamba.style.opacity = "1"
-
+        
         setTimeout(() => {
             purchaseBtn.style.transform = "translateY(10000%)"
         }, 500);
         
     } else {
         gamba.disabled = true
+        purchaseBtn.disabled = true
         gamba.style.opacity = "0.5"
         setTimeout(() => {
             purchaseBtn.style.transform = "translateY(0%)"
