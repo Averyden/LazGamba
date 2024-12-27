@@ -2,9 +2,7 @@
  
 
 - sound effects
-- host on portfolio site, so the people this is made for can actually play with it :D
 - maybe make a stats button that calculates win percentage and shows the results of the past spins
-- different tiers of GAMBAs to do.
 - a pity system
 - a random chance to get a bonus reward?
 
@@ -12,10 +10,11 @@
 # Finished features
 - make GAMBA emote zoom in when button is pressed.
 - Depending on outcome, its either GAMBAwin or GAMBAADDICT [DONE]
+- different tiers of GAMBAs to do.
+- host on portfolio site, so the people this is made for can actually play with it :D
 
 
 - Currency: L-coins (haha. get it?) [DONE]  
-
 # Special thanks
 Lazar710, for the idea itself. While not directly giving me the idea yourself, it was still a funny idea that popped up in my head because of you.
 BluTsunami, for the idea with the whole L-Coins thing, really creative pun and gave me the motivation to implement the currency itself.
