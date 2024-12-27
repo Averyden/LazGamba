@@ -23,10 +23,15 @@ const fetchUnlockedCases = (): number[] => {
 }
 
 const saveUnlocked = (caseIds: any): void => {
-    localStorage.setItem("unlockedCases", JSON.stringify(caseIds));
-};
+    localStorage.setItem("unlockedCases", JSON.stringify(caseIds))
+}
 
 const isGambaUnlocked = (gId: number): boolean => {
     const unlockedCases = fetchUnlockedCases()
     return unlockedCases.includes(gId)
+}
+
+
+const handlePurchaseCase = (id: number): void => {
+//TODO: implement this and figure out some way to like.... make the gamba button also call this. or else ill just make a new btton
 }
