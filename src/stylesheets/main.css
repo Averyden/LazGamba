@@ -50,6 +50,16 @@ button {
     font-size: 32px;
 }
 
+#purchaseCaseBtn {
+    /* margin: 8px; */
+    min-width: 60px;
+    width: auto;
+    height: 30px;
+    font-size: 18px;
+    border: none;
+    border-radius: 10px;
+}
+
 
 #sideButtons {
     position: fixed;
