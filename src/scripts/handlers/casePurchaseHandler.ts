@@ -52,7 +52,8 @@ const handlePurchaseCase = (id: number): void => {
             updateButtonState(id)
             initializeSelectedGambaCase(id)
         } else {
-            
+            console.error("User cannot afford case...")
+            return
         }
     }
     /* TODO:
