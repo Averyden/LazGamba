@@ -24,9 +24,15 @@ const initializeSelectedGambaCase = async (gId: number): Promise<void> => {
         selectedGambaCase = gambaCases.find((gCase: any) => gCase.gId === gId)
         caseID = gId // YES WE ARE SETTING IT TWICE BUT WHO CARES GRAAAAAAAAAA IM TOO LAZY TO FIGURE SOMETHING ELSE OUT.
 
-        body.style.background = selectedGambaCase.background
-        pricelbl.innerHTML = `Price to spin: ${selectedGambaCase.cost}`
-         
+        if (isGambaUnlocked(gId)) {
+            body.style.background = selectedGambaCase.background;
+            body.style.filter = "";
+            pricelbl.innerHTML = `Price to spin: ${selectedGambaCase.cost}`;
+        } else {
+            body.style.background = "#bbbbbb";
+            pricelbl.innerHTML = `Price to unlock: ${selectedGambaCase.price}`;
+        }
+       
         if (namelbl.innerHTML == "Error fetching name of gamba...") {
             namelbl.innerHTML = selectedGambaCase.name // Set it to the name if it isnt loaded yet.
         }
