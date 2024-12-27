@@ -47,9 +47,10 @@ const handlePurchaseCase = (id: number): void => {
         if (adjustCoins(-selectedGambaCase.price)) {
             unlockedCases.push(id)
             console.log(`Unlocking case: ${id}, ${selectedGambaCase.name}...`)
+            
+            saveUnlocked(unlockedCases)
             updateButtonState(id)
             initializeSelectedGambaCase(id)
-            saveUnlocked(unlockedCases)
         } else {
             
         }
