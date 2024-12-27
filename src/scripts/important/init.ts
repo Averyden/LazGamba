@@ -43,6 +43,7 @@ const initializeSelectedGambaCase = async (gId: number): Promise<void> => {
             namelbl.classList.add("outInFadeName")
             purchaseBtn.classList.add("outInFadeName")
             
+            purchaseBtn.disabled = true
             changeLeft.disabled = true
             changeRight.disabled = true
             
@@ -54,6 +55,7 @@ const initializeSelectedGambaCase = async (gId: number): Promise<void> => {
                 namelbl.classList.remove("outInFadeName")
                 purchaseBtn.classList.remove("outInFadeName")
                 changeLeft.disabled = false
+                purchaseBtn.disabled = false
                 changeRight.disabled = false
             }, 1000);
             
