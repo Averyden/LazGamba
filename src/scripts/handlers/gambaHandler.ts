@@ -107,6 +107,8 @@ const changeRight = document.getElementById("changeCaseRight") as HTMLButtonElem
 const changeLeft = document.getElementById("changeCaseleft") as HTMLButtonElement
 const gamba = document.getElementById("gambaBtn") as HTMLButtonElement
 
+
+
 let handler: GambaHandler;
 
 gamba.addEventListener("click", () => {
@@ -143,7 +145,7 @@ function handleChange(direction: string): void {
         case "left":
             initializeSelectedGambaCase(caseID-=1)
 
-            if (caseID < 0) {
+            if (caseID <= 0) {
                 changeLeft.style.transform = "translateY(10000%)"
             }
 
@@ -177,11 +179,20 @@ function updateButtonState(gId: number): void {
     const isUnlocked = isGambaUnlocked(gId)
     
     if (isUnlocked) {
+        
         gamba.disabled = false
         gamba.style.opacity = "1"
+
+        setTimeout(() => {
+            purchaseBtn.style.transform = "translateY(10000%)"
+        }, 500);
+        
     } else {
         gamba.disabled = true
         gamba.style.opacity = "0.5"
+        setTimeout(() => {
+            purchaseBtn.style.transform = "translateY(0%)"
+        }, 500);
     }
 
 }
