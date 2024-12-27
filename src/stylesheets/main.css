@@ -30,6 +30,15 @@ canvas {
     pointer-events: none;
 }
 
+button {
+    transition: background 0.3s;
+    cursor: pointer;
+
+    background-color: #f13ce8;
+    color: #FFF;
+    transition: background 0.3s;
+}
+
 #gambaBtn {
     margin: 8px;
     min-width: 125px;
@@ -39,13 +48,8 @@ canvas {
     border-radius: 15px;
    
     font-size: 32px;
-    transition: background 0.3s;
-    cursor: pointer;
-
-    background-color: #f13ce8;
-    color: #FFF;
-    transition: background 0.3s;
 }
+
 
 #sideButtons {
     position: fixed;
