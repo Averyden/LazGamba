@@ -70,16 +70,13 @@ class GambaHandler {
         const gambaWin = this.jackpotRange.includes(chance);
 
         if (Object.keys(gambaMessages).length === 0) {
-            console.log("Loading messages...");
             await loadGambaMessages();
         }
 
         setTimeout(() => {
             if (gambaWin) {
-                console.log(`Winning chance: ${chance}`);
                 gambaImg.src = images.find((img) => img.name === "win")!.path;
             } else {
-                console.log(`Losing chance: ${chance}`);
                 gambaImg.src = images.find((img) => img.name === "loss")!.path;
             }
         }, 1750);
@@ -144,8 +141,6 @@ function handleChange(direction: string): void {
     
     switch(direction) {
         case "left":
-            console.log("left")
-            console.log(caseID)
             initializeSelectedGambaCase(caseID-=1)
 
             if (caseID < 0) {
@@ -159,9 +154,6 @@ function handleChange(direction: string): void {
             break
 
         case "right":
-            console.log("right")
-            console.log(caseID)
-            
             if (caseID <= 0) {
                 changeLeft.style.transform = "translateY(0%)"
             }
