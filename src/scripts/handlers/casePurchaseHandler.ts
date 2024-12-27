@@ -3,6 +3,8 @@
 
 const purchaseBtn = document.getElementById("purchaseCaseBtn") as HTMLButtonElement
 
+purchaseBtn.addEventListener("click", () => handlePurchaseCase(selectedGambaCase.gId))
+
 const fetchUnlockedCases = (): number[] => {
     const rawData = localStorage.getItem("unlockedCases")
     if (!rawData) return []
@@ -34,5 +36,27 @@ const isGambaUnlocked = (gId: number): boolean => {
 
 
 const handlePurchaseCase = (id: number): void => {
-//TODO: implement this and figure out some way to like.... make the gamba button also call this. or else ill just make a new btton
+    if (selectedGambaCase.gId === id) {
+        const unlockedCases = fetchUnlockedCases()
+
+        if (unlockedCases.includes(id)) {
+            console.error("why are we trying to purchase this case?")
+            return
+        }
+
+        if (adjustCoins(-selectedGambaCase.price)) {
+            unlockedCases.push(id)
+            console.log(`Unlocking case: ${id}, ${selectedGambaCase.name}...`)
+            updateButtonState(id)
+            initializeSelectedGambaCase(id)
+            saveUnlocked(unlockedCases)
+        } else {
+            
+        }
+    }
+    /* TODO:
+    * TODO: utilize the L-Coins to check if user has enough
+    * then fetch all currently unlocked cases,
+    * then push to it and finally call the save function 
+    */
 }
