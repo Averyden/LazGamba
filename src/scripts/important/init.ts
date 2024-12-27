@@ -41,16 +41,18 @@ const initializeSelectedGambaCase = async (gId: number): Promise<void> => {
             console.log(`Selected Gamba Case:`, selectedGambaCase)
             handler.updateCase(selectedGambaCase)
             namelbl.classList.add("outInFadeName")
-
+            purchaseBtn.classList.add("outInFadeName")
+            
             changeLeft.disabled = true
             changeRight.disabled = true
-
+            
             setTimeout(() => {
                 namelbl.innerHTML = selectedGambaCase.name
             }, 500);
-
+            
             setTimeout(() => {
                 namelbl.classList.remove("outInFadeName")
+                purchaseBtn.classList.remove("outInFadeName")
                 changeLeft.disabled = false
                 changeRight.disabled = false
             }, 1000);
