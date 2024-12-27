@@ -139,7 +139,7 @@ function getRanMessage(type: "win" | "loss"): string {
 }
 
 function handleChange(direction: string): void {
-    const maxCases = 3 // this is a shitty temporary fix until i find out how i can get it dynamically.
+    const maxCases = 2 // this is a shitty temporary fix until i find out how i can get it dynamically.
     
     switch(direction) {
         case "left":
@@ -179,7 +179,6 @@ function updateButtonState(gId: number): void {
     const isUnlocked = isGambaUnlocked(gId)
     
     if (isUnlocked) {
-        purchaseBtn.disabled = false
         
         gamba.disabled = false
         gamba.style.opacity = "1"
@@ -190,7 +189,6 @@ function updateButtonState(gId: number): void {
         
     } else {
         gamba.disabled = true
-        purchaseBtn.disabled = true
         gamba.style.opacity = "0.5"
         setTimeout(() => {
             purchaseBtn.style.transform = "translateY(0%)"
