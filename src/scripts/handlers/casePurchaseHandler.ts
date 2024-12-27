@@ -1,6 +1,7 @@
 // For making sure the case is purchased before use
 //! Format for savedata, it just uses the case IDs and we run checks
 
+const purchaseBtn = document.getElementById("purchaseCaseBtn") as HTMLButtonElement
 
 const fetchUnlockedCases = (): number[] => {
     const rawData = localStorage.getItem("unlockedCases")
