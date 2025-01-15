@@ -152,7 +152,7 @@ function getRanMessage(type: "win" | "loss"): string {
 }
 
 function handleChange(direction: string): void {
-    const maxCases = 2 // this is a shitty temporary fix until i find out how i can get it dynamically.
+    const maxCases = 5 // this is a shitty temporary fix until i find out how i can get it dynamically.
     
     switch(direction) {
         case "left":
