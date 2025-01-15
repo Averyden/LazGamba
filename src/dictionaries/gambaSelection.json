@@ -1,7 +1,7 @@
 {
-    "gambaCases": [ 
-        {"gId": 0, "name": "Starter", "cost": 50, "winMult": 2, "rate": 10, "background": "#8d83d4", "price": 0},
-        {"gId": 1, "name": "Classy", "cost": 100, "winMult": 3, "rate": 35, "background": "#83cfd4", "price": 1000 },
-        {"gId": 2, "name": "Too scared to gamble", "cost": 1, "winMult": 1, "rate":2, "background": "#ebccd1", "price": 500}
+    "gambaCases": [
+        {"gId": 0, "name": "Starter", "cost": 50, "winMult": 2, "rate": 10, "background": "#8d83d4", "price": 0, "pityReq": 5},
+        {"gId": 1, "name": "Classy", "cost": 100, "winMult": 3, "rate": 35, "background": "#83cfd4", "price": 1000, "pityReq": 10 },
+        {"gId": 2, "name": "Too scared to gamble", "cost": 1, "winMult": 1, "rate":2, "background": "#ebccd1", "price": 500, "pityReq": 2}
     ]
 }
