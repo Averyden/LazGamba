@@ -4,6 +4,7 @@ class GambaHandler {
     private jackpotRange: number[] = []
     private winMult: number = 2 
     private curCase: any
+    private curPityScore: number = 0
 
     constructor() {
         if (!selectedGambaCase) {
