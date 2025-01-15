@@ -137,8 +137,6 @@ changeRight.addEventListener("click", () => handleChange("right"))
 
 
 
-//TODO: implement a sort of pity system.
-
 let finalMessageTimeout: number | undefined;
 
 function getRanMessage(type: "win" | "loss"): string {
