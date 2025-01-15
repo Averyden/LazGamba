@@ -54,6 +54,8 @@ class GambaHandler {
             return;
         }
 
+        let chance = 0
+
         updateCoinDisplay();
 
         gambaStatus.classList.remove("disappear");
@@ -65,7 +67,13 @@ class GambaHandler {
 
         gambaImg.src = images.find((img) => img.name === "spinning")!.path;
         gambaImg.classList.add("spinningAnim");
-        const chance = Math.floor(Math.random() * 100);
+
+        if (this.curPityScore !== this.curCase.pityReq) { 
+            chance = Math.floor(Math.random() * 100);
+        } else {
+            console.log("pity hit")
+            chance = this.curCase.pityReq
+        }
 
    
         const gambaWin = this.jackpotRange.includes(chance);
@@ -76,8 +84,12 @@ class GambaHandler {
 
         setTimeout(() => {
             if (gambaWin) {
+                this.curPityScore = 0
+                console.log("Winner, reset pity")
                 gambaImg.src = images.find((img) => img.name === "win")!.path;
             } else {
+                this.curPityScore += 1
+                console.log("Loser, add pity")
                 gambaImg.src = images.find((img) => img.name === "loss")!.path;
             }
         }, 1750);
