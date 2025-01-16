@@ -188,11 +188,31 @@ button {
 #bottom {
     position: fixed;
     bottom: 10px;
+    
     width: 100%;
     z-index: 200;
     display: flex;
     justify-content: right;
-    font-family: 'Roboto', sans-serif';
+    font-family: 'Roboto';
+}
+
+#caseTip {
+    font-family: 'Roboto', sans-serif;
+    font-size: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    color: white;
+    background-color: #f13ce8;
+    border-radius: 50%; 
+
+    min-width: 30px;
+    min-height: 30px;
+
+    text-align: center;
+
+    transition: background 0.3s;
+
+    margin-right: 10px;
 }
 
 
