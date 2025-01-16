@@ -28,7 +28,7 @@ class Popup {
         //This is still a messy way to do it, but infinitely better than whatever the fuck i was doing with notesu
         this.config = {
             "caseInfo": {
-                title: "Stats for: {}",
+                title: "You shouldn't be able to see me",
                 confirmText: "OK",
                 onConfirm: this.hide
             },
@@ -50,12 +50,21 @@ class Popup {
         if (!config) {
             const errCode = this.errorCodes["unknownType"]
             message = `Unknown popup type "${type}"\n(error ${errCode})`
+            
             config = this.config["error"]
+        }
+
+        if (config === this.config["error"] || config === this.config["caseInfo"]) {
+            this.cancelButton.style.display = "none"
         }
 
         this.titleElement.textContent = config.title
         this.messageElement.textContent = message 
         this.confirmButton.textContent = config.confirmText
+
+        if (config === this.config["caseInfo"]) {
+            this.titleElement.textContent = `Info for: ${selectedGambaCase.name}`
+        }
 
         const newConfirmButton = this.confirmButton.cloneNode(true) as HTMLButtonElement
         this.confirmButton.replaceWith(newConfirmButton)
