@@ -17,6 +17,8 @@ body.style.transition = "background-color 1s ease"
 const pricelbl = document.getElementById("gambaCost") as HTMLHeadingElement
 const namelbl = document.getElementById("caseName") as HTMLHeadingElement
 
+const infoButton = document.getElementById("caseTip") as HTMLButtonElement
+
 
 
 const initializeSelectedGambaCase = async (gId: number): Promise<void> => {
