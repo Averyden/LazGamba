@@ -95,6 +95,7 @@ button {
     color: #FFF;
 }
 
+#caseTip:hover,
 #changeCaseleft:hover,
 #changeCaseRight:hover,
 #gambaBtn:hover {
@@ -207,7 +208,7 @@ button {
 
     min-width: 30px;
     min-height: 30px;
-
+    border: none;
     text-align: center;
 
     transition: background 0.3s;
