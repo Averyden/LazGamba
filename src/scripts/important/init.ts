@@ -5,6 +5,10 @@ initCoins()
 const bah = fetchUnlockedCases()
 saveUnlocked(bah)
 
+const popup = new Popup("popupContainer")
+
+
+
 let selectedGambaCase: any = null
 let caseID: number = -1
 
