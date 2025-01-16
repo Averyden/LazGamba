@@ -59,7 +59,7 @@ class Popup {
         }
 
         this.titleElement.textContent = config.title
-        this.messageElement.textContent = message 
+        this.messageElement.innerHTML = message 
         this.confirmButton.textContent = config.confirmText
 
         if (config === this.config["caseInfo"]) {
