@@ -191,7 +191,7 @@ button {
     bottom: 10px;
     
     width: 100%;
-    z-index: 200;
+    z-index: 1001;
     display: flex;
     justify-content: right;
     font-family: 'Roboto';
