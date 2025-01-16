@@ -185,6 +185,16 @@ button {
     flex-direction: column;
 }
 
+#bottom {
+    position: fixed;
+    bottom: 10px;
+    width: 100%;
+    z-index: 200;
+    display: flex;
+    justify-content: right;
+    font-family: 'Roboto', sans-serif';
+}
+
 
 .notUnlocked {
     background-color: #707070 !important;
