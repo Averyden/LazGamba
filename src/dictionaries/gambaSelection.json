@@ -1,7 +1,10 @@
 {
-    "gambaCases": [ 
-        {"gId": 0, "name": "Starter", "cost": 50, "winMult": 2, "rate": 10, "background": "#8d83d4", "price": 0},
-        {"gId": 1, "name": "Classy", "cost": 100, "winMult": 3, "rate": 35, "background": "#83cfd4", "price": 1000 },
-        {"gId": 2, "name": "Too scared to gamble", "cost": 1, "winMult": 1, "rate":2, "background": "#ebccd1", "price": 500}
+    "gambaCases": [
+        {"gId": 0, "name": "Starter", "cost": 50, "winMult": 2, "rate": 10, "background": "#8d83d4", "price": 0, "pityReq": 5},
+        {"gId": 1, "name": "Easy Come Easy Go", "cost": 20, "winMult": 1.5, "rate": 3, "background": "#ff69b4", "price": 200, "pityReq": 3},
+        {"gId": 2, "name": "Too scared to gamble", "cost": 1, "winMult": 1, "rate":2, "background": "#ebccd1", "price": 500, "pityReq": 2},
+        {"gId": 3, "name": "Classy", "cost": 100, "winMult": 3, "rate": 35, "background": "#83cfd4", "price": 1000, "pityReq": 10 },
+        {"gId": 4, "name": "Risky Royale", "cost": 200, "winMult": 5, "rate": 15, "background": "#ffa500", "price": 1500, "pityReq": 8},
+        {"gId": 5, "name": "Jackpot Dreams", "cost": 500, "winMult": 8, "rate": 50, "background": "#00ff7f", "price": 3000, "pityReq": 15}
     ]
 }

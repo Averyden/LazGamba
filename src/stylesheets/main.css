@@ -83,7 +83,7 @@ button {
 
 #changeCaseRight,
 #changeCaseleft {
-    margin: 8px;
+    margin: 10px;
     min-width: 50px;
     height: 45px;
     border: none;
@@ -95,6 +95,7 @@ button {
     color: #FFF;
 }
 
+#caseTip:hover,
 #changeCaseleft:hover,
 #changeCaseRight:hover,
 #gambaBtn:hover {
@@ -183,6 +184,36 @@ button {
     align-content: center;
     display: flex;
     flex-direction: column;
+}
+
+#bottom {
+    position: fixed;
+    bottom: 10px;
+    
+    width: 100%;
+    z-index: 1001;
+    display: flex;
+    justify-content: right;
+    font-family: 'Roboto';
+}
+
+#caseTip {
+    font-family: 'Roboto', sans-serif;
+    font-size: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    color: white;
+    background-color: #f13ce8;
+    border-radius: 50%; 
+
+    min-width: 30px;
+    min-height: 30px;
+    border: none;
+    text-align: center;
+
+    transition: background 0.3s;
+
+    margin-right: 10px;
 }
 
 

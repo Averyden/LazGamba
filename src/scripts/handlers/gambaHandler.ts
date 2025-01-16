@@ -4,6 +4,7 @@ class GambaHandler {
     private jackpotRange: number[] = []
     private winMult: number = 2 
     private curCase: any
+    private curPityScore: number = 0
 
     constructor() {
         if (!selectedGambaCase) {
@@ -53,6 +54,8 @@ class GambaHandler {
             return;
         }
 
+        let chance = 0
+
         updateCoinDisplay();
 
         gambaStatus.classList.remove("disappear");
@@ -64,7 +67,13 @@ class GambaHandler {
 
         gambaImg.src = images.find((img) => img.name === "spinning")!.path;
         gambaImg.classList.add("spinningAnim");
-        const chance = Math.floor(Math.random() * 100);
+
+        if (this.curPityScore !== this.curCase.pityReq) { 
+            chance = Math.floor(Math.random() * 100);
+        } else {
+            console.log("pity hit")
+            chance = this.curCase.pityReq
+        }
 
    
         const gambaWin = this.jackpotRange.includes(chance);
@@ -75,8 +84,12 @@ class GambaHandler {
 
         setTimeout(() => {
             if (gambaWin) {
+                this.curPityScore = 0
+                console.log("Winner, reset pity")
                 gambaImg.src = images.find((img) => img.name === "win")!.path;
             } else {
+                this.curPityScore += 1
+                console.log("Loser, add pity")
                 gambaImg.src = images.find((img) => img.name === "loss")!.path;
             }
         }, 1750);
@@ -124,8 +137,6 @@ changeRight.addEventListener("click", () => handleChange("right"))
 
 
 
-//TODO: implement a sort of pity system.
-
 let finalMessageTimeout: number | undefined;
 
 function getRanMessage(type: "win" | "loss"): string {
@@ -139,7 +150,7 @@ function getRanMessage(type: "win" | "loss"): string {
 }
 
 function handleChange(direction: string): void {
-    const maxCases = 2 // this is a shitty temporary fix until i find out how i can get it dynamically.
+    const maxCases = 5 // this is a shitty temporary fix until i find out how i can get it dynamically.
     
     switch(direction) {
         case "left":

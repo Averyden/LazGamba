@@ -5,6 +5,10 @@ initCoins()
 const bah = fetchUnlockedCases()
 saveUnlocked(bah)
 
+const popup = new Popup("popupContainer")
+
+
+
 let selectedGambaCase: any = null
 let caseID: number = -1
 
@@ -13,7 +17,26 @@ body.style.transition = "background-color 1s ease"
 const pricelbl = document.getElementById("gambaCost") as HTMLHeadingElement
 const namelbl = document.getElementById("caseName") as HTMLHeadingElement
 
+const infoButton = document.getElementById("caseTip") as HTMLButtonElement
 
+infoButton.addEventListener("click", () => {popup.show("caseInfo", sendCaseInfoMessage())})
+
+const sendCaseInfoMessage = (): string => {
+    let curCaseUnlockedVar
+
+    if (isGambaUnlocked(selectedGambaCase.gId)) {
+        curCaseUnlockedVar = true
+    } else {
+        curCaseUnlockedVar = false
+    }
+
+    return `
+    Internal id: ${selectedGambaCase.gId}<br>
+    Price per spin: ${selectedGambaCase.cost}<br>
+    Return multiplier: ${selectedGambaCase.winMult}<br>
+    Jackpot rate: 1/${selectedGambaCase.rate}<br>
+    Unlocked: ${curCaseUnlockedVar}`
+}
 
 const initializeSelectedGambaCase = async (gId: number): Promise<void> => {
     try {
