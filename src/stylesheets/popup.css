@@ -14,7 +14,7 @@
     background-color: transparent;
 
     transition: background-color .45s ease-in-out;
-    z-index: 7;
+    z-index: 1000;
 }
 
 .popup-container:not(.visible) {
