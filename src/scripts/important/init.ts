@@ -87,7 +87,7 @@ const initializeSelectedGambaCase = async (gId: number): Promise<void> => {
         }
         
     } catch (error) {
-        popup.show("error", `Error loading or parsing gambaSelection.json: ${error} <br>(error ${popup.errorCodes["gambaSelectErrorParse"]}`)
+        popup.show("error", `Error loading or parsing gambaSelection.json: ${error} <br>(error ${popup.errorCodes["gambaSelectErrorParse"]})`)
         console.error("Error loading or parsing gambaSelection.json:", error)
     }
 };
@@ -98,7 +98,7 @@ const initializeHandler = async () => {
         handler = new GambaHandler()
         console.log('Handler initialized')
     } else {
-        popup.show("error", `Error: selectedGambaCase is still null, handler unable to initialize. <br>(error ${popup.errorCodes["cantLoadHandlerCauseGambaSelectIsNull"]}`)
+        popup.show("error", `Error: selectedGambaCase is still null, handler unable to initialize. <br>(error ${popup.errorCodes["cantLoadHandlerCauseGambaSelectIsNull"]})`)
         console.error('Error: selectedGambaCase is still null, handler cannot be initialized.')
     }
 };
@@ -132,7 +132,7 @@ const loadGambaMessages = async () => {
         gambaMessages = JSON.parse(text)
         console.log('Parsed Messages:', gambaMessages)
     } catch (error) {
-        popup.show("error", `Error loading or parsing JSON: ${error} <br>(error ${popup.errorCodes["baseJSONError"]}`)
+        popup.show("error", `Error loading or parsing JSON: ${error} <br>(error ${popup.errorCodes["baseJSONError"]})`)
         console.error('Error loading or parsing JSON:', error)
     }
 };

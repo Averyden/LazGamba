@@ -18,7 +18,7 @@ class GambaHandler {
 
     updateCase(curCase: any): void {
         if (!curCase) {
-            popup.show("error", `Error in updating variables, as no case was selected. <br>(error ${popup.errorCodes["updateVarFail"]}`)
+            popup.show("error", `Error in updating variables, as no case was selected. <br>(error ${popup.errorCodes["updateVarFail"]})`)
             console.error("Error in updating variables:\nNo case was selected\n\nDefaulting...")
             this.curCase = {gId: -1, cost: 50, winMult: 2, rate: 10}
         } else {
@@ -127,7 +127,7 @@ let handler: GambaHandler;
 
 gamba.addEventListener("click", () => {
     if (!handler) {
-        popup.show("error", `Error when handling gamba calculations, handler is not yet initialized. <br>(error ${popup.errorCodes["handlerNotInitWhenHandlingCalc"]}`)
+        popup.show("error", `Error when handling gamba calculations, handler is not yet initialized. <br>(error ${popup.errorCodes["handlerNotInitWhenHandlingCalc"]})`)
         console.error("Handler not initialized yet.");
         return;
     }
@@ -182,7 +182,7 @@ function handleChange(direction: string): void {
             
             break
         default:
-            popup.show("error", `Invalid case switch request. <br>(error ${popup.errorCodes["invalidLeftRightResult"]}`)
+            popup.show("error", `Invalid case switch request. <br>(error ${popup.errorCodes["invalidLeftRightResult"]})`)
             console.error("Invalid request sent to change")
             break
     }
