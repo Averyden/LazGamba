@@ -40,7 +40,7 @@ class Popup {
         }
     }
 
-    private errorCodes: Record<string, string> = {
+    public errorCodes: Record<string, string> = {
         //* Popup error codes, 1x as prefix
         "unknownType": "1x5638",
         "unknownConfig": "1x5861", 
