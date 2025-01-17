@@ -62,7 +62,7 @@ class Popup {
         let config = this.config[type]
         if (!config) {
             const errCode = this.errorCodes["unknownType"]
-            message = `Unknown popup type "${type}"\n(error ${errCode})`
+            message = `Unknown popup type "${type}"<br>(error ${errCode})`
             
             config = this.config["error"]
         }
