@@ -41,8 +41,21 @@ class Popup {
     }
 
     private errorCodes: Record<string, string> = {
+        //* Popup error codes, 1x as prefix
         "unknownType": "1x5638",
         "unknownConfig": "1x5861", 
+        //* case purchashing error codes, 2x as prefix
+        "unexpectedFormat": "2x8753",
+        "parseUnlockedFailed": "2x6528",
+        "purchasingUnlockedCase": "2x5268",
+        //* gamba handler error codes, 3x as prefix
+        "updateVarFail": "3x8659",
+        "handlerNotInitWhenHandlingCalc": "3x4672",
+        "invalidLeftRightResult": "3x6482",
+        //* init.ts error codes, 4x as prefix
+        "gambaSelectErrorParse": "4x1597",
+        "cantLoadHandlerCauseGambaSelectIsNull": "4x4724",
+        "baseJSONError": "4x2467",
     }
 
     public show(type: promptTypes, message: string = "No message provided.") {
