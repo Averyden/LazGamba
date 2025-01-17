@@ -87,7 +87,7 @@ const initializeSelectedGambaCase = async (gId: number): Promise<void> => {
         }
         
     } catch (error) {
-        popup.show("error", `Error loading or parsing gambaSelection.json: ${error} <br>(error ${popup.errorCodes["gambaSelectErrorParse"]})`)
+        // popup.show("error", `Error loading or parsing gambaSelection.json: ${error} <br>(error ${popup.errorCodes["gambaSelectErrorParse"]})`)
         console.error("Error loading or parsing gambaSelection.json:", error)
     }
 };
