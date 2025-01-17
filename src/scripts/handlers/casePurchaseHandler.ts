@@ -16,9 +16,11 @@ const fetchUnlockedCases = (): number[] => {
             } else if (typeof parsedData === "object" && parsedData !== null) {
                 unlockedCases = [parsedData.gId]
             } else {
+                popup.show("error", `Unexpected data format in unlockedCases: ${parsedData}<br>(error ${popup.errorCodes["unexpectedFormat"]}`)
                 console.error("Unexpected data format in unlockedCases:", parsedData)
             }
         } catch (err) {
+            popup.show("error", `ailed to parse unlockedCases: ${err} <br>(error ${popup.errorCodes["parseUnlockedFailed"]}`)
             console.error("Failed to parse unlockedCases:", err)
         }
     }
@@ -46,6 +48,7 @@ const handlePurchaseCase = (id: number): void => {
         const unlockedCases = fetchUnlockedCases()
 
         if (unlockedCases.includes(id)) {
+            popup.show("error", `Attempting to purchase case, which is already unlocked. <br>(error ${popup.errorCodes["purchasingUnlockedCase"]}`)
             console.error("why are we trying to purchase this case?")
             return
         }
