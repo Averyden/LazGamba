@@ -1,7 +1,7 @@
 let lCoins = 300
 
 const saveCoins = (): void => {
-    localStorage.setItem("currency", lCoins.toString())
+    localStorage.setItem("currency", btoa(lCoins.toString()))
 }
 
 
