@@ -30,9 +30,12 @@ const dailyBonus = (): boolean => {
     const lastBonus = localStorage.getItem(encoded)
     const today = new Date().toDateString()
 
-    if (lastBonus !== today) {
+
+    const encodedDate = btoa(today) 
+
+    if (lastBonus !== encodedDate) {
         adjustCoins(300) 
-        localStorage.setItem(btoa(encoded), btoa(today))
+        localStorage.setItem(encoded, encodedDate)
         return true
     }
     return false
