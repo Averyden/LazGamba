@@ -30,7 +30,7 @@ const dailyBonus = (): boolean => {
 
     if (lastBonus !== today) {
         adjustCoins(300) 
-        localStorage.setItem("lastBonusDate", today)
+        localStorage.setItem(btoa("lastBonusDate"), today)
         return true
     }
     return false
