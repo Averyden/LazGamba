@@ -6,11 +6,13 @@ const purchaseBtn = document.getElementById("purchaseCaseBtn") as HTMLButtonElem
 purchaseBtn.addEventListener("click", () => handlePurchaseCase(selectedGambaCase.gId))
 
 const fetchUnlockedCases = (): number[] => {
-    const rawData = localStorage.getItem("unlockedCases")
+    const rawData = localStorage.getItem(btoa("unlockedCases"))
+    
     let unlockedCases: number[] = []
     if (rawData) {
         try {
-            const parsedData = JSON.parse(rawData);
+            const parsedData64 = atob(rawData)
+            const parsedData = JSON.parse(parsedData64);
             if (Array.isArray(parsedData)) {
                 unlockedCases = parsedData
             } else if (typeof parsedData === "object" && parsedData !== null) {
