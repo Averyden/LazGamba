@@ -68,9 +68,4 @@ const handlePurchaseCase = (id: number): void => {
             return
         }
     }
-    /* TODO:
-    * TODO: utilize the L-Coins to check if user has enough
-    * then fetch all currently unlocked cases,
-    * then push to it and finally call the save function 
-    */
 }
