@@ -6,7 +6,7 @@ const saveCoins = (): void => {
 
 
 const loadCoins = (): number => {
-    const savedCoins = localStorage.getItem(atob("currency"))
+    const savedCoins = localStorage.getItem(btoa("currency"))
     return savedCoins ? parseInt(atob(savedCoins), 10) : 300
 }
 
