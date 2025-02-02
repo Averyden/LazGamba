@@ -36,7 +36,7 @@ const fetchUnlockedCases = (): number[] => {
 };
 
 const saveUnlocked = (caseIds: any): void => {
-    localStorage.setItem("unlockedCases", JSON.stringify(caseIds))
+    localStorage.setItem(btoa("unlockedCases"), btoa(JSON.stringify(caseIds)))
 }
 
 const isGambaUnlocked = (gId: number): boolean => {
