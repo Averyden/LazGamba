@@ -1,12 +1,12 @@
 let lCoins = 300
 
 const saveCoins = (): void => {
-    localStorage.setItem("currency", btoa(lCoins.toString()))
+    localStorage.setItem(btoa("currency"), btoa(lCoins.toString()))
 }
 
 
 const loadCoins = (): number => {
-    const savedCoins = localStorage.getItem("currency")
+    const savedCoins = localStorage.getItem(atob("currency"))
     return savedCoins ? parseInt(atob(savedCoins), 10) : 300
 }
 
