@@ -7,7 +7,7 @@ const saveCoins = (): void => {
 
 const loadCoins = (): number => {
     const savedCoins = localStorage.getItem("currency")
-    return savedCoins ? parseInt(savedCoins, 10) : 300
+    return savedCoins ? parseInt(atob(savedCoins), 10) : 300
 }
 
 const adjustCoins = (amount: number): boolean => {
@@ -25,7 +25,7 @@ const initCoins = (): void => {
 }
 
 const dailyBonus = (): boolean => {
-    const lastBonus = localStorage.getItem("lastBonusDate")
+    const lastBonus = localStorage.getItem(atob("lastBonusDate"))
     const today = new Date().toDateString()
 
     if (lastBonus !== today) {
