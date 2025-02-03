@@ -6,11 +6,13 @@ const purchaseBtn = document.getElementById("purchaseCaseBtn") as HTMLButtonElem
 purchaseBtn.addEventListener("click", () => handlePurchaseCase(selectedGambaCase.gId))
 
 const fetchUnlockedCases = (): number[] => {
-    const rawData = localStorage.getItem("unlockedCases")
+    const rawData = localStorage.getItem(btoa("unlockedCases"))
+    
     let unlockedCases: number[] = []
     if (rawData) {
         try {
-            const parsedData = JSON.parse(rawData);
+            const parsedData64 = atob(rawData)
+            const parsedData = JSON.parse(parsedData64);
             if (Array.isArray(parsedData)) {
                 unlockedCases = parsedData
             } else if (typeof parsedData === "object" && parsedData !== null) {
@@ -34,7 +36,7 @@ const fetchUnlockedCases = (): number[] => {
 };
 
 const saveUnlocked = (caseIds: any): void => {
-    localStorage.setItem("unlockedCases", JSON.stringify(caseIds))
+    localStorage.setItem(btoa("unlockedCases"), btoa(JSON.stringify(caseIds)))
 }
 
 const isGambaUnlocked = (gId: number): boolean => {
@@ -66,9 +68,4 @@ const handlePurchaseCase = (id: number): void => {
             return
         }
     }
-    /* TODO:
-    * TODO: utilize the L-Coins to check if user has enough
-    * then fetch all currently unlocked cases,
-    * then push to it and finally call the save function 
-    */
 }
