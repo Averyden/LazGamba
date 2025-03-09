@@ -6,19 +6,23 @@ const purchaseBtn = document.getElementById("purchaseCaseBtn") as HTMLButtonElem
 purchaseBtn.addEventListener("click", () => handlePurchaseCase(selectedGambaCase.gId))
 
 const fetchUnlockedCases = (): number[] => {
-    const rawData = localStorage.getItem("unlockedCases")
+    const rawData = localStorage.getItem(btoa("unlockedCases"))
+    
     let unlockedCases: number[] = []
     if (rawData) {
         try {
-            const parsedData = JSON.parse(rawData);
+            const parsedData64 = atob(rawData)
+            const parsedData = JSON.parse(parsedData64);
             if (Array.isArray(parsedData)) {
                 unlockedCases = parsedData
             } else if (typeof parsedData === "object" && parsedData !== null) {
                 unlockedCases = [parsedData.gId]
             } else {
+                popup.show("error", `Unexpected data format in unlockedCases: ${parsedData}<br>(error ${popup.errorCodes["unexpectedFormat"]})`)
                 console.error("Unexpected data format in unlockedCases:", parsedData)
             }
         } catch (err) {
+            popup.show("error", `ailed to parse unlockedCases: ${err} <br>(error ${popup.errorCodes["parseUnlockedFailed"]})`)
             console.error("Failed to parse unlockedCases:", err)
         }
     }
@@ -32,7 +36,7 @@ const fetchUnlockedCases = (): number[] => {
 };
 
 const saveUnlocked = (caseIds: any): void => {
-    localStorage.setItem("unlockedCases", JSON.stringify(caseIds))
+    localStorage.setItem(btoa("unlockedCases"), btoa(JSON.stringify(caseIds)))
 }
 
 const isGambaUnlocked = (gId: number): boolean => {
@@ -46,6 +50,7 @@ const handlePurchaseCase = (id: number): void => {
         const unlockedCases = fetchUnlockedCases()
 
         if (unlockedCases.includes(id)) {
+            popup.show("error", `Attempting to purchase case, which is already unlocked. <br>(error ${popup.errorCodes["purchasingUnlockedCase"]})`)
             console.error("why are we trying to purchase this case?")
             return
         }
@@ -63,9 +68,4 @@ const handlePurchaseCase = (id: number): void => {
             return
         }
     }
-    /* TODO:
-    * TODO: utilize the L-Coins to check if user has enough
-    * then fetch all currently unlocked cases,
-    * then push to it and finally call the save function 
-    */
 }

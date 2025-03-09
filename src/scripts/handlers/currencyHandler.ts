@@ -1,13 +1,13 @@
 let lCoins = 300
 
 const saveCoins = (): void => {
-    localStorage.setItem("currency", lCoins.toString())
+    localStorage.setItem(btoa("currency"), btoa(lCoins.toString()))
 }
 
 
 const loadCoins = (): number => {
-    const savedCoins = localStorage.getItem("currency")
-    return savedCoins ? parseInt(savedCoins, 10) : 300
+    const savedCoins = localStorage.getItem(btoa("currency"))
+    return savedCoins ? parseInt(atob(savedCoins), 10) : 300
 }
 
 const adjustCoins = (amount: number): boolean => {
@@ -25,12 +25,17 @@ const initCoins = (): void => {
 }
 
 const dailyBonus = (): boolean => {
-    const lastBonus = localStorage.getItem("lastBonusDate")
+
+    const encoded = btoa("lastBonusDate")
+    const lastBonus = localStorage.getItem(encoded)
     const today = new Date().toDateString()
 
-    if (lastBonus !== today) {
+
+    const encodedDate = btoa(today) 
+
+    if (lastBonus !== encodedDate) {
         adjustCoins(300) 
-        localStorage.setItem("lastBonusDate", today)
+        localStorage.setItem(encoded, encodedDate)
         return true
     }
     return false
