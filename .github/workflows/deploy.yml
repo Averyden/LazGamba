@@ -23,20 +23,21 @@ jobs:
       # Install dependencies
       - name: Install dependencies
         run: npm install --no-package-lock
+     
+      # Remove .gitignore to ensure compiledJS gets committed
+      - name: Remove .gitignore
+        run: rm -f .gitignore
 
       # Compile TypeScript to JavaScript
       - name: Compile TypeScript
         run: npx tsc  # Compiles your TypeScript code based on tsconfig.json
 
-      # Copy compiled JS files to root for visibility
-      - name: Copy compiled JS to root
-        run: cp -R src/scripts/compiledJS ./compiledJS
 
       # Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          token: ${{ secrets.GH_TOKEN }}
-          branch: gh-pages
-          folder: .  # Deploy everything to the root of the gh-pages branch
-          clean: true
+          token: ${{ secrets.GH_TOKEN }}  # Use your personal access token
+          branch: gh-pages  # Deploy to the gh-pages branch
+          folder: .  # Deploy the entire project including compiled JS
+          clean: true  # Clean the previous deployment to prevent conflicts
