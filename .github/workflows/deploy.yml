@@ -1,4 +1,4 @@
-name: Build and Deploy TypeScript to GitHub Pages
+name: Build and Deploy to GitHub Pages
 
 on:
   push:
@@ -23,15 +23,13 @@ jobs:
           npm install --no-package-lock
 
       - name: Compile TypeScript
-        run: npx tsc
-
-      - name: Ensure compiledJS exists
-        run: mkdir -p src/scripts/compiledJS  # Make sure the folder exists
+        run: |
+          npx tsc  # Compile your TypeScript files (make sure the output goes to the right location)
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          token: ${{ secrets.GH_TOKEN }}  # Use your stored PAT
-          branch: gh-pages  # Deploy to this branch instead of master
-          folder: dist
-          clean: true  # Clears old files to prevent conflicts
+            token: ${{ secrets.GH_TOKEN }}  # Use your stored PAT
+            branch: gh-pages  # Deploy to this branch
+            folder: .  # Deploy the entire project (including the compiled JavaScript)
+            clean: true  # Clears old files to prevent conflicts
