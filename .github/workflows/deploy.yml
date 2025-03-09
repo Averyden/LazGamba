@@ -31,3 +31,5 @@ jobs:
           branch: gh-pages  # Deploy to this branch instead of master
           folder: src/scripts/compiledJS  # Only deploy compiled JavaScript
           clean: true  # Clears old files to prevent conflicts
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}  # Reference the secret here
