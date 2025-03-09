@@ -33,5 +33,5 @@ jobs:
         with:
           token: ${{ secrets.GH_TOKEN }}  # Use your stored PAT
           branch: gh-pages  # Deploy to this branch instead of master
-          folder: src/scripts/compiledJS  # Only deploy compiled JavaScript
+          folder: dist
           clean: true  # Clears old files to prevent conflicts
