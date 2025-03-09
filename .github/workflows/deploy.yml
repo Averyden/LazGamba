@@ -3,7 +3,7 @@ name: Build and Deploy TypeScript to GitHub Pages
 on:
   push:
     branches:
-      - master  # Runs whenever you push to master
+      - master  # Runs when pushing to master
 
 jobs:
   build-and-deploy:
@@ -13,22 +13,21 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
+      - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: 'npm'
 
       - name: Install Dependencies
-        run: npm install
+        run: |
+          npm install --no-package-lock  # Install without package-lock.json
 
       - name: Compile TypeScript
         run: npx tsc
 
-      - name: Commit Compiled JavaScript
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add src/scripts/compiledJS
-          git commit -m "Auto-compiled TypeScript to JavaScript" || echo "No changes to commit"
-          git push origin master
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages  # Deploy to this branch instead of master
+          folder: src/scripts/compiledJS  # Only deploy compiled JavaScript
+          clean: true  # Clears old files to prevent conflicts
