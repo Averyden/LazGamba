@@ -1,10 +1,3 @@
-name: Build and Deploy TypeScript to GitHub Pages
-
-on:
-  push:
-    branches:
-      - master  # Runs when pushing to master
-
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -20,7 +13,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          npm install --no-package-lock  # Install without package-lock.json
+          npm install --no-package-lock
 
       - name: Compile TypeScript
         run: npx tsc
@@ -28,8 +21,8 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          branch: gh-pages  # Deploy to this branch instead of master
-          folder: src/scripts/compiledJS  # Only deploy compiled JavaScript
-          clean: true  # Clears old files to prevent conflicts
+          branch: gh-pages  # Deploy to this branch
+          folder: src/scripts/compiledJS  # Folder with the built files
+          clean: true
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}  # Reference the secret here
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}  # Use the token you added to repository secrets
