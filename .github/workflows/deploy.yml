@@ -3,33 +3,36 @@ name: Build and Deploy to GitHub Pages
 on:
   push:
     branches:
-      - master  # Runs when pushing to master
+      - master  # Runs on pushing to master
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
+      # Checkout repository
       - name: Checkout Repository
         uses: actions/checkout@v3
 
+      # Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: '18'
 
-      - name: Install Dependencies
-        run: |
-          npm install --no-package-lock
+      # Install dependencies
+      - name: Install dependencies
+        run: npm install --no-package-lock
 
+      # Compile TypeScript to JavaScript
       - name: Compile TypeScript
-        run: |
-          npx tsc  # Compile your TypeScript files (make sure the output goes to the right location)
+        run: npx tsc  # Compiles your TypeScript code based on tsconfig.json
 
+      # Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-            token: ${{ secrets.GH_TOKEN }}  # Use your stored PAT
-            branch: gh-pages  # Deploy to this branch
-            folder: .  # Deploy the entire project (including the compiled JavaScript)
-            clean: true  # Clears old files to prevent conflicts
+          token: ${{ secrets.GH_TOKEN }}  # Use your personal access token
+          branch: gh-pages  # Deploy to the gh-pages branch
+          folder: .  # Deploy the entire project including compiled JS
+          clean: true  # Clean the previous deployment to prevent conflicts
