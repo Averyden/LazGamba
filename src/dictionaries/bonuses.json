@@ -1,0 +1,17 @@
+{
+    "bonuses": [
+      { "type": "bonusCoin", "chance": 0.1, "amount": 20},
+      {
+        "type": "multiplierBoost",
+        "chance": 0.05,
+        "multiplier": 1.5,
+        "description": "Multiplier boost for your next spin"
+      },
+      {
+        "type": "freeSpin",
+        "chance": 0.03,
+        "description": "Win a free spin!"
+      }
+    ]
+  }
+  
