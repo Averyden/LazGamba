@@ -46,6 +46,8 @@ class GambaHandler {
         const gambaImg = document.getElementById("gambaStatusImg") as HTMLImageElement;
         const gambaStatus = document.getElementById("gambaStatus") as HTMLHeadingElement;
 
+        const activeCase = maybeInjectHeavenlyCase(this.curCase)
+
         let timeOutCancel = false;
 
         if (!adjustCoins(-this.pricePerGamba)) {
