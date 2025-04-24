@@ -10,7 +10,7 @@ let gambaCases: any[] = []
 
 const popup = new Popup("popupContainer")
 
-
+let cachedSelectedCase: { gId: number, price: number, name: string } | null = null;
 
 let selectedGambaCase: any = null
 let caseID: number = -1
