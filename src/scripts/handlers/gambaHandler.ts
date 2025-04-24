@@ -50,7 +50,7 @@ class GambaHandler {
     
         let timeOutCancel = false;
     
-        if (!adjustCoins(-activeCase.cost)) {
+        if (!adjustCoins(this.curCase.cost)) {
             gambaStatus.innerHTML = "HAH you're poor! come back tomorrow.";
             gambaImg.src = images.find((img) => img.name === "noMoney")!.path;
             timeOutCancel = true;
@@ -104,7 +104,7 @@ class GambaHandler {
     
             if (gambaWin) {
                 gambaStatus.innerHTML = getRanMessage("win");
-                adjustCoins(activeCase.cost * activeCase.winMult);
+                adjustCoins(this.curCase.cost * activeCase.winMult);
                 updateCoinDisplay();
             } else {
                 gambaStatus.innerHTML = getRanMessage("loss");
