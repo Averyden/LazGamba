@@ -46,7 +46,7 @@ const initializeSelectedGambaCase = async (gId: number): Promise<void> => {
         const response = await fetch("src/dictionaries/gambaSelection.json")
         const jsonData = await response.json()
         
-        const gambaCases = jsonData.gambaCases
+        gambaCases = jsonData.gambaCases
         selectedGambaCase = gambaCases.find((gCase: any) => gCase.gId === gId)
         caseID = gId // YES WE ARE SETTING IT TWICE BUT WHO CARES GRAAAAAAAAAA IM TOO LAZY TO FIGURE SOMETHING ELSE OUT.
 
