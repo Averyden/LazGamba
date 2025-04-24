@@ -24,6 +24,14 @@ const infoButton = document.getElementById("caseTip") as HTMLButtonElement
 
 infoButton.addEventListener("click", () => {popup.show("caseInfo", sendCaseInfoMessage())})
 
+const cacheSelectedCase = (): void => {
+    cachedSelectedCase = {
+        gId: selectedGambaCase.gId,
+        price: selectedGambaCase.price,
+        name: selectedGambaCase.name
+    };
+}
+
 const sendCaseInfoMessage = (): string => {
     let curCaseUnlockedVar
 
@@ -43,6 +51,7 @@ const sendCaseInfoMessage = (): string => {
 
 const initializeSelectedGambaCase = async (gId: number): Promise<void> => {
     try {
+        cacheSelectedCase
         const response = await fetch("src/dictionaries/gambaSelection.json")
         const jsonData = await response.json()
         
