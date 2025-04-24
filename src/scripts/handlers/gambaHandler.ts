@@ -45,70 +45,72 @@ class GambaHandler {
     async handleGambaCalc(): Promise<void> {
         const gambaImg = document.getElementById("gambaStatusImg") as HTMLImageElement;
         const gambaStatus = document.getElementById("gambaStatus") as HTMLHeadingElement;
-
-        const activeCase = maybeInjectHeavenlyCase(this.curCase)
-
+    
+        const activeCase = maybeInjectHeavenlyCase(this.curCase);
+    
         let timeOutCancel = false;
-
-        if (!adjustCoins(-this.pricePerGamba)) {
+    
+        if (!adjustCoins(-activeCase.cost)) {
             gambaStatus.innerHTML = "HAH you're poor! come back tomorrow.";
             gambaImg.src = images.find((img) => img.name === "noMoney")!.path;
             timeOutCancel = true;
             return;
         }
-
-        let chance = 0
-
+    
+        let chance = 0;
+    
         updateCoinDisplay();
-
+    
         gambaStatus.classList.remove("disappear");
         gambaStatus.innerHTML = "";
-
+    
         if (finalMessageTimeout !== undefined) {
             clearTimeout(finalMessageTimeout);
         }
-
+    
         gambaImg.src = images.find((img) => img.name === "spinning")!.path;
         gambaImg.classList.add("spinningAnim");
-
-        if (this.curPityScore !== this.curCase.pityReq) { 
+    
+        if (this.curPityScore !== activeCase.pityReq) { 
             chance = Math.floor(Math.random() * 100);
         } else {
-            console.log("pity hit")
-            chance = this.curCase.pityReq
+            console.log("pity hit");
+            chance = activeCase.pityReq;
         }
-
-   
-        const gambaWin = this.jackpotRange.includes(chance);
-
+    
+        const jackpotLength = Math.round(100 / activeCase.rate);
+        const clampedLength = Math.min(Math.max(jackpotLength, 10), 1000);
+        const dynamicRange = Array.from({ length: clampedLength }, (_, i) => i);
+        const gambaWin = dynamicRange.includes(chance);
+    
         if (Object.keys(gambaMessages).length === 0) {
             await loadGambaMessages();
         }
-
+    
         setTimeout(() => {
             if (gambaWin) {
-                this.curPityScore = 0
-                console.log("Winner, reset pity")
+                this.curPityScore = 0;
+                console.log("Winner, reset pity");
                 gambaImg.src = images.find((img) => img.name === "win")!.path;
             } else {
-                this.curPityScore += 1
-                console.log("Loser, add pity")
+                this.curPityScore += 1;
+                console.log("Loser, add pity");
                 gambaImg.src = images.find((img) => img.name === "loss")!.path;
             }
         }, 1750);
-
+    
         setTimeout(() => {
             gambaImg.classList.remove("spinningAnim");
-
+    
             if (gambaWin) {
                 gambaStatus.innerHTML = getRanMessage("win");
-                adjustCoins(this.pricePerGamba * this.winMult);
+                adjustCoins(activeCase.cost * activeCase.winMult);
                 updateCoinDisplay();
             } else {
                 gambaStatus.innerHTML = getRanMessage("loss");
             }
         }, 2000);
-
+    
         finalMessageTimeout = setTimeout(() => {
             if (!timeOutCancel) {
                 gambaStatus.innerHTML = "maybe you should spin again >:3";
@@ -116,7 +118,7 @@ class GambaHandler {
             }
         }, 7000);
     }
-}
+}    
 
 //* Get document elements
 const changeRight = document.getElementById("changeCaseRight") as HTMLButtonElement
