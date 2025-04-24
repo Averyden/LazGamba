@@ -50,7 +50,7 @@ class GambaHandler {
     
         let timeOutCancel = false;
     
-        if (!adjustCoins(this.curCase.cost)) {
+        if (!adjustCoins(-this.curCase.cost)) {
             gambaStatus.innerHTML = "HAH you're poor! come back tomorrow.";
             gambaImg.src = images.find((img) => img.name === "noMoney")!.path;
             timeOutCancel = true;
