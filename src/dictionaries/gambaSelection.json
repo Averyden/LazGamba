@@ -5,6 +5,9 @@
         {"gId": 2, "name": "Too scared to gamble", "cost": 1, "winMult": 1, "rate":2, "background": "#ebccd1", "price": 500, "pityReq": 2},
         {"gId": 3, "name": "Classy", "cost": 100, "winMult": 3, "rate": 35, "background": "#83cfd4", "price": 1000, "pityReq": 10 },
         {"gId": 4, "name": "Risky Royale", "cost": 200, "winMult": 5, "rate": 15, "background": "#ffa500", "price": 1500, "pityReq": 8},
-        {"gId": 5, "name": "Jackpot Dreams", "cost": 500, "winMult": 8, "rate": 50, "background": "#00ff7f", "price": 3000, "pityReq": 15}
+        {"gId": 5, "name": "Jackpot Dreams", "cost": 500, "winMult": 8, "rate": 50, "background": "#00ff7f", "price": 3000, "pityReq": 15},
+
+
+        {"gId":9999, "name": "Heavenly Desire", "cost":0, "winMult":100, "rate":100, "background": "#70fffc", "price": 0, "pityReq": 100}
     ]
 }
