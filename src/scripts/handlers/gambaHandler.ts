@@ -46,7 +46,6 @@ class GambaHandler {
         const gambaImg = document.getElementById("gambaStatusImg") as HTMLImageElement;
         const gambaStatus = document.getElementById("gambaStatus") as HTMLHeadingElement;
     
-        const activeCase = maybeInjectHeavenlyCase(this.curCase);
     
         let timeOutCancel = false;
     
@@ -71,14 +70,14 @@ class GambaHandler {
         gambaImg.src = images.find((img) => img.name === "spinning")!.path;
         gambaImg.classList.add("spinningAnim");
     
-        if (this.curPityScore !== activeCase.pityReq) { 
+        if (this.curPityScore !== this.curCase.pityReq) { 
             chance = Math.floor(Math.random() * 100);
         } else {
             console.log("pity hit");
-            chance = activeCase.pityReq;
+            chance = this.curCase.pityReq;
         }
     
-        const jackpotLength = Math.round(100 / activeCase.rate);
+        const jackpotLength = Math.round(100 / this.curCase.rate);
         const clampedLength = Math.min(Math.max(jackpotLength, 10), 1000);
         const dynamicRange = Array.from({ length: clampedLength }, (_, i) => i);
         const gambaWin = dynamicRange.includes(chance);
@@ -104,7 +103,7 @@ class GambaHandler {
     
             if (gambaWin) {
                 gambaStatus.innerHTML = getRanMessage("win");
-                adjustCoins(this.curCase.cost * activeCase.winMult);
+                adjustCoins(this.curCase.cost * this.curCase.winMult);
                 updateCoinDisplay();
             } else {
                 gambaStatus.innerHTML = getRanMessage("loss");
