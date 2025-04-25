@@ -6,6 +6,7 @@ class GambaHandler {
     private winMult: number = 2 
     private curCase: any
     private curPityScore: number = 0
+    private heavenInjected: boolean = false
 
     constructor() {
         if (!selectedGambaCase) {
@@ -49,16 +50,15 @@ class GambaHandler {
         
         const activeCase = maybeInjectHeavenlyCase(this.curCase)
         
-        let heavenInjected = false
         let timeOutCancel = false;
     
-        if (!heavenInjected && activeCase.gId === 9999) {
+        if (!this.heavenInjected && activeCase.gId === 9999) {
             initializeSelectedGambaCase(activeCase.gId)
             console.log(`yes we did ${this.oldID}` )
-            heavenInjected = true
-        } else if (heavenInjected = true && activeCase === 9999) {
+            this.heavenInjected = true
+        } else if (this.heavenInjected = true && activeCase === 9999) {
             console.log("for some reason the heaven case hit yet again")
-            heavenInjected = false
+            this.heavenInjected = false
             initializeSelectedGambaCase(this.oldID)
         }
 
