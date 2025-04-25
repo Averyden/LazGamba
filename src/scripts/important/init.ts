@@ -51,7 +51,6 @@ const sendCaseInfoMessage = (): string => {
 
 const initializeSelectedGambaCase = async (gId: number): Promise<void> => {
     try {
-        cacheSelectedCase
         const response = await fetch("src/dictionaries/gambaSelection.json")
         const jsonData = await response.json()
         
