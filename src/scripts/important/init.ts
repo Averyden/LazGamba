@@ -61,6 +61,7 @@ const initializeSelectedGambaCase = async (gId: number): Promise<void> => {
             body.style.background = selectedGambaCase.background;
             body.style.filter = "";
             if (gId !== heavenCase.gId) {
+                //TODO: ensure this isnt cosmetic and actually make the cost be its old cost when switching to heaven
                 pricelbl.innerHTML = `Price to spin: ${selectedGambaCase.cost}`;
                 cachedID = selectedGambaCase.gId
             }
