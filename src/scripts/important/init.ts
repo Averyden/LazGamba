@@ -62,7 +62,6 @@ const initializeSelectedGambaCase = async (gId: number): Promise<void> => {
             body.style.filter = "";
             pricelbl.innerHTML = `Price to spin: ${selectedGambaCase.cost}`;
             if (gId !== heavenCase.gId) {
-                heavenCase.cost = selectedGambaCase.cost
                 handler.oldID = selectedGambaCase.gId
             }
         } else {
