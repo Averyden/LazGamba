@@ -60,8 +60,8 @@ const initializeSelectedGambaCase = async (gId: number): Promise<void> => {
         if (isGambaUnlocked(gId)) {
             body.style.background = selectedGambaCase.background;
             body.style.filter = "";
-            pricelbl.innerHTML = `Price to spin: ${selectedGambaCase.cost}`;
             if (gId !== heavenCase.gId) {
+                pricelbl.innerHTML = `Price to spin: ${selectedGambaCase.cost}`;
                 cachedID = selectedGambaCase.gId
             }
         } else {
