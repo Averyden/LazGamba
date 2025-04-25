@@ -5,6 +5,7 @@ const maybeInjectHeavenlyCase = (currentCase: any): any => {
     if (rng < heavenlyChance) {
         const heavenly = gambaCases.find((gCase: any) => gCase.gId === 9999)
         if (heavenly) {
+            console.log(currentCase.cost)
             return { ...heavenly, cost: currentCase.cost }
         }
     }
