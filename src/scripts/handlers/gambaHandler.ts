@@ -54,10 +54,8 @@ class GambaHandler {
     
         if (!this.heavenInjected && activeCase.gId === 9999) {
             initializeSelectedGambaCase(activeCase.gId)
-            console.log(`yes we did ${this.oldID}` )
             this.heavenInjected = true
-        } else if (this.heavenInjected = true && activeCase === 9999) {
-            console.log("for some reason the heaven case hit yet again")
+        } else if (this.heavenInjected = true && activeCase.gId === 9999) {
             this.heavenInjected = false
             initializeSelectedGambaCase(this.oldID)
         }
