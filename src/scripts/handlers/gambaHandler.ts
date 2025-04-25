@@ -1,5 +1,4 @@
 class GambaHandler {
-    public oldID: number = -1
     private pricePerGamba: number = 50
     private jackpotNumber: number = 0
     private jackpotRange: number[] = []
@@ -57,7 +56,7 @@ class GambaHandler {
             this.heavenInjected = true
         } else if (this.heavenInjected = true && activeCase.gId === 9999) {
             this.heavenInjected = false
-            initializeSelectedGambaCase(this.oldID)
+            initializeSelectedGambaCase(cachedID)
         }
 
         if (!adjustCoins(-activeCase.cost)) {
