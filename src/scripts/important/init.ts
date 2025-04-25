@@ -7,6 +7,8 @@ saveUnlocked(bah)
 
 
 let gambaCases: any[] = []
+let heavenCase: any
+
 
 const popup = new Popup("popupContainer")
 
@@ -23,14 +25,6 @@ const namelbl = document.getElementById("caseName") as HTMLHeadingElement
 const infoButton = document.getElementById("caseTip") as HTMLButtonElement
 
 infoButton.addEventListener("click", () => {popup.show("caseInfo", sendCaseInfoMessage())})
-
-const cacheSelectedCase = (): void => {
-    cachedSelectedCase = {
-        gId: selectedGambaCase.gId,
-        price: selectedGambaCase.price,
-        name: selectedGambaCase.name
-    };
-}
 
 const sendCaseInfoMessage = (): string => {
     let curCaseUnlockedVar
@@ -49,12 +43,17 @@ const sendCaseInfoMessage = (): string => {
     Unlocked: ${curCaseUnlockedVar}`
 }
 
+
+
 const initializeSelectedGambaCase = async (gId: number): Promise<void> => {
     try {
         const response = await fetch("src/dictionaries/gambaSelection.json")
         const jsonData = await response.json()
         
+
         gambaCases = jsonData.gambaCases
+        heavenCase = gambaCases.find((gCase: any) => gCase.gId === 9999)
+
         selectedGambaCase = gambaCases.find((gCase: any) => gCase.gId === gId)
         caseID = gId // YES WE ARE SETTING IT TWICE BUT WHO CARES GRAAAAAAAAAA IM TOO LAZY TO FIGURE SOMETHING ELSE OUT.
 
@@ -62,6 +61,11 @@ const initializeSelectedGambaCase = async (gId: number): Promise<void> => {
             body.style.background = selectedGambaCase.background;
             body.style.filter = "";
             pricelbl.innerHTML = `Price to spin: ${selectedGambaCase.cost}`;
+            console.log(heavenCase.cost)
+            if (!gId === heavenCase.gId)
+                heavenCase.cost = selectedGambaCase.cost
+            
+            console.log(heavenCase.cost)
         } else {
             body.style.background = "#bbbbbb";
             pricelbl.innerHTML = `Price to unlock: ${selectedGambaCase.price}`;
