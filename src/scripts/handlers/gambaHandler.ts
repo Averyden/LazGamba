@@ -1,4 +1,5 @@
 class GambaHandler {
+    public oldID: number = -1
     private pricePerGamba: number = 50
     private jackpotNumber: number = 0
     private jackpotRange: number[] = []
@@ -45,11 +46,23 @@ class GambaHandler {
     async handleGambaCalc(): Promise<void> {
         const gambaImg = document.getElementById("gambaStatusImg") as HTMLImageElement;
         const gambaStatus = document.getElementById("gambaStatus") as HTMLHeadingElement;
-    
-    
+        
+        const activeCase = maybeInjectHeavenlyCase(this.curCase)
+        
+        let heavenInjected = false
         let timeOutCancel = false;
     
-        if (!adjustCoins(-this.curCase.cost)) {
+        if (!heavenInjected && activeCase.gId === 9999) {
+            initializeSelectedGambaCase(activeCase.gId)
+            console.log(`yes we did ${this.oldID}` )
+            heavenInjected = true
+        } else if (heavenInjected = true && activeCase === 9999) {
+            console.log("for some reason the heaven case hit yet again")
+            heavenInjected = false
+            initializeSelectedGambaCase(this.oldID)
+        }
+
+        if (!adjustCoins(-activeCase.cost)) {
             gambaStatus.innerHTML = "HAH you're poor! come back tomorrow.";
             gambaImg.src = images.find((img) => img.name === "noMoney")!.path;
             timeOutCancel = true;
@@ -70,14 +83,14 @@ class GambaHandler {
         gambaImg.src = images.find((img) => img.name === "spinning")!.path;
         gambaImg.classList.add("spinningAnim");
     
-        if (this.curPityScore !== this.curCase.pityReq) { 
+        if (this.curPityScore !== activeCase.pityReq) { 
             chance = Math.floor(Math.random() * 100);
         } else {
             console.log("pity hit");
-            chance = this.curCase.pityReq;
+            chance = activeCase.pityReq;
         }
     
-        const jackpotLength = Math.round(100 / this.curCase.rate);
+        const jackpotLength = Math.round(100 / activeCase.rate);
         const clampedLength = Math.min(Math.max(jackpotLength, 10), 1000);
         const dynamicRange = Array.from({ length: clampedLength }, (_, i) => i);
         const gambaWin = dynamicRange.includes(chance);
@@ -103,7 +116,7 @@ class GambaHandler {
     
             if (gambaWin) {
                 gambaStatus.innerHTML = getRanMessage("win");
-                adjustCoins(this.curCase.cost * this.curCase.winMult);
+                adjustCoins(activeCase.cost * activeCase.winMult);
                 updateCoinDisplay();
             } else {
                 gambaStatus.innerHTML = getRanMessage("loss");
