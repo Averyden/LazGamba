@@ -15,7 +15,7 @@ const popup = new Popup("popupContainer")
 let cachedSelectedCase: { gId: number, price: number, name: string } | null = null;
 
 let selectedGambaCase: any = null
-let caseID: number = -1
+let caseID: number = 0
 
 const body = document.body
 body.style.transition = "background-color 1s ease"
@@ -61,11 +61,10 @@ const initializeSelectedGambaCase = async (gId: number): Promise<void> => {
             body.style.background = selectedGambaCase.background;
             body.style.filter = "";
             pricelbl.innerHTML = `Price to spin: ${selectedGambaCase.cost}`;
-            console.log(heavenCase.cost)
-            if (!gId === heavenCase.gId)
+            if (gId !== heavenCase.gId) {
                 heavenCase.cost = selectedGambaCase.cost
-            
-            console.log(heavenCase.cost)
+                handler.oldID = selectedGambaCase.gId
+            }
         } else {
             body.style.background = "#bbbbbb";
             pricelbl.innerHTML = `Price to unlock: ${selectedGambaCase.price}`;
