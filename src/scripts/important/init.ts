@@ -8,7 +8,7 @@ saveUnlocked(bah)
 
 let gambaCases: any[] = []
 let heavenCase: any
-
+let cachedID: number
 
 const popup = new Popup("popupContainer")
 
@@ -62,13 +62,13 @@ const initializeSelectedGambaCase = async (gId: number): Promise<void> => {
             body.style.filter = "";
             pricelbl.innerHTML = `Price to spin: ${selectedGambaCase.cost}`;
             if (gId !== heavenCase.gId) {
-                handler.oldID = selectedGambaCase.gId
+                cachedID = selectedGambaCase.gId
             }
         } else {
             body.style.background = "#bbbbbb";
             pricelbl.innerHTML = `Price to unlock: ${selectedGambaCase.price}`;
         }
-       
+
         if (namelbl.innerHTML == "Error fetching name of gamba...") {
             namelbl.innerHTML = selectedGambaCase.name // Set it to the name if it isnt loaded yet.
         }
