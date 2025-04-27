@@ -230,13 +230,13 @@ function hideCaseChangeButtons(): void {
 }
 
 function showCaseChangeButtons(): void {
-    if (caseID <= 0) {
+    if (cachedID <= 0) {
         changeLeft.style.transform = "translateY(10000%)";
     } else {
         changeLeft.style.transform = "translateY(0%)";
     }
 
-    if (caseID >= maxCases - 1) {
+    if (cachedID >= maxCases - 1) {
         changeRight.style.transform = "translateY(10000%)";
     } else {
         changeRight.style.transform = "translateY(0%)";
