@@ -61,7 +61,6 @@ const initializeSelectedGambaCase = async (gId: number): Promise<void> => {
         if (isGambaUnlocked(gId)) {
             body.style.background = selectedGambaCase.background;
             body.style.filter = "";
-            //todo: create some sort of implementation that prevents the user from changing case when the heavenly data gets injected
             if (gId !== heavenCase.gId) {
                 //TODO: ensure this isnt cosmetic and actually make the cost be its old cost when switching to heaven
                 pricelbl.innerHTML = `Price to spin: ${selectedGambaCase.cost}`;
