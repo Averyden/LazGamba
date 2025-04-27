@@ -5,6 +5,7 @@ initCoins()
 const bah = fetchUnlockedCases()
 saveUnlocked(bah)
 
+const maxCases = 5
 
 let gambaCases: any[] = []
 let heavenCase: any
