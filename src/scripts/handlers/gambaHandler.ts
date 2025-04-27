@@ -226,3 +226,17 @@ function hideCaseChangeButtons(): void {
     changeLeft.style.transform = "translateY(10000%)"
     changeRight.style.transform = "translateY(10000%)"
 }
+
+function showCaseChangeButtons(): void {
+    if (caseID <= 0) {
+        changeLeft.style.transform = "translateY(10000%)";
+    } else {
+        changeLeft.style.transform = "translateY(0%)";
+    }
+
+    if (caseID >= maxCases - 1) {
+        changeRight.style.transform = "translateY(10000%)";
+    } else {
+        changeRight.style.transform = "translateY(0%)";
+    }
+}
