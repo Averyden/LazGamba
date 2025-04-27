@@ -54,9 +54,11 @@ class GambaHandler {
         if (!this.heavenInjected && activeCase.gId === 9999) {
             initializeSelectedGambaCase(activeCase.gId)
             this.heavenInjected = true
+            hideCaseChangeButtons()
         } else if (this.heavenInjected === true && activeCase.gId === 9999) {
             this.heavenInjected = false
             initializeSelectedGambaCase(cachedID)
+            showCaseChangeButtons()
         }
 
         if (!adjustCoins(-activeCase.cost)) {
