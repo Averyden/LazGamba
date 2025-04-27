@@ -111,6 +111,7 @@ class GambaHandler {
         }, 1750);
     
         setTimeout(() => {
+            this.heavenInjected ? pricelbl.innerHTML = "Next spin is free!" : ` Price to spin: ${selectedGambaCase.cost}`
             gambaImg.classList.remove("spinningAnim");
     
             if (gambaWin) {
