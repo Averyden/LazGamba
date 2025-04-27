@@ -223,3 +223,8 @@ function updateButtonState(gId: number): void {
     }
 
 }
+
+function hideCaseChangeButtons(): void {
+    changeLeft.style.transform = "translateY(10000%)"
+    changeRight.style.transform = "translateY(10000%)"
+}
