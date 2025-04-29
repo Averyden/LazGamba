@@ -54,11 +54,13 @@ class GambaHandler {
         if (!this.heavenInjected && activeCase.gId === 9999) {
             initializeSelectedGambaCase(activeCase.gId)
             this.heavenInjected = true
+            namelbl.classList.add('rainbow')
             hideCaseChangeButtons()
         } else if (this.heavenInjected === true && activeCase.gId === 9999) {
             this.heavenInjected = false
             initializeSelectedGambaCase(cachedID)
             showCaseChangeButtons()
+            namelbl.classList.remove('rainbow')
         }
 
         if (!adjustCoins(-activeCase.cost)) {
