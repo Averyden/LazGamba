@@ -31,6 +31,9 @@ const fetchUnlockedCases = (): number[] => {
         unlockedCases.push(0)
         unlockedCases.push(9999)
         saveUnlocked(unlockedCases)
+    } else if (!unlockedCases.includes(9999)) {
+        unlockedCases.push(9999)
+        saveUnlocked(unlockedCases)
     }
 
     return unlockedCases
