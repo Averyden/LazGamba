@@ -227,5 +227,6 @@ button {
 }
 
 h1 {
-    color:#FFF
+    color:#FFF;
+    transition: color 1.25s;
 }
