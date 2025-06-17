@@ -142,6 +142,16 @@ if (dailyBonus()) {
 
 updateCoinDisplay();
 
+const updateVersionDisplay = () => {
+  const identifier = document.getElementById(
+    "versionIdentifier"
+  ) as HTMLHeadingElement;
+
+  identifier.innerHTML = `LazGamba Version: ${versionNumber}`;
+};
+
+updateVersionDisplay();
+
 let gambaMessages: any = {};
 
 const loadGambaMessages = async () => {
