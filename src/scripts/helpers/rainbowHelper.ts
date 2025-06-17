@@ -1,4 +1,4 @@
-setInterval(rainbow, 1000)
+setInterval(rainbow, 500)
 function rainbow() {
     const toColor = document.querySelectorAll('.rainbow');
     if (toColor.length > 0) {
@@ -12,11 +12,16 @@ function rainbow() {
 
 
 function getRandomColor() {
-    let charset = "89ABCDEF"
-    let color = "#"
-    for (var i = 0; i<6; i++) {
-        color += charset[Math.floor(Math.random() * charset.length)]
-    }
-    return color
+    let colors = [
+        "red", 
+        "orange",
+        "yellow", 
+        "green",
+        "blue", 
+        "indigo", 
+        "violet"
+    ]
+
+    return colors[Math.floor(Math.random() * colors.length)]
 }
 
