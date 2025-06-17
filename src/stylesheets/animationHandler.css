@@ -1,54 +1,54 @@
 @keyframes spinningAnim {
-    0% {
-        transform: scale(0.5) rotate(0deg)
-    }
+  0% {
+    transform: scale(0.5) rotate(0deg);
+  }
 
-    50% {
-        transform: scale(1) rotate(0deg);
-    }
+  50% {
+    transform: scale(1) rotate(0deg);
+  }
 
-    60% {
-        transform: scale(1) rotate(-20deg);
-    }
+  60% {
+    transform: scale(1) rotate(-20deg);
+  }
 
-    100% {
-        transform: scale(1) rotate(1080deg);
-    }
+  100% {
+    transform: scale(1) rotate(1080deg);
+  }
 }
 
 .spinningAnim {
-    animation: spinningAnim 2s ease-in-out
+  animation: spinningAnim 2s ease-in-out;
 }
 
 @keyframes disappear {
-    0% {
-        opacity: 1;
-    } 
-    100% {
-        opacity: 0;
-        visibility: hidden;
-    }
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
 }
 
 .disappear {
-    animation: disappear 3s ease-in-out forwards
+  animation: disappear 3s ease-in-out forwards;
 }
 
 @keyframes outInFadeName {
-    0% {
-        opacity: 0.75;
-    }
-    25% {
-        opacity: 0;
-    }
-    75% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 0.75;
-    }
+  0% {
+    opacity: 0.75;
+  }
+  25% {
+    opacity: 0;
+  }
+  75% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0.75;
+  }
 }
 
 .outInFadeName {
-    animation: outInFadeName 1s  ease-in-out forwards
+  animation: outInFadeName 1s ease-in-out forwards;
 }
