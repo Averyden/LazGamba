@@ -1,5 +1,5 @@
 const maybeInjectHeavenlyCase = (currentCase: any): any => {
-    const heavenlyChance = 0.5
+    const heavenlyChance = 0.04
     const rng = Math.random()
 
     if (rng < heavenlyChance) {
