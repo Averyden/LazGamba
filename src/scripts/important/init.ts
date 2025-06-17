@@ -5,6 +5,8 @@ initCoins();
 const bah = fetchUnlockedCases();
 saveUnlocked(bah);
 
+const versionNumber = "0.8.3";
+
 const maxCases = 14;
 
 let gambaCases: any[] = [];
