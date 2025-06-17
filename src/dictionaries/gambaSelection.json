@@ -70,6 +70,86 @@
       "price": 2000,
       "pityReq": 6
     },
+    {
+      "gId": 7,
+      "name": "High Stakes",
+      "cost": 350,
+      "winMult": 7,
+      "rate": 25,
+      "background": "#b22222",
+      "price": 4000,
+      "pityReq": 12
+    },
+    {
+      "gId": 8,
+      "name": "Lucky Strike",
+      "cost": 75,
+      "winMult": 2.5,
+      "rate": 7,
+      "background": "#32cd32",
+      "price": 750,
+      "pityReq": 4
+    },
+    {
+      "gId": 9,
+      "name": "Double or Nothing",
+      "cost": 300,
+      "winMult": 6,
+      "rate": 20,
+      "background": "#ff4500",
+      "price": 2500,
+      "pityReq": 10
+    },
+    {
+      "gId": 10,
+      "name": "Royal Flush",
+      "cost": 500,
+      "winMult": 10,
+      "rate": 40,
+      "background": "#8a2be2",
+      "price": 5000,
+      "pityReq": 18
+    },
+    {
+      "gId": 11,
+      "name": "Billionaire's Dream",
+      "cost": 1000,
+      "winMult": 15,
+      "rate": 60,
+      "background": "#ff1493",
+      "price": 7000,
+      "pityReq": 25
+    },
+    {
+      "gId": 12,
+      "name": "Gambler's Paradise",
+      "cost": 200,
+      "winMult": 4.5,
+      "rate": 18,
+      "background": "#9932cc",
+      "price": 3500,
+      "pityReq": 9
+    },
+    {
+      "gId": 13,
+      "name": "Fortune Favors",
+      "cost": 600,
+      "winMult": 9,
+      "rate": 45,
+      "background": "#add8e6",
+      "price": 6000,
+      "pityReq": 20
+    },
+    {
+      "gId": 14,
+      "name": "The Risk Taker",
+      "cost": 800,
+      "winMult": 12,
+      "rate": 30,
+      "background": "#ff6347",
+      "price": 5500,
+      "pityReq": 22
+    },
 
     {
       "gId": 9999,
