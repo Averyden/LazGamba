@@ -5,7 +5,7 @@ initCoins();
 const bah = fetchUnlockedCases();
 saveUnlocked(bah);
 
-const maxCases = 5;
+const maxCases = 6;
 
 let gambaCases: any[] = [];
 let heavenCase: any;
