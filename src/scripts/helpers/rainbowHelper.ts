@@ -6,7 +6,7 @@ function rainbow() {
       (el as HTMLElement).style.color = getRandomColor();
     });
   } else {
-    console.log("No elements to rainbow.");
+    return;
   }
 }
 
