@@ -22,7 +22,7 @@ const fetchUnlockedCases = (): number[] => {
                 console.error("Unexpected data format in unlockedCases:", parsedData)
             }
         } catch (err) {
-            popup.show("error", `ailed to parse unlockedCases: ${err} <br>(error ${popup.errorCodes["parseUnlockedFailed"]})`)
+            popup.show("error", `Failed to parse unlockedCases: ${err} <br>(error ${popup.errorCodes["parseUnlockedFailed"]})`)
             console.error("Failed to parse unlockedCases:", err)
         }
     }
