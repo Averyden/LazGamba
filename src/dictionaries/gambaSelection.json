@@ -60,6 +60,16 @@
       "price": 3000,
       "pityReq": 15
     },
+    {
+      "gId": 6,
+      "name": "Golden Goose",
+      "cost": 150,
+      "winMult": 4,
+      "rate": 12,
+      "background": "#ffd700",
+      "price": 2000,
+      "pityReq": 6
+    },
 
     {
       "gId": 9999,
