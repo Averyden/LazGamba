@@ -22,12 +22,17 @@ const fetchUnlockedCases = () => {
             }
         }
         catch (err) {
-            popup.show("error", `ailed to parse unlockedCases: ${err} <br>(error ${popup.errorCodes["parseUnlockedFailed"]})`);
+            popup.show("error", `Failed to parse unlockedCases: ${err} <br>(error ${popup.errorCodes["parseUnlockedFailed"]})`);
             console.error("Failed to parse unlockedCases:", err);
         }
     }
     if (!unlockedCases.includes(0)) {
         unlockedCases.push(0);
+        unlockedCases.push(9999);
+        saveUnlocked(unlockedCases);
+    }
+    else if (!unlockedCases.includes(9999)) {
+        unlockedCases.push(9999);
         saveUnlocked(unlockedCases);
     }
     return unlockedCases;

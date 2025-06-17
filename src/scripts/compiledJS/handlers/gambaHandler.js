@@ -15,6 +15,7 @@ class GambaHandler {
         this.jackpotRange = [];
         this.winMult = 2;
         this.curPityScore = 0;
+        this.heavenInjected = false;
         if (!selectedGambaCase) {
             console.warn("selectedGambaCase is not yet defined, using default case.");
             this.updateCase({ gId: -1, cost: 50, winMult: 2, rate: 10 });
@@ -40,7 +41,8 @@ class GambaHandler {
         const maxLength = 1000;
         const finalLength = Math.min(Math.max(jackpotLength, minLength), maxLength);
         this.jackpotRange = Array.from({ length: finalLength }, (_, i) => i);
-        this.jackpotNumber = this.jackpotRange[Math.floor(Math.random() * this.jackpotRange.length)];
+        this.jackpotNumber =
+            this.jackpotRange[Math.floor(Math.random() * this.jackpotRange.length)];
         console.log(`Updated to case:`, this.curCase);
         console.log(`Jackpot number(s):`, this.jackpotRange);
     }
@@ -48,8 +50,21 @@ class GambaHandler {
         return __awaiter(this, void 0, void 0, function* () {
             const gambaImg = document.getElementById("gambaStatusImg");
             const gambaStatus = document.getElementById("gambaStatus");
+            const activeCase = maybeInjectHeavenlyCase(this.curCase);
             let timeOutCancel = false;
-            if (!adjustCoins(-this.pricePerGamba)) {
+            if (!this.heavenInjected && activeCase.gId === 9999) {
+                initializeSelectedGambaCase(activeCase.gId);
+                this.heavenInjected = true;
+                namelbl.classList.add("rainbow");
+                hideCaseChangeButtons();
+            }
+            else if (this.heavenInjected === true && activeCase.gId === 9999) {
+                this.heavenInjected = false;
+                initializeSelectedGambaCase(cachedID);
+                showCaseChangeButtons();
+                namelbl.classList.remove("rainbow");
+            }
+            if (!adjustCoins(-activeCase.cost)) {
                 gambaStatus.innerHTML = "HAH you're poor! come back tomorrow.";
                 gambaImg.src = images.find((img) => img.name === "noMoney").path;
                 timeOutCancel = true;
@@ -64,14 +79,17 @@ class GambaHandler {
             }
             gambaImg.src = images.find((img) => img.name === "spinning").path;
             gambaImg.classList.add("spinningAnim");
-            if (this.curPityScore !== this.curCase.pityReq) {
+            if (this.curPityScore !== activeCase.pityReq) {
                 chance = Math.floor(Math.random() * 100);
             }
             else {
                 console.log("pity hit");
-                chance = this.curCase.pityReq;
+                chance = activeCase.pityReq;
             }
-            const gambaWin = this.jackpotRange.includes(chance);
+            const jackpotLength = Math.round(100 / activeCase.rate);
+            const clampedLength = Math.min(Math.max(jackpotLength, 10), 1000);
+            const dynamicRange = Array.from({ length: clampedLength }, (_, i) => i);
+            const gambaWin = dynamicRange.includes(chance);
             if (Object.keys(gambaMessages).length === 0) {
                 yield loadGambaMessages();
             }
@@ -88,10 +106,13 @@ class GambaHandler {
                 }
             }, 1750);
             setTimeout(() => {
+                this.heavenInjected
+                    ? (pricelbl.innerHTML = "Next spin is free!")
+                    : ` Price to spin: ${selectedGambaCase.cost}`;
                 gambaImg.classList.remove("spinningAnim");
                 if (gambaWin) {
                     gambaStatus.innerHTML = getRanMessage("win");
-                    adjustCoins(this.pricePerGamba * this.winMult);
+                    adjustCoins(activeCase.cost * activeCase.winMult);
                     updateCoinDisplay();
                 }
                 else {
@@ -132,10 +153,9 @@ function getRanMessage(type) {
     return filteredMessage[randomIndex].message;
 }
 function handleChange(direction) {
-    const maxCases = 5; // this is a shitty temporary fix until i find out how i can get it dynamically.
     switch (direction) {
         case "left":
-            initializeSelectedGambaCase(caseID -= 1);
+            initializeSelectedGambaCase((caseID -= 1));
             if (caseID <= 0) {
                 changeLeft.style.transform = "translateY(10000%)";
             }
@@ -147,10 +167,11 @@ function handleChange(direction) {
             if (caseID <= 0) {
                 changeLeft.style.transform = "translateY(0%)";
             }
-            if (caseID >= maxCases - 1) { // we remove 1 from it because it doesnt actually update, woops
+            if (caseID >= maxCases - 1) {
+                // we remove 1 from it because it doesnt actually update, woops
                 changeRight.style.transform = "translateY(10000%)";
             }
-            initializeSelectedGambaCase(caseID += 1);
+            initializeSelectedGambaCase((caseID += 1));
             break;
         default:
             popup.show("error", `Invalid case switch request. <br>(error ${popup.errorCodes["invalidLeftRightResult"]})`);
@@ -174,5 +195,23 @@ function updateButtonState(gId) {
         setTimeout(() => {
             purchaseBtn.style.transform = "translateY(0%)";
         }, 500);
+    }
+}
+function hideCaseChangeButtons() {
+    changeLeft.style.transform = "translateY(10000%)";
+    changeRight.style.transform = "translateY(10000%)";
+}
+function showCaseChangeButtons() {
+    if (cachedID <= 0) {
+        changeLeft.style.transform = "translateY(10000%)";
+    }
+    else {
+        changeLeft.style.transform = "translateY(0%)";
+    }
+    if (cachedID >= maxCases - 1) {
+        changeRight.style.transform = "translateY(10000%)";
+    }
+    else {
+        changeRight.style.transform = "translateY(0%)";
     }
 }

@@ -1,5 +1,5 @@
 "use strict";
-// This may seem redundant, but this is just initializing stuff for the site, like setting currency and such. 
+// This may seem redundant, but this is just initializing stuff for the site, like setting currency and such.
 // This is only so that the handlers dont get cluttered with useless stuff
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -13,15 +13,23 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 initCoins();
 const bah = fetchUnlockedCases();
 saveUnlocked(bah);
+const versionNumber = "0.8.3";
+const maxCases = 14;
+let gambaCases = [];
+let heavenCase;
+let cachedID;
 const popup = new Popup("popupContainer");
+let cachedSelectedCase = null;
 let selectedGambaCase = null;
-let caseID = -1;
+let caseID = 0;
 const body = document.body;
 body.style.transition = "background-color 1s ease";
 const pricelbl = document.getElementById("gambaCost");
 const namelbl = document.getElementById("caseName");
 const infoButton = document.getElementById("caseTip");
-infoButton.addEventListener("click", () => { popup.show("caseInfo", sendCaseInfoMessage()); });
+infoButton.addEventListener("click", () => {
+    popup.show("caseInfo", sendCaseInfoMessage());
+});
 const sendCaseInfoMessage = () => {
     let curCaseUnlockedVar;
     if (isGambaUnlocked(selectedGambaCase.gId)) {
@@ -41,13 +49,18 @@ const initializeSelectedGambaCase = (gId) => __awaiter(void 0, void 0, void 0, f
     try {
         const response = yield fetch("src/dictionaries/gambaSelection.json");
         const jsonData = yield response.json();
-        const gambaCases = jsonData.gambaCases;
+        gambaCases = jsonData.gambaCases;
+        heavenCase = gambaCases.find((gCase) => gCase.gId === 9999);
         selectedGambaCase = gambaCases.find((gCase) => gCase.gId === gId);
         caseID = gId; // YES WE ARE SETTING IT TWICE BUT WHO CARES GRAAAAAAAAAA IM TOO LAZY TO FIGURE SOMETHING ELSE OUT.
         if (isGambaUnlocked(gId)) {
             body.style.background = selectedGambaCase.background;
             body.style.filter = "";
-            pricelbl.innerHTML = `Price to spin: ${selectedGambaCase.cost}`;
+            if (gId !== heavenCase.gId) {
+                //TODO: ensure this isnt cosmetic and actually make the cost be its old cost when switching to heaven
+                pricelbl.innerHTML = `Price to spin: ${selectedGambaCase.cost}`;
+                cachedID = selectedGambaCase.gId;
+            }
         }
         else {
             body.style.background = "#bbbbbb";
@@ -88,11 +101,11 @@ const initializeHandler = () => __awaiter(void 0, void 0, void 0, function* () {
     yield initializeSelectedGambaCase(0);
     if (selectedGambaCase) {
         handler = new GambaHandler();
-        console.log('Handler initialized');
+        console.log("Handler initialized");
     }
     else {
         popup.show("error", `Error: selectedGambaCase is still null, handler unable to initialize. <br>(error ${popup.errorCodes["cantLoadHandlerCauseGambaSelectIsNull"]})`);
-        console.error('Error: selectedGambaCase is still null, handler cannot be initialized.');
+        console.error("Error: selectedGambaCase is still null, handler cannot be initialized.");
     }
 });
 initializeHandler();
@@ -110,25 +123,30 @@ else {
     console.log("Daily bonus/reset is already claimed.");
 }
 updateCoinDisplay();
+const updateVersionDisplay = () => {
+    const identifier = document.getElementById("versionIdentifier");
+    identifier.innerHTML = `LazGamba Version: ${versionNumber}`;
+};
+updateVersionDisplay();
 let gambaMessages = {};
 const loadGambaMessages = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const response = yield fetch("src/dictionaries/mainGambaDictionaries.json");
         const text = yield response.text();
-        console.log('Raw Response:', text);
+        console.log("Raw Response:", text);
         gambaMessages = JSON.parse(text);
-        console.log('Parsed Messages:', gambaMessages);
+        console.log("Parsed Messages:", gambaMessages);
     }
     catch (error) {
         popup.show("error", `Error loading or parsing JSON: ${error} <br>(error ${popup.errorCodes["baseJSONError"]})`);
-        console.error('Error loading or parsing JSON:', error);
+        console.error("Error loading or parsing JSON:", error);
     }
 });
 loadGambaMessages();
 const images = [
     { name: "loss", path: "assets/img/GAMBA imgs/loss.webp" }, // User didnt win anything.
-    { name: "spinning", path: "assets/img/GAMBA imgs/speen.webp" }, // for when the user has pressed the button and we are calculating the chances of a win. 
+    { name: "spinning", path: "assets/img/GAMBA imgs/speen.webp" }, // for when the user has pressed the button and we are calculating the chances of a win.
     { name: "win", path: "assets/img/GAMBA imgs/win.png" }, // static win image because paint.net cant make gifs!
     { name: "noMoney", path: "assets/img/GAMBA imgs/noMoreMoney.webp" }, // User lost it all for the day.
-    { name: "waiting", path: "assets/img/GAMBA imgs/waiting.webp" }
+    { name: "waiting", path: "assets/img/GAMBA imgs/waiting.webp" },
 ];

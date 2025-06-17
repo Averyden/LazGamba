@@ -4,20 +4,20 @@ class Popup {
     constructor(container) {
         this.errorCodes = {
             //* Popup error codes, 1x as prefix
-            "unknownType": "1x5638",
-            "unknownConfig": "1x5861",
+            unknownType: "1x5638",
+            unknownConfig: "1x5861",
             //* case purchashing error codes, 2x as prefix
-            "unexpectedFormat": "2x8753",
-            "parseUnlockedFailed": "2x6528",
-            "purchasingUnlockedCase": "2x5268",
+            unexpectedFormat: "2x8753",
+            parseUnlockedFailed: "2x6528",
+            purchasingUnlockedCase: "2x5268",
             //* gamba handler error codes, 3x as prefix
-            "updateVarFail": "3x8659",
-            "handlerNotInitWhenHandlingCalc": "3x4672",
-            "invalidLeftRightResult": "3x6482",
+            updateVarFail: "3x8659",
+            handlerNotInitWhenHandlingCalc: "3x4672",
+            invalidLeftRightResult: "3x6482",
             //* init.ts error codes, 4x as prefix
-            "gambaSelectErrorParse": "4x1597",
-            "cantLoadHandlerCauseGambaSelectIsNull": "4x4724",
-            "baseJSONError": "4x2467",
+            gambaSelectErrorParse: "4x1597",
+            cantLoadHandlerCauseGambaSelectIsNull: "4x4724",
+            baseJSONError: "4x2467",
         };
         this.container = document.getElementById(container);
         this.titleElement = this.container.querySelector("#popupTitle");
@@ -27,15 +27,15 @@ class Popup {
         this.cancelButton.addEventListener("click", () => this.hide());
         //This is still a messy way to do it, but infinitely better than whatever the fuck i was doing with notesu
         this.config = {
-            "caseInfo": {
+            caseInfo: {
                 title: "You shouldn't be able to see me",
                 confirmText: "OK",
-                onConfirm: this.hide
+                onConfirm: this.hide,
             },
-            "error": {
+            error: {
                 title: "Error",
                 confirmText: "OK",
-                onConfirm: this.hide
+                onConfirm: this.hide,
             },
         };
     }
