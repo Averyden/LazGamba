@@ -8,6 +8,6 @@
         {"gId": 5, "name": "Jackpot Dreams", "cost": 500, "winMult": 8, "rate": 50, "background": "#00ff7f", "price": 3000, "pityReq": 15},
 
 
-        {"gId":9999, "name": "Heavenly Desire", "cost":0, "winMult":100, "rate":2, "background": "#70fffc", "price": 0, "pityReq": 100}
+        {"gId":9999, "name": "Heavenly Desire", "cost":0, "winMult":100, "rate":25, "background": "#70fffc", "price": 0, "pityReq": 100}
     ]
 }
