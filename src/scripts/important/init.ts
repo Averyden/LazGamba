@@ -15,9 +15,6 @@ import {
   globalFunctions,
 } from "./globals";
 
-let selectedGambaCase = internalSharedGlobals.selectedGambaCase;
-let gambaCases = internalSharedGlobals.gambaCases;
-const popup = internalSharedGlobals.popup;
 let heavenCase: any;
 
 initCoins();
@@ -35,23 +32,23 @@ const infoButton = document.getElementById("caseTip") as HTMLButtonElement;
 let handler: GambaHandler | null = null;
 
 infoButton.addEventListener("click", () => {
-  popup.show("caseInfo", sendCaseInfoMessage());
+  internalSharedGlobals.popup.show("caseInfo", sendCaseInfoMessage());
 });
 
 const sendCaseInfoMessage = (): string => {
   let curCaseUnlockedVar;
 
-  if (isGambaUnlocked(selectedGambaCase.gId)) {
+  if (isGambaUnlocked(internalSharedGlobals.selectedGambaCase.gId)) {
     curCaseUnlockedVar = true;
   } else {
     curCaseUnlockedVar = false;
   }
 
   return `
-    Internal id: ${selectedGambaCase.gId}<br>
-    Price per spin: ${selectedGambaCase.cost}<br>
-    Return multiplier: ${selectedGambaCase.winMult}<br>
-    Jackpot rate: 1/${selectedGambaCase.rate}<br>
+    Internal id: ${internalSharedGlobals.selectedGambaCase.gId}<br>
+    Price per spin: ${internalSharedGlobals.selectedGambaCase.cost}<br>
+    Return multiplier: ${internalSharedGlobals.selectedGambaCase.winMult}<br>
+    Jackpot rate: 1/${internalSharedGlobals.selectedGambaCase.rate}<br>
     Unlocked: ${curCaseUnlockedVar}`;
 };
 
@@ -62,32 +59,40 @@ export const initializeSelectedGambaCase = async (
     const response = await fetch("src/dictionaries/gambaSelection.json");
     const jsonData = await response.json();
 
-    gambaCases = jsonData.gambaCases;
-    heavenCase = gambaCases.find((gCase: any) => gCase.gId === 9999);
+    internalSharedGlobals.gambaCases = jsonData.gambaCases;
+    heavenCase = internalSharedGlobals.gambaCases.find(
+      (gCase: any) => gCase.gId === 9999
+    );
 
-    selectedGambaCase = gambaCases.find((gCase: any) => gCase.gId === gId);
+    internalSharedGlobals.selectedGambaCase =
+      internalSharedGlobals.gambaCases.find((gCase: any) => gCase.gId === gId);
     internalSharedGlobals.caseID = gId; // YES WE ARE SETTING IT TWICE BUT WHO CARES GRAAAAAAAAAA IM TOO LAZY TO FIGURE SOMETHING ELSE OUT.
 
     if (isGambaUnlocked(gId)) {
-      body.style.background = selectedGambaCase.background;
+      body.style.background =
+        internalSharedGlobals.selectedGambaCase.background;
       body.style.filter = "";
       if (gId !== heavenCase.gId) {
         //TODO: ensure this isnt cosmetic and actually make the cost be its old cost when switching to heaven
-        pricelbl.innerHTML = `Price to spin: ${selectedGambaCase.cost}`;
-        internalSharedGlobals.cachedID = selectedGambaCase.gId;
+        pricelbl.innerHTML = `Price to spin: ${internalSharedGlobals.selectedGambaCase.cost}`;
+        internalSharedGlobals.cachedID =
+          internalSharedGlobals.selectedGambaCase.gId;
       }
     } else {
       body.style.background = "#bbbbbb";
-      pricelbl.innerHTML = `Price to unlock: ${selectedGambaCase.price}`;
+      pricelbl.innerHTML = `Price to unlock: ${internalSharedGlobals.selectedGambaCase.price}`;
     }
 
     if (namelbl.innerHTML == "Error fetching name of gamba...") {
-      namelbl.innerHTML = selectedGambaCase.name; // Set it to the name if it isnt loaded yet.
+      namelbl.innerHTML = internalSharedGlobals.selectedGambaCase.name; // Set it to the name if it isnt loaded yet.
     }
 
-    if (selectedGambaCase) {
-      console.log(`Selected Gamba Case:`, selectedGambaCase);
-      handler?.updateCase(selectedGambaCase); //TODO: ensure that making this nullable doesnt fuck literally everything up
+    if (internalSharedGlobals.selectedGambaCase) {
+      console.log(
+        `Selected Gamba Case:`,
+        internalSharedGlobals.selectedGambaCase
+      );
+      handler?.updateCase(internalSharedGlobals.selectedGambaCase); //TODO: ensure that making this nullable doesnt fuck literally everything up
       namelbl.classList.add("outInFadeName");
       purchaseBtn.classList.add("outInFadeName");
 
@@ -96,7 +101,7 @@ export const initializeSelectedGambaCase = async (
       uiSharedGlobals.changeRight.disabled = true;
 
       setTimeout(() => {
-        namelbl.innerHTML = selectedGambaCase.name;
+        namelbl.innerHTML = internalSharedGlobals.selectedGambaCase.name;
       }, 500);
 
       setTimeout(() => {
@@ -117,13 +122,13 @@ export const initializeSelectedGambaCase = async (
 
 const initializeHandler = async () => {
   await initializeSelectedGambaCase(0);
-  if (selectedGambaCase) {
+  if (internalSharedGlobals.selectedGambaCase) {
     handler = new GambaHandler();
     console.log("Handler initialized");
   } else {
-    popup.show(
+    internalSharedGlobals.popup.show(
       "error",
-      `Error: selectedGambaCase is still null, handler unable to initialize. <br>(error ${popup.errorCodes["cantLoadHandlerCauseGambaSelectIsNull"]})`
+      `Error: selectedGambaCase is still null, handler unable to initialize. <br>(error ${internalSharedGlobals.popup.errorCodes["cantLoadHandlerCauseGambaSelectIsNull"]})`
     );
     console.error(
       "Error: selectedGambaCase is still null, handler cannot be initialized."
