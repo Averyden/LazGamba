@@ -1,6 +1,10 @@
 // For making sure the case is purchased before use
 //! Format for savedata, it just uses the case IDs and we run checks
-import { internalSharedGlobals, uiSharedGlobals } from "../important/globals";
+import {
+  internalSharedGlobals,
+  uiSharedGlobals,
+  globalFunctions,
+} from "../important/globals";
 
 let selectedGambaCase = internalSharedGlobals.selectedGambaCase;
 const popup = internalSharedGlobals.popup;
@@ -27,7 +31,7 @@ const handlePurchaseCase = (id: number): void => {
       console.log(`Unlocking case: ${id}, ${selectedGambaCase.name}...`);
 
       neededForInitialization.saveUnlocked(unlockedCases);
-      updateButtonState(id);
+      globalFunctions.updateButtonState(id);
       initializeSelectedGambaCase(id);
       updateCoinDisplay();
     } else {
