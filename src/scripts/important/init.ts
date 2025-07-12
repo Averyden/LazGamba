@@ -33,7 +33,9 @@ const infoButton = document.getElementById("caseTip") as HTMLButtonElement;
 let handler: GambaHandler | null = null;
 
 infoButton.addEventListener("click", () => {
-  internalSharedGlobals.popup.show("caseInfo", sendCaseInfoMessage());
+  internalSharedGlobals.popup.show("caseInfo", sendCaseInfoMessage(), {
+    name: internalSharedGlobals.selectedGambaCase.name as string,
+  });
 });
 
 const sendCaseInfoMessage = (): string => {
