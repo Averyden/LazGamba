@@ -5,6 +5,7 @@ import {
   images,
   globalFunctions,
 } from "../important/globals";
+import { initializeSelectedGambaCase } from "../important/init";
 
 let selectedGambaCase = internalSharedGlobals.selectedGambaCase;
 let caseID = internalSharedGlobals.caseID;
@@ -17,7 +18,7 @@ const changeRight = uiSharedGlobals.changeRight;
 
 // const gambaMessages = dictionaries.gambaMessages;
 
-class GambaHandler {
+export class GambaHandler {
   private pricePerGamba: number = 50;
   private jackpotNumber: number = 0;
   private jackpotRange: number[] = [];
@@ -125,7 +126,7 @@ class GambaHandler {
     const gambaWin = dynamicRange.includes(chance);
 
     if (Object.keys(dictionaries.gambaMessages).length === 0) {
-      await loadGambaMessages();
+      await globalFunctions.loadGambaMessages();
     }
 
     setTimeout(() => {
