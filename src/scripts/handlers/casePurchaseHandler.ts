@@ -6,11 +6,7 @@ import {
   globalFunctions,
 } from "../important/globals";
 
-import {
-  fetchUnlockedCases,
-  saveUnlocked,
-  isGambaUnlocked,
-} from "../utils/unlockUtils";
+import { fetchUnlockedCases, saveUnlocked } from "../utils/unlockUtils";
 
 import { initializeSelectedGambaCase } from "../important/init";
 import { adjustCoins } from "./currencyHandler";
