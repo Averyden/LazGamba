@@ -1,11 +1,11 @@
 // For making sure the case is purchased before use
 //! Format for savedata, it just uses the case IDs and we run checks
+import { internalSharedGlobals, uiSharedGlobals } from "../important/globals";
 
-const purchaseBtn = document.getElementById(
-  "purchaseCaseBtn"
-) as HTMLButtonElement;
+let selectedGambaCase = internalSharedGlobals.selectedGambaCase;
+const popup = internalSharedGlobals.popup;
 
-purchaseBtn.addEventListener("click", () =>
+uiSharedGlobals.purchaseBtn.addEventListener("click", () =>
   handlePurchaseCase(selectedGambaCase.gId)
 );
 
