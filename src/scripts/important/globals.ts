@@ -25,6 +25,10 @@ export const images = [
   { name: "waiting", path: "assets/img/GAMBA imgs/waiting.webp" },
 ];
 
+export const dictionaries = {
+  gambaMessages: {} as any,
+};
+
 // export let cachedSelectedCase: {
 //   gId: number;
 //   price: number;

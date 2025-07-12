@@ -1,7 +1,11 @@
 // This may seem redundant, but this is just initializing stuff for the site, like setting currency and such.
 // This is only so that the handlers dont get cluttered with useless stuff
 import { config } from "./config";
-import { internalSharedGlobals, uiSharedGlobals } from "./globals";
+import {
+  internalSharedGlobals,
+  uiSharedGlobals,
+  dictionaries,
+} from "./globals";
 
 let selectedGambaCase = internalSharedGlobals.selectedGambaCase;
 let gambaCases = internalSharedGlobals.gambaCases;
@@ -12,11 +16,11 @@ initCoins();
 const bah = fetchUnlockedCases();
 saveUnlocked(bah);
 
-const maxCases = 14; //TODO: Make this dynamic INSTEAD of hard-coded
 const body = document.body;
 body.style.transition = "background-color 1s ease";
-const pricelbl = document.getElementById("gambaCost") as HTMLHeadingElement;
-const namelbl = document.getElementById("caseName") as HTMLHeadingElement;
+const pricelbl = uiSharedGlobals.pricelbl;
+const namelbl = uiSharedGlobals.namelbl;
+const purchaseBtn = uiSharedGlobals.purchaseBtn;
 
 const infoButton = document.getElementById("caseTip") as HTMLButtonElement;
 
@@ -144,15 +148,13 @@ const updateVersionDisplay = () => {
 
 updateVersionDisplay();
 
-let gambaMessages: any = {};
-
 const loadGambaMessages = async () => {
   try {
     const response = await fetch("src/dictionaries/mainGambaDictionaries.json");
     const text = await response.text();
     console.log("Raw Response:", text);
-    gambaMessages = JSON.parse(text);
-    console.log("Parsed Messages:", gambaMessages);
+    dictionaries.gambaMessages = JSON.parse(text);
+    console.log("Parsed Messages:", dictionaries.gambaMessages);
   } catch (error) {
     popup.show(
       "error",
@@ -163,11 +165,3 @@ const loadGambaMessages = async () => {
 };
 
 loadGambaMessages();
-
-const images = [
-  { name: "loss", path: "assets/img/GAMBA imgs/loss.webp" }, // User didnt win anything.
-  { name: "spinning", path: "assets/img/GAMBA imgs/speen.webp" }, // for when the user has pressed the button and we are calculating the chances of a win.
-  { name: "win", path: "assets/img/GAMBA imgs/win.png" }, // static win image because paint.net cant make gifs!
-  { name: "noMoney", path: "assets/img/GAMBA imgs/noMoreMoney.webp" }, // User lost it all for the day.
-  { name: "waiting", path: "assets/img/GAMBA imgs/waiting.webp" },
-];
