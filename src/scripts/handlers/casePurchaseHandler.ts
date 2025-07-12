@@ -5,6 +5,13 @@ import {
   uiSharedGlobals,
   globalFunctions,
 } from "../important/globals";
+
+import {
+  fetchUnlockedCases,
+  saveUnlocked,
+  isGambaUnlocked,
+} from "../utils/unlockUtils";
+
 import { initializeSelectedGambaCase } from "../important/init";
 import { adjustCoins } from "./currencyHandler";
 
@@ -14,7 +21,7 @@ uiSharedGlobals.purchaseBtn.addEventListener("click", () =>
 
 const handlePurchaseCase = (id: number): void => {
   if (internalSharedGlobals.selectedGambaCase.gId === id) {
-    const unlockedCases = neededForInitialization.fetchUnlockedCases();
+    const unlockedCases = fetchUnlockedCases();
 
     if (unlockedCases.includes(id)) {
       internalSharedGlobals.popup.show(
@@ -31,7 +38,7 @@ const handlePurchaseCase = (id: number): void => {
         `Unlocking case: ${id}, ${internalSharedGlobals.selectedGambaCase.name}...`
       );
 
-      neededForInitialization.saveUnlocked(unlockedCases);
+      saveUnlocked(unlockedCases);
       globalFunctions.updateButtonState(id);
       initializeSelectedGambaCase(id);
       globalFunctions.updateCoinDisplay();
@@ -40,55 +47,4 @@ const handlePurchaseCase = (id: number): void => {
       return;
     }
   }
-};
-
-export const neededForInitialization = {
-  saveUnlocked: (caseIds: any): void => {
-    localStorage.setItem(btoa("unlockedCases"), btoa(JSON.stringify(caseIds)));
-  },
-
-  fetchUnlockedCases: (): number[] => {
-    const rawData = localStorage.getItem(btoa("unlockedCases"));
-
-    let unlockedCases: number[] = [];
-    if (rawData) {
-      try {
-        const parsedData64 = atob(rawData);
-        const parsedData = JSON.parse(parsedData64);
-        if (Array.isArray(parsedData)) {
-          unlockedCases = parsedData;
-        } else if (typeof parsedData === "object" && parsedData !== null) {
-          unlockedCases = [parsedData.gId];
-        } else {
-          internalSharedGlobals.popup.show(
-            "error",
-            `Unexpected data format in unlockedCases: ${parsedData}<br>(error ${internalSharedGlobals.popup.errorCodes["unexpectedFormat"]})`
-          );
-          console.error("Unexpected data format in unlockedCases:", parsedData);
-        }
-      } catch (err) {
-        internalSharedGlobals.popup.show(
-          "error",
-          `Failed to parse unlockedCases: ${err} <br>(error ${internalSharedGlobals.popup.errorCodes["parseUnlockedFailed"]})`
-        );
-        console.error("Failed to parse unlockedCases:", err);
-      }
-    }
-
-    if (!unlockedCases.includes(0)) {
-      unlockedCases.push(0);
-      unlockedCases.push(9999);
-      neededForInitialization.saveUnlocked(unlockedCases);
-    } else if (!unlockedCases.includes(9999)) {
-      unlockedCases.push(9999);
-      neededForInitialization.saveUnlocked(unlockedCases);
-    }
-
-    return unlockedCases;
-  },
-};
-
-export const isGambaUnlocked = (gId: number): boolean => {
-  const unlockedCases = neededForInitialization.fetchUnlockedCases();
-  return unlockedCases.includes(gId);
 };
