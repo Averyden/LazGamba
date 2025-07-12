@@ -7,6 +7,7 @@ import {
 } from "../utils/unlockUtils";
 import { initCoins, dailyBonus } from "../handlers/currencyHandler";
 import { GambaHandler } from "../handlers/gambaHandler";
+import { setGambaHandler } from "../helpers/gambaHandlerInstance";
 
 import { config } from "./config";
 
@@ -127,6 +128,8 @@ const initializeHandler = async () => {
   await initializeSelectedGambaCase(0);
   if (internalSharedGlobals.selectedGambaCase) {
     handler = new GambaHandler();
+    setGambaHandler(handler);
+
     console.log("Handler initialized");
   } else {
     internalSharedGlobals.popup.show(
