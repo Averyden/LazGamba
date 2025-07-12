@@ -1,5 +1,6 @@
 // This may seem redundant, but this is just initializing stuff for the site, like setting currency and such.
 // This is only so that the handlers dont get cluttered with useless stuff
+import { versionNumber } from "./config";
 
 initCoins();
 const bah = fetchUnlockedCases();
@@ -145,7 +146,7 @@ const updateVersionDisplay = () => {
     "versionIdentifier"
   ) as HTMLHeadingElement;
 
-  identifier.innerHTML = `LazGamba Version: ${process.env.VERSION_NUMBER}`;
+  identifier.innerHTML = `LazGamba Version: ${versionNumber}`;
 };
 
 updateVersionDisplay();
