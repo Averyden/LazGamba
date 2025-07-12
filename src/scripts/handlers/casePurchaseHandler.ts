@@ -9,7 +9,35 @@ uiSharedGlobals.purchaseBtn.addEventListener("click", () =>
   handlePurchaseCase(selectedGambaCase.gId)
 );
 
-const fetchUnlockedCases = (): number[] => {
+const handlePurchaseCase = (id: number): void => {
+  if (selectedGambaCase.gId === id) {
+    const unlockedCases = fetchUnlockedCases();
+
+    if (unlockedCases.includes(id)) {
+      popup.show(
+        "error",
+        `Attempting to purchase case, which is already unlocked. <br>(error ${popup.errorCodes["purchasingUnlockedCase"]})`
+      );
+      console.error("why are we trying to purchase this case?");
+      return;
+    }
+
+    if (adjustCoins(-selectedGambaCase.price)) {
+      unlockedCases.push(id);
+      console.log(`Unlocking case: ${id}, ${selectedGambaCase.name}...`);
+
+      saveUnlocked(unlockedCases);
+      updateButtonState(id);
+      initializeSelectedGambaCase(id);
+      updateCoinDisplay();
+    } else {
+      console.error("User cannot afford case...");
+      return;
+    }
+  }
+};
+
+export const fetchUnlockedCases = (): number[] => {
   const rawData = localStorage.getItem(btoa("unlockedCases"));
 
   let unlockedCases: number[] = [];
@@ -49,38 +77,9 @@ const fetchUnlockedCases = (): number[] => {
   return unlockedCases;
 };
 
-const saveUnlocked = (caseIds: any): void => {
+export const saveUnlocked = (caseIds: any): void => {
   localStorage.setItem(btoa("unlockedCases"), btoa(JSON.stringify(caseIds)));
 };
-
-const handlePurchaseCase = (id: number): void => {
-  if (selectedGambaCase.gId === id) {
-    const unlockedCases = fetchUnlockedCases();
-
-    if (unlockedCases.includes(id)) {
-      popup.show(
-        "error",
-        `Attempting to purchase case, which is already unlocked. <br>(error ${popup.errorCodes["purchasingUnlockedCase"]})`
-      );
-      console.error("why are we trying to purchase this case?");
-      return;
-    }
-
-    if (adjustCoins(-selectedGambaCase.price)) {
-      unlockedCases.push(id);
-      console.log(`Unlocking case: ${id}, ${selectedGambaCase.name}...`);
-
-      saveUnlocked(unlockedCases);
-      updateButtonState(id);
-      initializeSelectedGambaCase(id);
-      updateCoinDisplay();
-    } else {
-      console.error("User cannot afford case...");
-      return;
-    }
-  }
-};
-
 export const isGambaUnlocked = (gId: number): boolean => {
   const unlockedCases = fetchUnlockedCases();
   return unlockedCases.includes(gId);
