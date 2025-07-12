@@ -5,6 +5,7 @@ import {
   uiSharedGlobals,
   globalFunctions,
 } from "../important/globals";
+import { initializeSelectedGambaCase } from "../important/init";
 
 let selectedGambaCase = internalSharedGlobals.selectedGambaCase;
 const popup = internalSharedGlobals.popup;
