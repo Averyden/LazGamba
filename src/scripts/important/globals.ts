@@ -51,6 +51,12 @@ export const globalFunctions = {
       }, 500);
     }
   },
+
+  updateCoinDisplay: (): void => {
+    if (lblCoins) {
+      lblCoins.innerText = `L-coins: ${lCoins}`;
+    }
+  },
 };
 
 // export let cachedSelectedCase: {
