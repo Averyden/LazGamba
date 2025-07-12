@@ -12,21 +12,23 @@
     <!-- THESE HANDLERS ARENT DEPENDANT ON ANY ELEMENTS BEING LOADED, THEREFORE WE PUT THEM HERE SO THE MAIN HANDLERS CAN UTILIZE THEM! -->
 
     <script
-      src="src/scripts/compiledJS/handlers/currencyHandler.js"
-      defer></script>
+      type="module"
+      src="src/scripts/compiledJS/handlers/currencyHandler.js"></script>
     <script
-      src="src/scripts/compiledJS/handlers/casePurchaseHandler.js"
-      defer></script>
+      type="module"
+      src="src/scripts/compiledJS/handlers/casePurchaseHandler.js"></script>
     <script
       src="src/scripts/compiledJS/handlers/popupHandler.js"
-      defer></script>
-    <script src="src/scripts/compiledJS/important/init.js" defer></script>
+      type="module"></script>
+    <script
+      src="src/scripts/compiledJS/important/init.js"
+      type="module"></script>
     <script
       src="src/scripts/compiledJS/handlers/rareOccurancesHandler.js"
-      defer></script>
+      type="module"></script>
     <script
       src="src/scripts/compiledJS/helpers/rainbowHelper.js"
-      defer></script>
+      type="module"></script>
   </head>
   <body>
     <canvas id="starfield" style="z-index: -10"></canvas>
@@ -77,9 +79,9 @@
     <!-- it needs to load down here as its dependant on the button being loaded. -->
     <script
       src="./src/scripts/compiledJS/handlers/gambaHandler.js"
-      defer></script>
+      type="module"></script>
     <script
       src="./src/scripts/compiledJS/handlers/dailyResetHandler.js"
-      defer></script>
+      type="module"></script>
   </body>
 </html>
