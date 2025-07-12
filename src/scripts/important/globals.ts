@@ -1,6 +1,7 @@
 //! Globals used in several files
 
 import { isGambaUnlocked } from "../handlers/casePurchaseHandler";
+import { Popup } from "../handlers/popupHandler";
 
 export const internalSharedGlobals = {
   selectedGambaCase: null as any,

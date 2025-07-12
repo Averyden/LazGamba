@@ -1,5 +1,7 @@
 //! Rewrite of the notesu popup logic because that fucking sucked
+import { internalSharedGlobals } from "../important/globals";
 
+//? Maybe convert to an enum instead?
 type promptTypes = "caseInfo" | "error";
 
 interface IPopupConfig {
@@ -8,7 +10,7 @@ interface IPopupConfig {
   onConfirm: () => void;
 }
 
-class Popup {
+export class Popup {
   private container: HTMLElement;
   private titleElement: HTMLElement;
   private messageElement: HTMLElement;
@@ -84,7 +86,7 @@ class Popup {
     this.confirmButton.textContent = config.confirmText;
 
     if (config === this.config["caseInfo"]) {
-      this.titleElement.textContent = `Info for: ${selectedGambaCase.name}`;
+      this.titleElement.textContent = `Info for: ${internalSharedGlobals.selectedGambaCase.name}`;
     }
 
     const newConfirmButton = this.confirmButton.cloneNode(
