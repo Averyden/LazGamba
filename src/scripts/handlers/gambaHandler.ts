@@ -10,12 +10,6 @@ import { initializeSelectedGambaCase } from "../important/init";
 import { adjustCoins } from "./currencyHandler";
 import { maybeInjectHeavenlyCase } from "./rareOccurancesHandler";
 
-const popup = internalSharedGlobals.popup;
-
-const namelbl = uiSharedGlobals.namelbl;
-const changeLeft = uiSharedGlobals.changeLeft;
-const changeRight = uiSharedGlobals.changeRight;
-
 // const gambaMessages = dictionaries.gambaMessages;
 
 export class GambaHandler {
@@ -38,9 +32,9 @@ export class GambaHandler {
 
   updateCase(curCase: any): void {
     if (!curCase) {
-      popup.show(
+      internalSharedGlobals.popup.show(
         "error",
-        `Error in updating variables, as no case was selected. <br>(error ${popup.errorCodes["updateVarFail"]})`
+        `Error in updating variables, as no case was selected. <br>(error ${internalSharedGlobals.popup.errorCodes["updateVarFail"]})`
       );
       console.error(
         "Error in updating variables:\nNo case was selected\n\nDefaulting..."
@@ -83,13 +77,13 @@ export class GambaHandler {
     if (!this.heavenInjected && activeCase.gId === 9999) {
       initializeSelectedGambaCase(activeCase.gId);
       this.heavenInjected = true;
-      namelbl.classList.add("rainbow");
+      uiSharedGlobals.namelbl.classList.add("rainbow");
       hideCaseChangeButtons();
     } else if (this.heavenInjected === true && activeCase.gId === 9999) {
       this.heavenInjected = false;
       initializeSelectedGambaCase(internalSharedGlobals.cachedID);
       showCaseChangeButtons();
-      namelbl.classList.remove("rainbow");
+      uiSharedGlobals.namelbl.classList.remove("rainbow");
     }
 
     if (!adjustCoins(-activeCase.cost)) {
@@ -172,9 +166,9 @@ let handler: GambaHandler;
 
 gamba.addEventListener("click", () => {
   if (!handler) {
-    popup.show(
+    internalSharedGlobals.popup.show(
       "error",
-      `Error when handling gamba calculations, handler is not yet initialized. <br>(error ${popup.errorCodes["handlerNotInitWhenHandlingCalc"]})`
+      `Error when handling gamba calculations, handler is not yet initialized. <br>(error ${internalSharedGlobals.popup.errorCodes["handlerNotInitWhenHandlingCalc"]})`
     );
     console.error("Handler not initialized yet.");
     return;
@@ -182,8 +176,12 @@ gamba.addEventListener("click", () => {
   handler.handleGambaCalc();
 });
 
-changeLeft.addEventListener("click", () => handleChange("left"));
-changeRight.addEventListener("click", () => handleChange("right"));
+uiSharedGlobals.changeLeft.addEventListener("click", () =>
+  handleChange("left")
+);
+uiSharedGlobals.changeRight.addEventListener("click", () =>
+  handleChange("right")
+);
 
 let finalMessageTimeout: number | undefined;
 
@@ -206,32 +204,32 @@ function handleChange(direction: string): void {
       initializeSelectedGambaCase((internalSharedGlobals.caseID -= 1));
 
       if (internalSharedGlobals.caseID <= 0) {
-        changeLeft.style.transform = "translateY(10000%)";
+        uiSharedGlobals.changeLeft.style.transform = "translateY(10000%)";
       }
 
       if (internalSharedGlobals.caseID < internalSharedGlobals.maxCases) {
-        changeRight.style.transform = "translateY(0%)";
+        uiSharedGlobals.changeRight.style.transform = "translateY(0%)";
       }
 
       break;
 
     case "right":
       if (internalSharedGlobals.caseID <= 0) {
-        changeLeft.style.transform = "translateY(0%)";
+        uiSharedGlobals.changeLeft.style.transform = "translateY(0%)";
       }
 
       if (internalSharedGlobals.caseID >= internalSharedGlobals.maxCases - 1) {
         // we remove 1 from it because it doesnt actually update, woops
-        changeRight.style.transform = "translateY(10000%)";
+        uiSharedGlobals.changeRight.style.transform = "translateY(10000%)";
       }
 
       initializeSelectedGambaCase((internalSharedGlobals.caseID += 1));
 
       break;
     default:
-      popup.show(
+      internalSharedGlobals.popup.show(
         "error",
-        `Invalid case switch request. <br>(error ${popup.errorCodes["invalidLeftRightResult"]})`
+        `Invalid case switch request. <br>(error ${internalSharedGlobals.popup.errorCodes["invalidLeftRightResult"]})`
       );
       console.error("Invalid request sent to change");
       break;
@@ -240,20 +238,20 @@ function handleChange(direction: string): void {
 }
 
 function hideCaseChangeButtons(): void {
-  changeLeft.style.transform = "translateY(10000%)";
-  changeRight.style.transform = "translateY(10000%)";
+  uiSharedGlobals.changeLeft.style.transform = "translateY(10000%)";
+  uiSharedGlobals.changeRight.style.transform = "translateY(10000%)";
 }
 
 function showCaseChangeButtons(): void {
   if (internalSharedGlobals.cachedID <= 0) {
-    changeLeft.style.transform = "translateY(10000%)";
+    uiSharedGlobals.changeLeft.style.transform = "translateY(10000%)";
   } else {
-    changeLeft.style.transform = "translateY(0%)";
+    uiSharedGlobals.changeLeft.style.transform = "translateY(0%)";
   }
 
   if (internalSharedGlobals.cachedID >= internalSharedGlobals.maxCases - 1) {
-    changeRight.style.transform = "translateY(10000%)";
+    uiSharedGlobals.changeRight.style.transform = "translateY(10000%)";
   } else {
-    changeRight.style.transform = "translateY(0%)";
+    uiSharedGlobals.changeRight.style.transform = "translateY(0%)";
   }
 }
