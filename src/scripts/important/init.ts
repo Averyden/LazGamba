@@ -4,6 +4,7 @@ import {
   isGambaUnlocked,
   neededForInitialization,
 } from "../handlers/casePurchaseHandler";
+import { GambaHandler } from "../handlers/gambaHandler";
 
 import { config } from "./config";
 
@@ -31,6 +32,8 @@ const purchaseBtn = uiSharedGlobals.purchaseBtn;
 
 const infoButton = document.getElementById("caseTip") as HTMLButtonElement;
 
+let handler: GambaHandler | null = null;
+
 infoButton.addEventListener("click", () => {
   popup.show("caseInfo", sendCaseInfoMessage());
 });
@@ -52,7 +55,9 @@ const sendCaseInfoMessage = (): string => {
     Unlocked: ${curCaseUnlockedVar}`;
 };
 
-const initializeSelectedGambaCase = async (gId: number): Promise<void> => {
+export const initializeSelectedGambaCase = async (
+  gId: number
+): Promise<void> => {
   try {
     const response = await fetch("src/dictionaries/gambaSelection.json");
     const jsonData = await response.json();
@@ -82,7 +87,7 @@ const initializeSelectedGambaCase = async (gId: number): Promise<void> => {
 
     if (selectedGambaCase) {
       console.log(`Selected Gamba Case:`, selectedGambaCase);
-      handler.updateCase(selectedGambaCase);
+      handler?.updateCase(selectedGambaCase); //TODO: ensure that making this nullable doesnt fuck literally everything up
       namelbl.classList.add("outInFadeName");
       purchaseBtn.classList.add("outInFadeName");
 
