@@ -5,8 +5,6 @@ initCoins();
 const bah = fetchUnlockedCases();
 saveUnlocked(bah);
 
-const versionNumber = "0.8.3";
-
 const maxCases = 14;
 
 let gambaCases: any[] = [];
@@ -147,7 +145,7 @@ const updateVersionDisplay = () => {
     "versionIdentifier"
   ) as HTMLHeadingElement;
 
-  identifier.innerHTML = `LazGamba Version: ${versionNumber}`;
+  identifier.innerHTML = `LazGamba Version: ${process.env.VERSION_NUMBER}`;
 };
 
 updateVersionDisplay();
