@@ -1,4 +1,5 @@
 //! Globals used in several files
+import { gambaButton } from "../utils/gambaHandlerUtils";
 import { isGambaUnlocked } from "../utils/unlockUtils";
 import { Popup } from "../handlers/popupHandler";
 
@@ -18,7 +19,6 @@ export const uiSharedGlobals = {
   purchaseBtn: document.getElementById("purchaseCaseBtn") as HTMLButtonElement,
   namelbl: document.getElementById("caseName") as HTMLHeadingElement,
   pricelbl: document.getElementById("gambaCost") as HTMLHeadingElement,
-  gambaButton: document.getElementById("gambaBtn") as HTMLButtonElement,
   lblCoins: document.getElementById("coinLabel") as HTMLDivElement,
 };
 
@@ -39,15 +39,15 @@ export const globalFunctions = {
     const isUnlocked = isGambaUnlocked(gId);
 
     if (isUnlocked) {
-      uiSharedGlobals.gambaButton.disabled = false;
-      uiSharedGlobals.gambaButton.style.opacity = "1";
+      gambaButton.disabled = false;
+      gambaButton.style.opacity = "1";
 
       setTimeout(() => {
         uiSharedGlobals.purchaseBtn.style.transform = "translateY(10000%)";
       }, 500);
     } else {
-      uiSharedGlobals.gambaButton.disabled = true;
-      uiSharedGlobals.gambaButton.style.opacity = "0.5";
+      gambaButton.disabled = true;
+      gambaButton.style.opacity = "0.5";
       setTimeout(() => {
         uiSharedGlobals.purchaseBtn.style.transform = "translateY(0%)";
       }, 500);
