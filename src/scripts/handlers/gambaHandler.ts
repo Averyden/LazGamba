@@ -174,10 +174,10 @@ gamba.addEventListener("click", () => {
   handler.handleGambaCalc();
 });
 
-uiSharedGlobals.changeLeft.addEventListener("click", () =>
+uiSharedGlobals?.changeLeft.addEventListener("click", () =>
   handleChange("left")
 );
-uiSharedGlobals.changeRight.addEventListener("click", () =>
+uiSharedGlobals?.changeRight.addEventListener("click", () =>
   handleChange("right")
 );
 
