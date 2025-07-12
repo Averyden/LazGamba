@@ -1,11 +1,11 @@
 // This may seem redundant, but this is just initializing stuff for the site, like setting currency and such.
 // This is only so that the handlers dont get cluttered with useless stuff
-import { versionNumber } from "./config";
-import { allUseGlobals } from "./globals";
+import { config } from "./config";
+import { internalSharedGlobals, uiSharedGlobals } from "./globals";
 
-let selectedGambaCase = allUseGlobals.selectedGambaCase;
-let gambaCases = allUseGlobals.gambaCases;
-const popup = allUseGlobals.popup;
+let selectedGambaCase = internalSharedGlobals.selectedGambaCase;
+let gambaCases = internalSharedGlobals.gambaCases;
+const popup = internalSharedGlobals.popup;
 let heavenCase: any;
 
 initCoins();
@@ -50,7 +50,7 @@ const initializeSelectedGambaCase = async (gId: number): Promise<void> => {
     heavenCase = gambaCases.find((gCase: any) => gCase.gId === 9999);
 
     selectedGambaCase = gambaCases.find((gCase: any) => gCase.gId === gId);
-    allUseGlobals.caseID = gId; // YES WE ARE SETTING IT TWICE BUT WHO CARES GRAAAAAAAAAA IM TOO LAZY TO FIGURE SOMETHING ELSE OUT.
+    internalSharedGlobals.caseID = gId; // YES WE ARE SETTING IT TWICE BUT WHO CARES GRAAAAAAAAAA IM TOO LAZY TO FIGURE SOMETHING ELSE OUT.
 
     if (isGambaUnlocked(gId)) {
       body.style.background = selectedGambaCase.background;
@@ -58,7 +58,7 @@ const initializeSelectedGambaCase = async (gId: number): Promise<void> => {
       if (gId !== heavenCase.gId) {
         //TODO: ensure this isnt cosmetic and actually make the cost be its old cost when switching to heaven
         pricelbl.innerHTML = `Price to spin: ${selectedGambaCase.cost}`;
-        allUseGlobals.cachedID = selectedGambaCase.gId;
+        internalSharedGlobals.cachedID = selectedGambaCase.gId;
       }
     } else {
       body.style.background = "#bbbbbb";
@@ -76,8 +76,8 @@ const initializeSelectedGambaCase = async (gId: number): Promise<void> => {
       purchaseBtn.classList.add("outInFadeName");
 
       purchaseBtn.disabled = true;
-      changeLeft.disabled = true;
-      changeRight.disabled = true;
+      uiSharedGlobals.changeLeft.disabled = true;
+      uiSharedGlobals.changeRight.disabled = true;
 
       setTimeout(() => {
         namelbl.innerHTML = selectedGambaCase.name;
@@ -86,9 +86,9 @@ const initializeSelectedGambaCase = async (gId: number): Promise<void> => {
       setTimeout(() => {
         namelbl.classList.remove("outInFadeName");
         purchaseBtn.classList.remove("outInFadeName");
-        changeLeft.disabled = false;
+        uiSharedGlobals.changeLeft.disabled = false;
         purchaseBtn.disabled = false;
-        changeRight.disabled = false;
+        uiSharedGlobals.changeRight.disabled = false;
       }, 1000);
     } else {
       console.warn(`No Gamba Case found with gId: ${gId}`);
@@ -139,7 +139,7 @@ const updateVersionDisplay = () => {
     "versionIdentifier"
   ) as HTMLHeadingElement;
 
-  identifier.innerHTML = `LazGamba Version: ${versionNumber}`;
+  identifier.innerHTML = `LazGamba Version: ${config.versionNumber}`;
 };
 
 updateVersionDisplay();
