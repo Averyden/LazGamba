@@ -53,11 +53,6 @@ const saveUnlocked = (caseIds: any): void => {
   localStorage.setItem(btoa("unlockedCases"), btoa(JSON.stringify(caseIds)));
 };
 
-const isGambaUnlocked = (gId: number): boolean => {
-  const unlockedCases = fetchUnlockedCases();
-  return unlockedCases.includes(gId);
-};
-
 const handlePurchaseCase = (id: number): void => {
   if (selectedGambaCase.gId === id) {
     const unlockedCases = fetchUnlockedCases();
@@ -84,4 +79,9 @@ const handlePurchaseCase = (id: number): void => {
       return;
     }
   }
+};
+
+export const isGambaUnlocked = (gId: number): boolean => {
+  const unlockedCases = fetchUnlockedCases();
+  return unlockedCases.includes(gId);
 };
