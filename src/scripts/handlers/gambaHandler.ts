@@ -1,3 +1,21 @@
+import {
+  internalSharedGlobals,
+  uiSharedGlobals,
+  dictionaries,
+  images,
+} from "../important/globals";
+
+let selectedGambaCase = internalSharedGlobals.selectedGambaCase;
+let caseID = internalSharedGlobals.caseID;
+const popup = internalSharedGlobals.popup;
+
+const namelbl = uiSharedGlobals.namelbl;
+const purchaseBtn = uiSharedGlobals.purchaseBtn;
+const changeLeft = uiSharedGlobals.changeLeft;
+const changeRight = uiSharedGlobals.changeRight;
+
+const gambaMessages = dictionaries.gambaMessages;
+
 class GambaHandler {
   private pricePerGamba: number = 50;
   private jackpotNumber: number = 0;
@@ -67,7 +85,7 @@ class GambaHandler {
       hideCaseChangeButtons();
     } else if (this.heavenInjected === true && activeCase.gId === 9999) {
       this.heavenInjected = false;
-      initializeSelectedGambaCase(cachedID);
+      initializeSelectedGambaCase(internalSharedGlobals.cachedID);
       showCaseChangeButtons();
       namelbl.classList.remove("rainbow");
     }
@@ -123,7 +141,7 @@ class GambaHandler {
 
     setTimeout(() => {
       this.heavenInjected
-        ? (pricelbl.innerHTML = "Next spin is free!")
+        ? (uiSharedGlobals.pricelbl.innerHTML = "Next spin is free!")
         : ` Price to spin: ${selectedGambaCase.cost}`;
       gambaImg.classList.remove("spinningAnim");
 
@@ -146,12 +164,6 @@ class GambaHandler {
 }
 
 //* Get document elements
-const changeRight = document.getElementById(
-  "changeCaseRight"
-) as HTMLButtonElement;
-const changeLeft = document.getElementById(
-  "changeCaseleft"
-) as HTMLButtonElement;
 const gamba = document.getElementById("gambaBtn") as HTMLButtonElement;
 
 let handler: GambaHandler;
@@ -193,7 +205,7 @@ function handleChange(direction: string): void {
         changeLeft.style.transform = "translateY(10000%)";
       }
 
-      if (caseID < maxCases) {
+      if (caseID < internalSharedGlobals.maxCases) {
         changeRight.style.transform = "translateY(0%)";
       }
 
@@ -204,7 +216,7 @@ function handleChange(direction: string): void {
         changeLeft.style.transform = "translateY(0%)";
       }
 
-      if (caseID >= maxCases - 1) {
+      if (caseID >= internalSharedGlobals.maxCases - 1) {
         // we remove 1 from it because it doesnt actually update, woops
         changeRight.style.transform = "translateY(10000%)";
       }
@@ -248,13 +260,13 @@ function hideCaseChangeButtons(): void {
 }
 
 function showCaseChangeButtons(): void {
-  if (cachedID <= 0) {
+  if (internalSharedGlobals.cachedID <= 0) {
     changeLeft.style.transform = "translateY(10000%)";
   } else {
     changeLeft.style.transform = "translateY(0%)";
   }
 
-  if (cachedID >= maxCases - 1) {
+  if (internalSharedGlobals.cachedID >= internalSharedGlobals.maxCases - 1) {
     changeRight.style.transform = "translateY(10000%)";
   } else {
     changeRight.style.transform = "translateY(0%)";
