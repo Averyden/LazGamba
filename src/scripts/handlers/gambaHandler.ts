@@ -7,8 +7,6 @@ import {
 } from "../important/globals";
 import { initializeSelectedGambaCase } from "../important/init";
 
-let selectedGambaCase = internalSharedGlobals.selectedGambaCase;
-let caseID = internalSharedGlobals.caseID;
 const popup = internalSharedGlobals.popup;
 
 const namelbl = uiSharedGlobals.namelbl;
@@ -28,11 +26,11 @@ export class GambaHandler {
   private heavenInjected: boolean = false;
 
   constructor() {
-    if (!selectedGambaCase) {
+    if (!internalSharedGlobals.selectedGambaCase) {
       console.warn("selectedGambaCase is not yet defined, using default case.");
       this.updateCase({ gId: -1, cost: 50, winMult: 2, rate: 10 });
     } else {
-      this.updateCase(selectedGambaCase);
+      this.updateCase(internalSharedGlobals.selectedGambaCase);
     }
   }
 
@@ -144,7 +142,7 @@ export class GambaHandler {
     setTimeout(() => {
       this.heavenInjected
         ? (uiSharedGlobals.pricelbl.innerHTML = "Next spin is free!")
-        : ` Price to spin: ${selectedGambaCase.cost}`;
+        : ` Price to spin: ${internalSharedGlobals.selectedGambaCase.cost}`;
       gambaImg.classList.remove("spinningAnim");
 
       if (gambaWin) {
@@ -203,29 +201,29 @@ function getRanMessage(type: "win" | "loss"): string {
 function handleChange(direction: string): void {
   switch (direction) {
     case "left":
-      initializeSelectedGambaCase((caseID -= 1));
+      initializeSelectedGambaCase((internalSharedGlobals.caseID -= 1));
 
-      if (caseID <= 0) {
+      if (internalSharedGlobals.caseID <= 0) {
         changeLeft.style.transform = "translateY(10000%)";
       }
 
-      if (caseID < internalSharedGlobals.maxCases) {
+      if (internalSharedGlobals.caseID < internalSharedGlobals.maxCases) {
         changeRight.style.transform = "translateY(0%)";
       }
 
       break;
 
     case "right":
-      if (caseID <= 0) {
+      if (internalSharedGlobals.caseID <= 0) {
         changeLeft.style.transform = "translateY(0%)";
       }
 
-      if (caseID >= internalSharedGlobals.maxCases - 1) {
+      if (internalSharedGlobals.caseID >= internalSharedGlobals.maxCases - 1) {
         // we remove 1 from it because it doesnt actually update, woops
         changeRight.style.transform = "translateY(10000%)";
       }
 
-      initializeSelectedGambaCase((caseID += 1));
+      initializeSelectedGambaCase((internalSharedGlobals.caseID += 1));
 
       break;
     default:
@@ -236,7 +234,7 @@ function handleChange(direction: string): void {
       console.error("Invalid request sent to change");
       break;
   }
-  globalFunctions.updateButtonState(caseID);
+  globalFunctions.updateButtonState(internalSharedGlobals.caseID);
 }
 
 function hideCaseChangeButtons(): void {
