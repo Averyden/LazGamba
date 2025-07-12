@@ -18,6 +18,7 @@ export const uiSharedGlobals = {
   namelbl: document.getElementById("caseName") as HTMLHeadingElement,
   pricelbl: document.getElementById("gambaCost") as HTMLHeadingElement,
   gambaButton: document.getElementById("gambaBtn") as HTMLButtonElement,
+  lblCoins: document.getElementById("coinLabel") as HTMLDivElement,
 };
 
 export const images = [
@@ -53,8 +54,8 @@ export const globalFunctions = {
   },
 
   updateCoinDisplay: (): void => {
-    if (lblCoins) {
-      lblCoins.innerText = `L-coins: ${lCoins}`;
+    if (uiSharedGlobals.lblCoins) {
+      uiSharedGlobals.lblCoins.innerText = `L-coins: ${lCoins}`;
     }
   },
 };

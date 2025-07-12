@@ -128,8 +128,6 @@ const initializeHandler = async () => {
 
 initializeHandler();
 
-const lblCoins = document.getElementById("coinLabel") as HTMLDivElement;
-
 if (dailyBonus()) {
   console.log("Awarded daily bonus/reset");
   globalFunctions.updateCoinDisplay();
