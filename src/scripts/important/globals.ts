@@ -1,5 +1,7 @@
 //! Globals used in several files
 
+import { isGambaUnlocked } from "../handlers/casePurchaseHandler";
+
 export const internalSharedGlobals = {
   selectedGambaCase: null as any,
   gambaCases: [] as any[],
@@ -15,6 +17,7 @@ export const uiSharedGlobals = {
   purchaseBtn: document.getElementById("purchaseCaseBtn") as HTMLButtonElement,
   namelbl: document.getElementById("caseName") as HTMLHeadingElement,
   pricelbl: document.getElementById("gambaCost") as HTMLHeadingElement,
+  gambaButton: document.getElementById("gambaBtn") as HTMLButtonElement,
 };
 
 export const images = [
@@ -27,6 +30,27 @@ export const images = [
 
 export const dictionaries = {
   gambaMessages: {} as any,
+};
+
+export const globalFunctions = {
+  updateButtonState(gId: number): void {
+    const isUnlocked = isGambaUnlocked(gId);
+
+    if (isUnlocked) {
+      uiSharedGlobals.gambaButton.disabled = false;
+      uiSharedGlobals.gambaButton.style.opacity = "1";
+
+      setTimeout(() => {
+        uiSharedGlobals.purchaseBtn.style.transform = "translateY(10000%)";
+      }, 500);
+    } else {
+      uiSharedGlobals.gambaButton.disabled = true;
+      uiSharedGlobals.gambaButton.style.opacity = "0.5";
+      setTimeout(() => {
+        uiSharedGlobals.purchaseBtn.style.transform = "translateY(0%)";
+      }, 500);
+    }
+  },
 };
 
 // export let cachedSelectedCase: {
