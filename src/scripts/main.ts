@@ -1,3 +1,6 @@
+//TODO: find ut a way to get rid of my circular dependencies
+//todo: im too fucking tired to bother with this at this point
+
 import "./important/globals";
 
 import "./handlers/casePurchaseHandler";
