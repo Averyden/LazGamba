@@ -1,7 +1,4 @@
-import { Popup } from "../handlers/popupHandler";
-
-//! This is only here to serve as a shitty workaround to avoid circular dependencies
-const utilityPopup = new Popup("popupContainer");
+import { utilityPopup } from "./emergencyUtils";
 
 export const fetchUnlockedCases = (): number[] => {
   const rawData = localStorage.getItem(btoa("unlockedCases"));
