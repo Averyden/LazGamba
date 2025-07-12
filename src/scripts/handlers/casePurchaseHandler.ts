@@ -11,7 +11,7 @@ uiSharedGlobals.purchaseBtn.addEventListener("click", () =>
 
 const handlePurchaseCase = (id: number): void => {
   if (selectedGambaCase.gId === id) {
-    const unlockedCases = fetchUnlockedCases();
+    const unlockedCases = neededForInitialization.fetchUnlockedCases();
 
     if (unlockedCases.includes(id)) {
       popup.show(
@@ -26,7 +26,7 @@ const handlePurchaseCase = (id: number): void => {
       unlockedCases.push(id);
       console.log(`Unlocking case: ${id}, ${selectedGambaCase.name}...`);
 
-      saveUnlocked(unlockedCases);
+      neededForInitialization.saveUnlocked(unlockedCases);
       updateButtonState(id);
       initializeSelectedGambaCase(id);
       updateCoinDisplay();
@@ -37,50 +37,53 @@ const handlePurchaseCase = (id: number): void => {
   }
 };
 
-export const fetchUnlockedCases = (): number[] => {
-  const rawData = localStorage.getItem(btoa("unlockedCases"));
+export const neededForInitialization = {
+  saveUnlocked: (caseIds: any): void => {
+    localStorage.setItem(btoa("unlockedCases"), btoa(JSON.stringify(caseIds)));
+  },
 
-  let unlockedCases: number[] = [];
-  if (rawData) {
-    try {
-      const parsedData64 = atob(rawData);
-      const parsedData = JSON.parse(parsedData64);
-      if (Array.isArray(parsedData)) {
-        unlockedCases = parsedData;
-      } else if (typeof parsedData === "object" && parsedData !== null) {
-        unlockedCases = [parsedData.gId];
-      } else {
+  fetchUnlockedCases: (): number[] => {
+    const rawData = localStorage.getItem(btoa("unlockedCases"));
+
+    let unlockedCases: number[] = [];
+    if (rawData) {
+      try {
+        const parsedData64 = atob(rawData);
+        const parsedData = JSON.parse(parsedData64);
+        if (Array.isArray(parsedData)) {
+          unlockedCases = parsedData;
+        } else if (typeof parsedData === "object" && parsedData !== null) {
+          unlockedCases = [parsedData.gId];
+        } else {
+          popup.show(
+            "error",
+            `Unexpected data format in unlockedCases: ${parsedData}<br>(error ${popup.errorCodes["unexpectedFormat"]})`
+          );
+          console.error("Unexpected data format in unlockedCases:", parsedData);
+        }
+      } catch (err) {
         popup.show(
           "error",
-          `Unexpected data format in unlockedCases: ${parsedData}<br>(error ${popup.errorCodes["unexpectedFormat"]})`
+          `Failed to parse unlockedCases: ${err} <br>(error ${popup.errorCodes["parseUnlockedFailed"]})`
         );
-        console.error("Unexpected data format in unlockedCases:", parsedData);
+        console.error("Failed to parse unlockedCases:", err);
       }
-    } catch (err) {
-      popup.show(
-        "error",
-        `Failed to parse unlockedCases: ${err} <br>(error ${popup.errorCodes["parseUnlockedFailed"]})`
-      );
-      console.error("Failed to parse unlockedCases:", err);
     }
-  }
 
-  if (!unlockedCases.includes(0)) {
-    unlockedCases.push(0);
-    unlockedCases.push(9999);
-    saveUnlocked(unlockedCases);
-  } else if (!unlockedCases.includes(9999)) {
-    unlockedCases.push(9999);
-    saveUnlocked(unlockedCases);
-  }
+    if (!unlockedCases.includes(0)) {
+      unlockedCases.push(0);
+      unlockedCases.push(9999);
+      neededForInitialization.saveUnlocked(unlockedCases);
+    } else if (!unlockedCases.includes(9999)) {
+      unlockedCases.push(9999);
+      neededForInitialization.saveUnlocked(unlockedCases);
+    }
 
-  return unlockedCases;
+    return unlockedCases;
+  },
 };
 
-export const saveUnlocked = (caseIds: any): void => {
-  localStorage.setItem(btoa("unlockedCases"), btoa(JSON.stringify(caseIds)));
-};
 export const isGambaUnlocked = (gId: number): boolean => {
-  const unlockedCases = fetchUnlockedCases();
+  const unlockedCases = neededForInitialization.fetchUnlockedCases();
   return unlockedCases.includes(gId);
 };
