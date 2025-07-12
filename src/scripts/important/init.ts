@@ -4,6 +4,7 @@ import { versionNumber } from "./config";
 import { allUseGlobals, initializingGlobals } from "./globals";
 
 let selectedGambaCase = allUseGlobals.selectedGambaCase;
+let gambaCases = allUseGlobals.gambaCases;
 const popup = allUseGlobals.popup;
 
 initCoins();
@@ -45,14 +46,12 @@ const initializeSelectedGambaCase = async (gId: number): Promise<void> => {
     const response = await fetch("src/dictionaries/gambaSelection.json");
     const jsonData = await response.json();
 
-    allUseGlobals.gambaCases = jsonData.gambaCases;
-    initializingGlobals.heavenCase = allUseGlobals.gambaCases.find(
+    gambaCases = jsonData.gambaCases;
+    initializingGlobals.heavenCase = gambaCases.find(
       (gCase: any) => gCase.gId === 9999
     );
 
-    selectedGambaCase = allUseGlobals.gambaCases.find(
-      (gCase: any) => gCase.gId === gId
-    );
+    selectedGambaCase = gambaCases.find((gCase: any) => gCase.gId === gId);
     allUseGlobals.caseID = gId; // YES WE ARE SETTING IT TWICE BUT WHO CARES GRAAAAAAAAAA IM TOO LAZY TO FIGURE SOMETHING ELSE OUT.
 
     if (isGambaUnlocked(gId)) {
