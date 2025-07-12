@@ -4,6 +4,7 @@ import {
   isGambaUnlocked,
   neededForInitialization,
 } from "../handlers/casePurchaseHandler";
+import { initCoins, dailyBonus } from "../handlers/currencyHandler";
 import { GambaHandler } from "../handlers/gambaHandler";
 
 import { config } from "./config";

@@ -6,6 +6,7 @@ import {
   globalFunctions,
 } from "../important/globals";
 import { initializeSelectedGambaCase } from "../important/init";
+import { adjustCoins } from "./currencyHandler";
 
 let selectedGambaCase = internalSharedGlobals.selectedGambaCase;
 const popup = internalSharedGlobals.popup;

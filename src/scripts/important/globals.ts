@@ -10,6 +10,7 @@ export const internalSharedGlobals = {
   cachedID: 0 as number,
   popup: new Popup("popupContainer"),
   maxCases: 14 as number, //TODO: Make this dynamic INSTEAD of hard-coded
+  lCoins: 300 as number,
 };
 
 export const uiSharedGlobals = {
@@ -56,7 +57,7 @@ export const globalFunctions = {
 
   updateCoinDisplay: (): void => {
     if (uiSharedGlobals.lblCoins) {
-      uiSharedGlobals.lblCoins.innerText = `L-coins: ${lCoins}`;
+      uiSharedGlobals.lblCoins.innerText = `L-coins: ${internalSharedGlobals.lCoins}`;
     }
   },
 

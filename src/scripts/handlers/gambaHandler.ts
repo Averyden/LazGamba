@@ -5,13 +5,14 @@ import {
   images,
   globalFunctions,
 } from "../important/globals";
+
 import { initializeSelectedGambaCase } from "../important/init";
+import { adjustCoins } from "./currencyHandler";
 import { maybeInjectHeavenlyCase } from "./rareOccurancesHandler";
 
 const popup = internalSharedGlobals.popup;
 
 const namelbl = uiSharedGlobals.namelbl;
-const purchaseBtn = uiSharedGlobals.purchaseBtn;
 const changeLeft = uiSharedGlobals.changeLeft;
 const changeRight = uiSharedGlobals.changeRight;
 
