@@ -1,6 +1,5 @@
 //! Globals used in several files
-
-import { isGambaUnlocked } from "../handlers/casePurchaseHandler";
+import { isGambaUnlocked } from "../utils/unlockUtils";
 import { Popup } from "../handlers/popupHandler";
 
 export const internalSharedGlobals = {
