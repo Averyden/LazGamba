@@ -1,5 +1,4 @@
 //! Rewrite of the notesu popup logic because that fucking sucked
-import { internalSharedGlobals } from "../important/globals";
 
 //? Maybe convert to an enum instead?
 type promptTypes = "caseInfo" | "error";
@@ -68,7 +67,11 @@ export class Popup {
     baseJSONError: "4x2467",
   };
 
-  public show(type: promptTypes, message: string = "No message provided.") {
+  public show(
+    type: promptTypes,
+    message: string = "No message provided.",
+    extraData?: any
+  ) {
     let config = this.config[type];
     if (!config) {
       const errCode = this.errorCodes["unknownType"];
@@ -85,8 +88,8 @@ export class Popup {
     this.messageElement.innerHTML = message;
     this.confirmButton.textContent = config.confirmText;
 
-    if (config === this.config["caseInfo"]) {
-      this.titleElement.textContent = `Info for: ${internalSharedGlobals.selectedGambaCase.name}`;
+    if (config === this.config["caseInfo"] && extraData?.name) {
+      this.titleElement.textContent = `Info for: ${extraData.name}`;
     }
 
     const newConfirmButton = this.confirmButton.cloneNode(
