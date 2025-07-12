@@ -1,24 +1,13 @@
 // This may seem redundant, but this is just initializing stuff for the site, like setting currency and such.
 // This is only so that the handlers dont get cluttered with useless stuff
 import { versionNumber } from "./config";
+import { allUseGlobals, initializingGlobals } from "./globals";
 
 initCoins();
 const bah = fetchUnlockedCases();
 saveUnlocked(bah);
 
 const maxCases = 14; //TODO: Make this dynamic INSTEAD of hard-coded
-
-let gambaCases: any[] = [];
-let heavenCase: any;
-let cachedID: number;
-
-const popup = new Popup("popupContainer");
-
-let cachedSelectedCase: { gId: number; price: number; name: string } | null =
-  null;
-
-let selectedGambaCase: any = null;
-let caseID: number = 0;
 
 const body = document.body;
 body.style.transition = "background-color 1s ease";
@@ -28,23 +17,23 @@ const namelbl = document.getElementById("caseName") as HTMLHeadingElement;
 const infoButton = document.getElementById("caseTip") as HTMLButtonElement;
 
 infoButton.addEventListener("click", () => {
-  popup.show("caseInfo", sendCaseInfoMessage());
+  allUseGlobals.popup.show("caseInfo", sendCaseInfoMessage());
 });
 
 const sendCaseInfoMessage = (): string => {
   let curCaseUnlockedVar;
 
-  if (isGambaUnlocked(selectedGambaCase.gId)) {
+  if (isGambaUnlocked(allUseGlobals.selectedGambaCase.gId)) {
     curCaseUnlockedVar = true;
   } else {
     curCaseUnlockedVar = false;
   }
 
   return `
-    Internal id: ${selectedGambaCase.gId}<br>
-    Price per spin: ${selectedGambaCase.cost}<br>
-    Return multiplier: ${selectedGambaCase.winMult}<br>
-    Jackpot rate: 1/${selectedGambaCase.rate}<br>
+    Internal id: ${allUseGlobals.selectedGambaCase.gId}<br>
+    Price per spin: ${allUseGlobals.selectedGambaCase.cost}<br>
+    Return multiplier: ${allUseGlobals.selectedGambaCase.winMult}<br>
+    Jackpot rate: 1/${allUseGlobals.selectedGambaCase.rate}<br>
     Unlocked: ${curCaseUnlockedVar}`;
 };
 
@@ -53,19 +42,23 @@ const initializeSelectedGambaCase = async (gId: number): Promise<void> => {
     const response = await fetch("src/dictionaries/gambaSelection.json");
     const jsonData = await response.json();
 
-    gambaCases = jsonData.gambaCases;
-    heavenCase = gambaCases.find((gCase: any) => gCase.gId === 9999);
+    allUseGlobals.gambaCases = jsonData.gambaCases;
+    initializingGlobals.heavenCase = allUseGlobals.gambaCases.find(
+      (gCase: any) => gCase.gId === 9999
+    );
 
-    selectedGambaCase = gambaCases.find((gCase: any) => gCase.gId === gId);
-    caseID = gId; // YES WE ARE SETTING IT TWICE BUT WHO CARES GRAAAAAAAAAA IM TOO LAZY TO FIGURE SOMETHING ELSE OUT.
+    allUseGlobals.selectedGambaCase = allUseGlobals.gambaCases.find(
+      (gCase: any) => gCase.gId === gId
+    );
+    allUseGlobals.caseID = gId; // YES WE ARE SETTING IT TWICE BUT WHO CARES GRAAAAAAAAAA IM TOO LAZY TO FIGURE SOMETHING ELSE OUT.
 
     if (isGambaUnlocked(gId)) {
-      body.style.background = selectedGambaCase.background;
+      body.style.background = allUseGlobals.selectedGambaCase.background;
       body.style.filter = "";
-      if (gId !== heavenCase.gId) {
+      if (gId !== initializingGlobals.heavenCase.gId) {
         //TODO: ensure this isnt cosmetic and actually make the cost be its old cost when switching to heaven
-        pricelbl.innerHTML = `Price to spin: ${selectedGambaCase.cost}`;
-        cachedID = selectedGambaCase.gId;
+        pricelbl.innerHTML = `Price to spin: ${allUseGlobals.selectedGambaCase.cost}`;
+        allUseGlobals.cachedID = allUseGlobals.selectedGambaCase.gId;
       }
     } else {
       body.style.background = "#bbbbbb";
