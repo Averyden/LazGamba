@@ -1,18 +1,18 @@
 // This may seem redundant, but this is just initializing stuff for the site, like setting currency and such.
 // This is only so that the handlers dont get cluttered with useless stuff
 import { versionNumber } from "./config";
-import { allUseGlobals, initializingGlobals } from "./globals";
+import { allUseGlobals } from "./globals";
 
 let selectedGambaCase = allUseGlobals.selectedGambaCase;
 let gambaCases = allUseGlobals.gambaCases;
 const popup = allUseGlobals.popup;
+let heavenCase: any;
 
 initCoins();
 const bah = fetchUnlockedCases();
 saveUnlocked(bah);
 
 const maxCases = 14; //TODO: Make this dynamic INSTEAD of hard-coded
-
 const body = document.body;
 body.style.transition = "background-color 1s ease";
 const pricelbl = document.getElementById("gambaCost") as HTMLHeadingElement;
@@ -47,9 +47,7 @@ const initializeSelectedGambaCase = async (gId: number): Promise<void> => {
     const jsonData = await response.json();
 
     gambaCases = jsonData.gambaCases;
-    initializingGlobals.heavenCase = gambaCases.find(
-      (gCase: any) => gCase.gId === 9999
-    );
+    heavenCase = gambaCases.find((gCase: any) => gCase.gId === 9999);
 
     selectedGambaCase = gambaCases.find((gCase: any) => gCase.gId === gId);
     allUseGlobals.caseID = gId; // YES WE ARE SETTING IT TWICE BUT WHO CARES GRAAAAAAAAAA IM TOO LAZY TO FIGURE SOMETHING ELSE OUT.
@@ -57,7 +55,7 @@ const initializeSelectedGambaCase = async (gId: number): Promise<void> => {
     if (isGambaUnlocked(gId)) {
       body.style.background = selectedGambaCase.background;
       body.style.filter = "";
-      if (gId !== initializingGlobals.heavenCase.gId) {
+      if (gId !== heavenCase.gId) {
         //TODO: ensure this isnt cosmetic and actually make the cost be its old cost when switching to heaven
         pricelbl.innerHTML = `Price to spin: ${selectedGambaCase.cost}`;
         allUseGlobals.cachedID = selectedGambaCase.gId;
