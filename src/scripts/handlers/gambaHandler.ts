@@ -10,8 +10,6 @@ import { initializeSelectedGambaCase } from "../important/init";
 import { adjustCoins } from "./currencyHandler";
 import { maybeInjectHeavenlyCase } from "./rareOccurancesHandler";
 
-// const gambaMessages = dictionaries.gambaMessages;
-
 export class GambaHandler {
   private pricePerGamba: number = 50;
   private jackpotNumber: number = 0;

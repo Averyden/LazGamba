@@ -8,29 +8,28 @@ import {
 import { initializeSelectedGambaCase } from "../important/init";
 import { adjustCoins } from "./currencyHandler";
 
-let selectedGambaCase = internalSharedGlobals.selectedGambaCase;
-const popup = internalSharedGlobals.popup;
-
 uiSharedGlobals.purchaseBtn.addEventListener("click", () =>
-  handlePurchaseCase(selectedGambaCase.gId)
+  handlePurchaseCase(internalSharedGlobals.selectedGambaCase.gId)
 );
 
 const handlePurchaseCase = (id: number): void => {
-  if (selectedGambaCase.gId === id) {
+  if (internalSharedGlobals.selectedGambaCase.gId === id) {
     const unlockedCases = neededForInitialization.fetchUnlockedCases();
 
     if (unlockedCases.includes(id)) {
-      popup.show(
+      internalSharedGlobals.popup.show(
         "error",
-        `Attempting to purchase case, which is already unlocked. <br>(error ${popup.errorCodes["purchasingUnlockedCase"]})`
+        `Attempting to purchase case, which is already unlocked. <br>(error ${internalSharedGlobals.popup.errorCodes["purchasingUnlockedCase"]})`
       );
       console.error("why are we trying to purchase this case?");
       return;
     }
 
-    if (adjustCoins(-selectedGambaCase.price)) {
+    if (adjustCoins(-internalSharedGlobals.selectedGambaCase.price)) {
       unlockedCases.push(id);
-      console.log(`Unlocking case: ${id}, ${selectedGambaCase.name}...`);
+      console.log(
+        `Unlocking case: ${id}, ${internalSharedGlobals.selectedGambaCase.name}...`
+      );
 
       neededForInitialization.saveUnlocked(unlockedCases);
       globalFunctions.updateButtonState(id);
@@ -61,16 +60,16 @@ export const neededForInitialization = {
         } else if (typeof parsedData === "object" && parsedData !== null) {
           unlockedCases = [parsedData.gId];
         } else {
-          popup.show(
+          internalSharedGlobals.popup.show(
             "error",
-            `Unexpected data format in unlockedCases: ${parsedData}<br>(error ${popup.errorCodes["unexpectedFormat"]})`
+            `Unexpected data format in unlockedCases: ${parsedData}<br>(error ${internalSharedGlobals.popup.errorCodes["unexpectedFormat"]})`
           );
           console.error("Unexpected data format in unlockedCases:", parsedData);
         }
       } catch (err) {
-        popup.show(
+        internalSharedGlobals.popup.show(
           "error",
-          `Failed to parse unlockedCases: ${err} <br>(error ${popup.errorCodes["parseUnlockedFailed"]})`
+          `Failed to parse unlockedCases: ${err} <br>(error ${internalSharedGlobals.popup.errorCodes["parseUnlockedFailed"]})`
         );
         console.error("Failed to parse unlockedCases:", err);
       }
