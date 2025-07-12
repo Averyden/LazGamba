@@ -2,8 +2,9 @@
 // This is only so that the handlers dont get cluttered with useless stuff
 import {
   isGambaUnlocked,
-  neededForInitialization,
-} from "../handlers/casePurchaseHandler";
+  fetchUnlockedCases,
+  saveUnlocked,
+} from "../utils/unlockUtils";
 import { initCoins, dailyBonus } from "../handlers/currencyHandler";
 import { GambaHandler } from "../handlers/gambaHandler";
 
@@ -18,8 +19,8 @@ import {
 let heavenCase: any;
 
 initCoins();
-const bah = neededForInitialization.fetchUnlockedCases();
-neededForInitialization.saveUnlocked(bah);
+const bah = fetchUnlockedCases();
+saveUnlocked(bah);
 
 const body = document.body;
 body.style.transition = "background-color 1s ease";
