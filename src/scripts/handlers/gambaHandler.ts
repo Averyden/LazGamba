@@ -3,6 +3,7 @@ import {
   uiSharedGlobals,
   dictionaries,
   images,
+  globalFunctions,
 } from "../important/globals";
 
 let selectedGambaCase = internalSharedGlobals.selectedGambaCase;
@@ -14,7 +15,7 @@ const purchaseBtn = uiSharedGlobals.purchaseBtn;
 const changeLeft = uiSharedGlobals.changeLeft;
 const changeRight = uiSharedGlobals.changeRight;
 
-const gambaMessages = dictionaries.gambaMessages;
+// const gambaMessages = dictionaries.gambaMessages;
 
 class GambaHandler {
   private pricePerGamba: number = 50;
@@ -99,7 +100,7 @@ class GambaHandler {
 
     let chance = 0;
 
-    updateCoinDisplay();
+    globalFunctions.updateCoinDisplay();
 
     gambaStatus.classList.remove("disappear");
     gambaStatus.innerHTML = "";
@@ -123,7 +124,7 @@ class GambaHandler {
     const dynamicRange = Array.from({ length: clampedLength }, (_, i) => i);
     const gambaWin = dynamicRange.includes(chance);
 
-    if (Object.keys(gambaMessages).length === 0) {
+    if (Object.keys(dictionaries.gambaMessages).length === 0) {
       await loadGambaMessages();
     }
 
@@ -148,7 +149,7 @@ class GambaHandler {
       if (gambaWin) {
         gambaStatus.innerHTML = getRanMessage("win");
         adjustCoins(activeCase.cost * activeCase.winMult);
-        updateCoinDisplay();
+        globalFunctions.updateCoinDisplay();
       } else {
         gambaStatus.innerHTML = getRanMessage("loss");
       }
@@ -186,12 +187,14 @@ changeRight.addEventListener("click", () => handleChange("right"));
 let finalMessageTimeout: number | undefined;
 
 function getRanMessage(type: "win" | "loss"): string {
-  if (!gambaMessages[type === "win" ? "winMessages" : "lossMessages"]) {
+  if (
+    !dictionaries.gambaMessages[type === "win" ? "winMessages" : "lossMessages"]
+  ) {
     return "Message not available.";
   }
 
   const filteredMessage =
-    gambaMessages[type === "win" ? "winMessages" : "lossMessages"];
+    dictionaries.gambaMessages[type === "win" ? "winMessages" : "lossMessages"];
   const randomIndex = Math.floor(Math.random() * filteredMessage.length);
   return filteredMessage[randomIndex].message;
 }
@@ -232,7 +235,7 @@ function handleChange(direction: string): void {
       console.error("Invalid request sent to change");
       break;
   }
-  updateButtonState(caseID);
+  globalFunctions.updateButtonState(caseID);
 }
 
 function hideCaseChangeButtons(): void {

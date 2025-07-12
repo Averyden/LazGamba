@@ -1,10 +1,17 @@
 // This may seem redundant, but this is just initializing stuff for the site, like setting currency and such.
 // This is only so that the handlers dont get cluttered with useless stuff
+import {
+  isGambaUnlocked,
+  neededForInitialization,
+} from "../handlers/casePurchaseHandler";
+
 import { config } from "./config";
+
 import {
   internalSharedGlobals,
   uiSharedGlobals,
   dictionaries,
+  globalFunctions,
 } from "./globals";
 
 let selectedGambaCase = internalSharedGlobals.selectedGambaCase;
@@ -13,8 +20,8 @@ const popup = internalSharedGlobals.popup;
 let heavenCase: any;
 
 initCoins();
-const bah = fetchUnlockedCases();
-saveUnlocked(bah);
+const bah = neededForInitialization.fetchUnlockedCases();
+neededForInitialization.saveUnlocked(bah);
 
 const body = document.body;
 body.style.transition = "background-color 1s ease";
@@ -123,20 +130,14 @@ initializeHandler();
 
 const lblCoins = document.getElementById("coinLabel") as HTMLDivElement;
 
-const updateCoinDisplay = (): void => {
-  if (lblCoins) {
-    lblCoins.innerText = `L-coins: ${lCoins}`;
-  }
-};
-
 if (dailyBonus()) {
   console.log("Awarded daily bonus/reset");
-  updateCoinDisplay();
+  globalFunctions.updateCoinDisplay();
 } else {
   console.log("Daily bonus/reset is already claimed.");
 }
 
-updateCoinDisplay();
+globalFunctions.updateCoinDisplay();
 
 const updateVersionDisplay = () => {
   const identifier = document.getElementById(

@@ -33,7 +33,7 @@ const handlePurchaseCase = (id: number): void => {
       neededForInitialization.saveUnlocked(unlockedCases);
       globalFunctions.updateButtonState(id);
       initializeSelectedGambaCase(id);
-      updateCoinDisplay();
+      globalFunctions.updateCoinDisplay();
     } else {
       console.error("User cannot afford case...");
       return;
