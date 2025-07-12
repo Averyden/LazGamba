@@ -3,6 +3,9 @@
 import { versionNumber } from "./config";
 import { allUseGlobals, initializingGlobals } from "./globals";
 
+let selectedGambaCase = allUseGlobals.selectedGambaCase;
+const popup = allUseGlobals.popup;
+
 initCoins();
 const bah = fetchUnlockedCases();
 saveUnlocked(bah);
@@ -17,23 +20,23 @@ const namelbl = document.getElementById("caseName") as HTMLHeadingElement;
 const infoButton = document.getElementById("caseTip") as HTMLButtonElement;
 
 infoButton.addEventListener("click", () => {
-  allUseGlobals.popup.show("caseInfo", sendCaseInfoMessage());
+  popup.show("caseInfo", sendCaseInfoMessage());
 });
 
 const sendCaseInfoMessage = (): string => {
   let curCaseUnlockedVar;
 
-  if (isGambaUnlocked(allUseGlobals.selectedGambaCase.gId)) {
+  if (isGambaUnlocked(selectedGambaCase.gId)) {
     curCaseUnlockedVar = true;
   } else {
     curCaseUnlockedVar = false;
   }
 
   return `
-    Internal id: ${allUseGlobals.selectedGambaCase.gId}<br>
-    Price per spin: ${allUseGlobals.selectedGambaCase.cost}<br>
-    Return multiplier: ${allUseGlobals.selectedGambaCase.winMult}<br>
-    Jackpot rate: 1/${allUseGlobals.selectedGambaCase.rate}<br>
+    Internal id: ${selectedGambaCase.gId}<br>
+    Price per spin: ${selectedGambaCase.cost}<br>
+    Return multiplier: ${selectedGambaCase.winMult}<br>
+    Jackpot rate: 1/${selectedGambaCase.rate}<br>
     Unlocked: ${curCaseUnlockedVar}`;
 };
 
@@ -47,18 +50,18 @@ const initializeSelectedGambaCase = async (gId: number): Promise<void> => {
       (gCase: any) => gCase.gId === 9999
     );
 
-    allUseGlobals.selectedGambaCase = allUseGlobals.gambaCases.find(
+    selectedGambaCase = allUseGlobals.gambaCases.find(
       (gCase: any) => gCase.gId === gId
     );
     allUseGlobals.caseID = gId; // YES WE ARE SETTING IT TWICE BUT WHO CARES GRAAAAAAAAAA IM TOO LAZY TO FIGURE SOMETHING ELSE OUT.
 
     if (isGambaUnlocked(gId)) {
-      body.style.background = allUseGlobals.selectedGambaCase.background;
+      body.style.background = selectedGambaCase.background;
       body.style.filter = "";
       if (gId !== initializingGlobals.heavenCase.gId) {
         //TODO: ensure this isnt cosmetic and actually make the cost be its old cost when switching to heaven
-        pricelbl.innerHTML = `Price to spin: ${allUseGlobals.selectedGambaCase.cost}`;
-        allUseGlobals.cachedID = allUseGlobals.selectedGambaCase.gId;
+        pricelbl.innerHTML = `Price to spin: ${selectedGambaCase.cost}`;
+        allUseGlobals.cachedID = selectedGambaCase.gId;
       }
     } else {
       body.style.background = "#bbbbbb";
