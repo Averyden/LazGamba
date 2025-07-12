@@ -6,6 +6,7 @@ import {
   globalFunctions,
 } from "../important/globals";
 import { initializeSelectedGambaCase } from "../important/init";
+import { maybeInjectHeavenlyCase } from "./rareOccurancesHandler";
 
 const popup = internalSharedGlobals.popup;
 
