@@ -11,6 +11,7 @@ export const internalSharedGlobals = {
 export const uiSharedGlobals = {
   changeRight: document.getElementById("changeCaseRight") as HTMLButtonElement,
   changeLeft: document.getElementById("changeCaseleft") as HTMLButtonElement,
+  purchaseBtn: document.getElementById("purchaseCaseBtn") as HTMLButtonElement,
 };
 
 // export let cachedSelectedCase: {
