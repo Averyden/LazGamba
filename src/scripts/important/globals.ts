@@ -1,6 +1,6 @@
 //! Globals used in several files
 
-export const allUseGlobals = {
+export const internalSharedGlobals = {
   selectedGambaCase: null as any,
   gambaCases: [] as any[],
   caseID: 0 as number,
@@ -8,8 +8,9 @@ export const allUseGlobals = {
   popup: new Popup("popupContainer"),
 };
 
-export const initializingGlobals = {
-  heavenCase: null as any,
+export const uiSharedGlobals = {
+  changeRight: document.getElementById("changeCaseRight") as HTMLButtonElement,
+  changeLeft: document.getElementById("changeCaseleft") as HTMLButtonElement,
 };
 
 // export let cachedSelectedCase: {
