@@ -1,16 +1,19 @@
 //! Globals used in several files
 
-export let gambaCases: any[] = [];
-export let heavenCase: any;
-export let cachedID: number;
+export const allUseGlobals = {
+  selectedGambaCase: null as any,
+  gambaCases: [] as any[],
+  caseID: 0 as number,
+  cachedID: 0 as number,
+  popup: new Popup("popupContainer"),
+};
 
-export let cachedSelectedCase: {
-  gId: number;
-  price: number;
-  name: string;
-} | null = null;
+export const initializingGlobals = {
+  heavenCase: null as any,
+};
 
-export let selectedGambaCase: any = null;
-export let caseID: number = 0;
-
-export const popup = new Popup("popupContainer");
+// export let cachedSelectedCase: {
+//   gId: number;
+//   price: number;
+//   name: string;
+// } | null = null;
