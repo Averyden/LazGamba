@@ -58,6 +58,24 @@ export const globalFunctions = {
       uiSharedGlobals.lblCoins.innerText = `L-coins: ${lCoins}`;
     }
   },
+
+  loadGambaMessages: async () => {
+    try {
+      const response = await fetch(
+        "src/dictionaries/mainGambaDictionaries.json"
+      );
+      const text = await response.text();
+      console.log("Raw Response:", text);
+      dictionaries.gambaMessages = JSON.parse(text);
+      console.log("Parsed Messages:", dictionaries.gambaMessages);
+    } catch (error) {
+      internalSharedGlobals.popup.show(
+        "error",
+        `Error loading or parsing JSON: ${error} <br>(error ${internalSharedGlobals.popup.errorCodes["baseJSONError"]})`
+      );
+      console.error("Error loading or parsing JSON:", error);
+    }
+  },
 };
 
 // export let cachedSelectedCase: {
