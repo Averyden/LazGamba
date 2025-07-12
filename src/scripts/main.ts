@@ -1,9 +1,9 @@
 import "./handlers/casePurchaseHandler";
 import "./handlers/currencyHandler";
-import "./handlers/dailyResetHandlerandler";
+import "./handlers/dailyResetHandler";
 import "./handlers/gambaHandler";
 import "./handlers/popupHandler";
-import "./handlers/rareOccurancesHandlerHandler";
+import "./handlers/rareOccurancesHandler";
 
 import "./helpers/rainbowHelper";
 
