@@ -9,6 +9,7 @@ import {
 import { initializeSelectedGambaCase } from "../important/init";
 import { adjustCoins } from "./currencyHandler";
 import { maybeInjectHeavenlyCase } from "./rareOccurancesHandler";
+import "../utils/gambaHandlerUtils";
 
 export class GambaHandler {
   private pricePerGamba: number = 50;
