@@ -89,9 +89,6 @@ const sendCaseInfoMessage = (): string => {
 
 export const initializeSelectedGambaCase = async (gId: number) => {
   try {
-    // const response = await fetch("src/dictionaries/gambaSelection.json");
-    // const jsonData = await response.json();
-
     internalSharedGlobals.gambaCases = (await fetchJsonData()) as IGambaCase[];
     heavenCase = internalSharedGlobals.gambaCases.find(
       (gCase: any) => gCase.gId === 9999
@@ -99,7 +96,7 @@ export const initializeSelectedGambaCase = async (gId: number) => {
 
     internalSharedGlobals.selectedGambaCase =
       internalSharedGlobals.gambaCases.find((gCase: any) => gCase.gId === gId);
-    internalSharedGlobals.caseID = gId; // YES WE ARE SETTING IT TWICE BUT WHO CARES GRAAAAAAAAAA IM TOO LAZY TO FIGURE SOMETHING ELSE OUT.
+    internalSharedGlobals.caseID = gId;
 
     if (isGambaUnlocked(gId)) {
       body.style.background =
@@ -148,7 +145,6 @@ export const initializeSelectedGambaCase = async (gId: number) => {
       console.warn(`No Gamba Case found with gId: ${gId}`);
     }
   } catch (error) {
-    // popup.show("error", `Error loading or parsing gambaSelection.json: ${error} <br>(error ${popup.errorCodes["gambaSelectErrorParse"]})`)
     console.error("Error loading or parsing gambaSelection.json:", error);
   }
 };
