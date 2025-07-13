@@ -18,15 +18,18 @@ gambaButton.addEventListener("click", () => {
   handler.handleGambaCalc();
 });
 
-export function getRanMessage(type: "win" | "loss"): string {
-  if (
-    !dictionaries.gambaMessages[type === "win" ? "winMessages" : "lossMessages"]
-  ) {
+export function getRanMessage<
+  T extends {
+    winMessages: { message: string }[];
+    lossMessages: { message: string }[];
+  }
+>(type: "win" | "loss", messageDictionary: T): string {
+  const messages =
+    messageDictionary[type === "win" ? "winMessages" : "lossMessages"];
+  if (!messages || messages.length === 0) {
     return "Message not available.";
   }
 
-  const filteredMessage =
-    dictionaries.gambaMessages[type === "win" ? "winMessages" : "lossMessages"];
-  const randomIndex = Math.floor(Math.random() * filteredMessage.length);
-  return filteredMessage[randomIndex].message;
+  const randomIndex = Math.floor(Math.random() * messages.length);
+  return messages[randomIndex].message;
 }
