@@ -164,10 +164,6 @@ export class GambaHandler {
   }
 }
 
-//* Get document elements
-
-// let handler: GambaHandler;
-
 uiSharedGlobals?.changeLeft.addEventListener("click", () =>
   handleChange("left")
 );
