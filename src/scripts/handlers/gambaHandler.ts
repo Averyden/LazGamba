@@ -9,7 +9,7 @@ import {
 import { initializeSelectedGambaCase } from "../important/init";
 import { adjustCoins } from "./currencyHandler";
 import { maybeInjectHeavenlyCase } from "./rareOccurancesHandler";
-import "../utils/gambaHandlerUtils";
+import { getRanMessage } from "../utils/gambaHandlerUtils";
 
 export class GambaHandler {
   private pricePerGamba: number = 50;
@@ -141,11 +141,17 @@ export class GambaHandler {
       gambaImg.classList.remove("spinningAnim");
 
       if (gambaWin) {
-        gambaStatus.innerHTML = getRanMessage("win");
+        gambaStatus.innerHTML = getRanMessage(
+          "win",
+          dictionaries.gambaMessages
+        );
         adjustCoins(activeCase.cost * activeCase.winMult);
         globalFunctions.updateCoinDisplay();
       } else {
-        gambaStatus.innerHTML = getRanMessage("loss");
+        gambaStatus.innerHTML = getRanMessage(
+          "loss",
+          dictionaries.gambaMessages
+        );
       }
     }, 2000);
 
