@@ -2,14 +2,15 @@
 import { gambaButton } from "../utils/gambaHandlerUtils";
 import { isGambaUnlocked } from "../utils/unlockUtils";
 import { Popup } from "../handlers/popupHandler";
+import { IGambaCase } from "../utils/IGambaCase";
 
 export const internalSharedGlobals = {
   selectedGambaCase: null as any,
-  gambaCases: [] as any[],
+  gambaCases: [] as IGambaCase[],
   caseID: 0 as number,
   cachedID: 0 as number,
   popup: new Popup("popupContainer"),
-  maxCases: 14 as number, //TODO: Make this dynamic INSTEAD of hard-coded
+  maxCases: 0 as number, //TODO: Make this dynamic INSTEAD of hard-coded
   lCoins: 300 as number,
 };
 
