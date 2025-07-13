@@ -1,5 +1,6 @@
 //! Rewrite of the notesu popup logic because that fucking sucked
 
+//? Maybe convert to an enum instead?
 type promptTypes = "caseInfo" | "error";
 
 interface IPopupConfig {
@@ -8,7 +9,7 @@ interface IPopupConfig {
   onConfirm: () => void;
 }
 
-class Popup {
+export class Popup {
   private container: HTMLElement;
   private titleElement: HTMLElement;
   private messageElement: HTMLElement;
@@ -66,7 +67,11 @@ class Popup {
     baseJSONError: "4x2467",
   };
 
-  public show(type: promptTypes, message: string = "No message provided.") {
+  public show(
+    type: promptTypes,
+    message: string = "No message provided.",
+    extraData?: any
+  ) {
     let config = this.config[type];
     if (!config) {
       const errCode = this.errorCodes["unknownType"];
@@ -83,8 +88,8 @@ class Popup {
     this.messageElement.innerHTML = message;
     this.confirmButton.textContent = config.confirmText;
 
-    if (config === this.config["caseInfo"]) {
-      this.titleElement.textContent = `Info for: ${selectedGambaCase.name}`;
+    if (config === this.config["caseInfo"] && extraData?.name) {
+      this.titleElement.textContent = `Info for: ${extraData.name}`;
     }
 
     const newConfirmButton = this.confirmButton.cloneNode(

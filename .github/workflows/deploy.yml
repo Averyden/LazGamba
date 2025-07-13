@@ -3,7 +3,7 @@ name: Build and Deploy to GitHub Pages
 on:
   push:
     branches:
-      - master  # Runs on pushing to master
+      - master # Runs on pushing to master
 
 jobs:
   build-and-deploy:
@@ -18,26 +18,25 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: "18"
 
       # Install dependencies
       - name: Install dependencies
         run: npm install --no-package-lock
-     
+
       # Remove .gitignore to ensure compiledJS gets committed
       - name: Remove .gitignore
         run: rm -f .gitignore
 
       # Compile TypeScript to JavaScript
       - name: Compile TypeScript
-        run: npx tsc  # Compiles your TypeScript code based on tsconfig.json
-
+        run: npm run build # Compiles your TypeScript code based on tsconfig.json
 
       # Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          token: ${{ secrets.GH_TOKEN }}  # Use your personal access token
-          branch: gh-pages  # Deploy to the gh-pages branch
-          folder: .  # Deploy the entire project including compiled JS
-          clean: true  # Clean the previous deployment to prevent conflicts
+          token: ${{ secrets.GH_TOKEN }} # Use your personal access token
+          branch: gh-pages # Deploy to the gh-pages branch
+          folder: . # Deploy the entire project including compiled JS
+          clean: true # Clean the previous deployment to prevent conflicts
