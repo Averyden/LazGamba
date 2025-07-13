@@ -1,102 +1,148 @@
 // This may seem redundant, but this is just initializing stuff for the site, like setting currency and such.
 // This is only so that the handlers dont get cluttered with useless stuff
+import {
+  isGambaUnlocked,
+  fetchUnlockedCases,
+  saveUnlocked,
+} from "../utils/unlockUtils";
+import { initCoins, dailyBonus } from "../handlers/currencyHandler";
+import { GambaHandler } from "../handlers/gambaHandler";
+import { setGambaHandler } from "../helpers/gambaHandlerInstance";
+
+import { IGambaCase } from "../utils/IGambaCase";
+
+import { config } from "./config";
+
+import {
+  internalSharedGlobals,
+  uiSharedGlobals,
+  globalFunctions,
+} from "./globals";
+
+let heavenCase: any;
 
 initCoins();
 const bah = fetchUnlockedCases();
 saveUnlocked(bah);
 
-const versionNumber = "0.8.3";
-
-const maxCases = 14;
-
-let gambaCases: any[] = [];
-let heavenCase: any;
-let cachedID: number;
-
-const popup = new Popup("popupContainer");
-
-let cachedSelectedCase: { gId: number; price: number; name: string } | null =
-  null;
-
-let selectedGambaCase: any = null;
-let caseID: number = 0;
-
 const body = document.body;
 body.style.transition = "background-color 1s ease";
-const pricelbl = document.getElementById("gambaCost") as HTMLHeadingElement;
-const namelbl = document.getElementById("caseName") as HTMLHeadingElement;
+const pricelbl = uiSharedGlobals.pricelbl;
+const namelbl = uiSharedGlobals.namelbl;
+const purchaseBtn = uiSharedGlobals.purchaseBtn;
 
 const infoButton = document.getElementById("caseTip") as HTMLButtonElement;
 
+let handler: GambaHandler | null = null;
+
 infoButton.addEventListener("click", () => {
-  popup.show("caseInfo", sendCaseInfoMessage());
+  internalSharedGlobals.popup.show("caseInfo", sendCaseInfoMessage(), {
+    name: internalSharedGlobals.selectedGambaCase.name as string,
+  });
 });
+
+const fetchJsonData = async (): Promise<IGambaCase[] | undefined> => {
+  try {
+    const response = await fetch("src/dictionaries/gambaSelection.json");
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const jsonData = await response.json();
+    return jsonData.gambaCases;
+  } catch (error) {
+    internalSharedGlobals.popup.show(
+      "error",
+      `Error loading or parsing gambaSelection.json: ${error} <br>(error ${internalSharedGlobals.popup.errorCodes["gambaSelectErrorParse"]})`
+    );
+  }
+};
+
+const countCases = async () => {
+  internalSharedGlobals.gambaCases = (await fetchJsonData()) as IGambaCase[];
+
+  const normalCases = internalSharedGlobals.gambaCases.filter(
+    (c) => c.gId !== 9999
+  );
+  internalSharedGlobals.maxCases = normalCases.length - 1; // take one away to account for 0-index
+
+  // TODO: handle heavenly case separately if needed
+};
+
+countCases();
 
 const sendCaseInfoMessage = (): string => {
   let curCaseUnlockedVar;
 
-  if (isGambaUnlocked(selectedGambaCase.gId)) {
+  if (isGambaUnlocked(internalSharedGlobals.selectedGambaCase.gId)) {
     curCaseUnlockedVar = true;
   } else {
     curCaseUnlockedVar = false;
   }
 
   return `
-    Internal id: ${selectedGambaCase.gId}<br>
-    Price per spin: ${selectedGambaCase.cost}<br>
-    Return multiplier: ${selectedGambaCase.winMult}<br>
-    Jackpot rate: 1/${selectedGambaCase.rate}<br>
+    Internal id: ${internalSharedGlobals.selectedGambaCase.gId}<br>
+    Price per spin: ${internalSharedGlobals.selectedGambaCase.cost}<br>
+    Return multiplier: ${internalSharedGlobals.selectedGambaCase.winMult}<br>
+    Jackpot rate: 1/${internalSharedGlobals.selectedGambaCase.rate}<br>
     Unlocked: ${curCaseUnlockedVar}`;
 };
 
-const initializeSelectedGambaCase = async (gId: number): Promise<void> => {
+export const initializeSelectedGambaCase = async (gId: number) => {
   try {
-    const response = await fetch("src/dictionaries/gambaSelection.json");
-    const jsonData = await response.json();
+    // const response = await fetch("src/dictionaries/gambaSelection.json");
+    // const jsonData = await response.json();
 
-    gambaCases = jsonData.gambaCases;
-    heavenCase = gambaCases.find((gCase: any) => gCase.gId === 9999);
+    internalSharedGlobals.gambaCases = (await fetchJsonData()) as IGambaCase[];
+    heavenCase = internalSharedGlobals.gambaCases.find(
+      (gCase: any) => gCase.gId === 9999
+    );
 
-    selectedGambaCase = gambaCases.find((gCase: any) => gCase.gId === gId);
-    caseID = gId; // YES WE ARE SETTING IT TWICE BUT WHO CARES GRAAAAAAAAAA IM TOO LAZY TO FIGURE SOMETHING ELSE OUT.
+    internalSharedGlobals.selectedGambaCase =
+      internalSharedGlobals.gambaCases.find((gCase: any) => gCase.gId === gId);
+    internalSharedGlobals.caseID = gId; // YES WE ARE SETTING IT TWICE BUT WHO CARES GRAAAAAAAAAA IM TOO LAZY TO FIGURE SOMETHING ELSE OUT.
 
     if (isGambaUnlocked(gId)) {
-      body.style.background = selectedGambaCase.background;
+      body.style.background =
+        internalSharedGlobals.selectedGambaCase.background;
       body.style.filter = "";
       if (gId !== heavenCase.gId) {
         //TODO: ensure this isnt cosmetic and actually make the cost be its old cost when switching to heaven
-        pricelbl.innerHTML = `Price to spin: ${selectedGambaCase.cost}`;
-        cachedID = selectedGambaCase.gId;
+        pricelbl.innerHTML = `Price to spin: ${internalSharedGlobals.selectedGambaCase.cost}`;
+        internalSharedGlobals.cachedID =
+          internalSharedGlobals.selectedGambaCase.gId;
       }
     } else {
       body.style.background = "#bbbbbb";
-      pricelbl.innerHTML = `Price to unlock: ${selectedGambaCase.price}`;
+      pricelbl.innerHTML = `Price to unlock: ${internalSharedGlobals.selectedGambaCase.price}`;
     }
 
     if (namelbl.innerHTML == "Error fetching name of gamba...") {
-      namelbl.innerHTML = selectedGambaCase.name; // Set it to the name if it isnt loaded yet.
+      namelbl.innerHTML = internalSharedGlobals.selectedGambaCase.name; // Set it to the name if it isnt loaded yet.
     }
 
-    if (selectedGambaCase) {
-      console.log(`Selected Gamba Case:`, selectedGambaCase);
-      handler.updateCase(selectedGambaCase);
+    if (internalSharedGlobals.selectedGambaCase) {
+      console.log(
+        `Selected Gamba Case:`,
+        internalSharedGlobals.selectedGambaCase
+      );
+      handler?.updateCase(internalSharedGlobals.selectedGambaCase); //TODO: ensure that making this nullable doesnt fuck literally everything up
       namelbl.classList.add("outInFadeName");
       purchaseBtn.classList.add("outInFadeName");
 
       purchaseBtn.disabled = true;
-      changeLeft.disabled = true;
-      changeRight.disabled = true;
+      uiSharedGlobals.changeLeft.disabled = true;
+      uiSharedGlobals.changeRight.disabled = true;
 
       setTimeout(() => {
-        namelbl.innerHTML = selectedGambaCase.name;
+        namelbl.innerHTML = internalSharedGlobals.selectedGambaCase.name;
       }, 500);
 
       setTimeout(() => {
         namelbl.classList.remove("outInFadeName");
         purchaseBtn.classList.remove("outInFadeName");
-        changeLeft.disabled = false;
+        uiSharedGlobals.changeLeft.disabled = false;
         purchaseBtn.disabled = false;
-        changeRight.disabled = false;
+        uiSharedGlobals.changeRight.disabled = false;
       }, 1000);
     } else {
       console.warn(`No Gamba Case found with gId: ${gId}`);
@@ -109,13 +155,15 @@ const initializeSelectedGambaCase = async (gId: number): Promise<void> => {
 
 const initializeHandler = async () => {
   await initializeSelectedGambaCase(0);
-  if (selectedGambaCase) {
+  if (internalSharedGlobals.selectedGambaCase) {
     handler = new GambaHandler();
+    setGambaHandler(handler);
+
     console.log("Handler initialized");
   } else {
-    popup.show(
+    internalSharedGlobals.popup.show(
       "error",
-      `Error: selectedGambaCase is still null, handler unable to initialize. <br>(error ${popup.errorCodes["cantLoadHandlerCauseGambaSelectIsNull"]})`
+      `Error: selectedGambaCase is still null, handler unable to initialize. <br>(error ${internalSharedGlobals.popup.errorCodes["cantLoadHandlerCauseGambaSelectIsNull"]})`
     );
     console.error(
       "Error: selectedGambaCase is still null, handler cannot be initialized."
@@ -125,57 +173,23 @@ const initializeHandler = async () => {
 
 initializeHandler();
 
-const lblCoins = document.getElementById("coinLabel") as HTMLDivElement;
-
-const updateCoinDisplay = (): void => {
-  if (lblCoins) {
-    lblCoins.innerText = `L-coins: ${lCoins}`;
-  }
-};
-
 if (dailyBonus()) {
   console.log("Awarded daily bonus/reset");
-  updateCoinDisplay();
+  globalFunctions.updateCoinDisplay();
 } else {
   console.log("Daily bonus/reset is already claimed.");
 }
 
-updateCoinDisplay();
+globalFunctions.updateCoinDisplay();
 
 const updateVersionDisplay = () => {
   const identifier = document.getElementById(
     "versionIdentifier"
   ) as HTMLHeadingElement;
 
-  identifier.innerHTML = `LazGamba Version: ${versionNumber}`;
+  identifier.innerHTML = `LazGamba Version: ${config.versionNumber}`;
 };
 
 updateVersionDisplay();
 
-let gambaMessages: any = {};
-
-const loadGambaMessages = async () => {
-  try {
-    const response = await fetch("src/dictionaries/mainGambaDictionaries.json");
-    const text = await response.text();
-    console.log("Raw Response:", text);
-    gambaMessages = JSON.parse(text);
-    console.log("Parsed Messages:", gambaMessages);
-  } catch (error) {
-    popup.show(
-      "error",
-      `Error loading or parsing JSON: ${error} <br>(error ${popup.errorCodes["baseJSONError"]})`
-    );
-    console.error("Error loading or parsing JSON:", error);
-  }
-};
-
-loadGambaMessages();
-
-const images = [
-  { name: "loss", path: "assets/img/GAMBA imgs/loss.webp" }, // User didnt win anything.
-  { name: "spinning", path: "assets/img/GAMBA imgs/speen.webp" }, // for when the user has pressed the button and we are calculating the chances of a win.
-  { name: "win", path: "assets/img/GAMBA imgs/win.png" }, // static win image because paint.net cant make gifs!
-  { name: "noMoney", path: "assets/img/GAMBA imgs/noMoreMoney.webp" }, // User lost it all for the day.
-  { name: "waiting", path: "assets/img/GAMBA imgs/waiting.webp" },
-];
+globalFunctions.loadGambaMessages();

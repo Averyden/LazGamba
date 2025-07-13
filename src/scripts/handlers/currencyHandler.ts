@@ -1,7 +1,10 @@
-let lCoins = 300;
+import { internalSharedGlobals } from "../important/globals";
 
 const saveCoins = (): void => {
-  localStorage.setItem(btoa("currency"), btoa(lCoins.toString()));
+  localStorage.setItem(
+    btoa("currency"),
+    btoa(internalSharedGlobals.lCoins.toString())
+  );
 };
 
 const loadCoins = (): number => {
@@ -9,21 +12,21 @@ const loadCoins = (): number => {
   return savedCoins ? parseInt(atob(savedCoins), 10) : 300;
 };
 
-const adjustCoins = (amount: number): boolean => {
-  if (lCoins + amount < 0) {
+export const adjustCoins = (amount: number): boolean => {
+  if (internalSharedGlobals.lCoins + amount < 0) {
     return false;
   } else {
-    lCoins += amount;
+    internalSharedGlobals.lCoins += amount;
     saveCoins();
     return true;
   }
 };
 
-const initCoins = (): void => {
-  lCoins = loadCoins();
+export const initCoins = (): void => {
+  internalSharedGlobals.lCoins = loadCoins();
 };
 
-const dailyBonus = (): boolean => {
+export const dailyBonus = (): boolean => {
   const encoded = btoa("lastBonusDate");
   const lastBonus = localStorage.getItem(encoded);
   const today = new Date().toDateString();

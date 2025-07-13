@@ -1,3 +1,5 @@
+import { uiSharedGlobals } from "../important/globals";
+
 setInterval(rainbow, 500);
 function rainbow() {
   const toColor = document.querySelectorAll(".rainbow");
@@ -8,8 +10,7 @@ function rainbow() {
   } else {
     //Shitty hack, but i honestly cannot be bothered to figure out a dynamic way to fix it.
     //And yes... we are unfortunately hard coding an element here.
-    const namelbl = document.getElementById("caseName") as HTMLHeadingElement;
-    namelbl.style.color = "#FFF";
+    uiSharedGlobals.namelbl.style.color = "#FFF";
     return;
   }
 }
