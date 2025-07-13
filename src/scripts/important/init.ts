@@ -9,6 +9,8 @@ import { initCoins, dailyBonus } from "../handlers/currencyHandler";
 import { GambaHandler } from "../handlers/gambaHandler";
 import { setGambaHandler } from "../helpers/gambaHandlerInstance";
 
+import { IGambaCase } from "../utils/IGambaCase";
+
 import { config } from "./config";
 
 import {
@@ -39,6 +41,35 @@ infoButton.addEventListener("click", () => {
   });
 });
 
+const fetchJsonData = async (): Promise<IGambaCase[] | undefined> => {
+  try {
+    const response = await fetch("src/dictionaries/gambaSelection.json");
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const jsonData = await response.json();
+    return jsonData.gambaCases;
+  } catch (error) {
+    internalSharedGlobals.popup.show(
+      "error",
+      `Error loading or parsing gambaSelection.json: ${error} <br>(error ${internalSharedGlobals.popup.errorCodes["gambaSelectErrorParse"]})`
+    );
+  }
+};
+
+const countCases = async () => {
+  internalSharedGlobals.gambaCases = (await fetchJsonData()) as IGambaCase[];
+
+  const normalCases = internalSharedGlobals.gambaCases.filter(
+    (c) => c.gId !== 9999
+  );
+  internalSharedGlobals.maxCases = normalCases.length - 1; // take one away to account for 0-index
+
+  // TODO: handle heavenly case separately if needed
+};
+
+countCases();
+
 const sendCaseInfoMessage = (): string => {
   let curCaseUnlockedVar;
 
@@ -56,14 +87,12 @@ const sendCaseInfoMessage = (): string => {
     Unlocked: ${curCaseUnlockedVar}`;
 };
 
-export const initializeSelectedGambaCase = async (
-  gId: number
-): Promise<void> => {
+export const initializeSelectedGambaCase = async (gId: number) => {
   try {
-    const response = await fetch("src/dictionaries/gambaSelection.json");
-    const jsonData = await response.json();
+    // const response = await fetch("src/dictionaries/gambaSelection.json");
+    // const jsonData = await response.json();
 
-    internalSharedGlobals.gambaCases = jsonData.gambaCases;
+    internalSharedGlobals.gambaCases = (await fetchJsonData()) as IGambaCase[];
     heavenCase = internalSharedGlobals.gambaCases.find(
       (gCase: any) => gCase.gId === 9999
     );
