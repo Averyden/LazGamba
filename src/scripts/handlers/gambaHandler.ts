@@ -159,21 +159,8 @@ export class GambaHandler {
 }
 
 //* Get document elements
-const gamba = document.getElementById("gambaBtn") as HTMLButtonElement;
 
-let handler: GambaHandler;
-
-gamba.addEventListener("click", () => {
-  if (!handler) {
-    internalSharedGlobals.popup.show(
-      "error",
-      `Error when handling gamba calculations, handler is not yet initialized. <br>(error ${internalSharedGlobals.popup.errorCodes["handlerNotInitWhenHandlingCalc"]})`
-    );
-    console.error("Handler not initialized yet.");
-    return;
-  }
-  handler.handleGambaCalc();
-});
+// let handler: GambaHandler;
 
 uiSharedGlobals?.changeLeft.addEventListener("click", () =>
   handleChange("left")
