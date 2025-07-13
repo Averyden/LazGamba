@@ -10,7 +10,7 @@ export const internalSharedGlobals = {
   caseID: 0 as number,
   cachedID: 0 as number,
   popup: new Popup("popupContainer"),
-  maxCases: 0 as number, //TODO: Make this dynamic INSTEAD of hard-coded
+  maxCases: 0 as number,
   lCoins: 300 as number,
 };
 
