@@ -171,19 +171,6 @@ uiSharedGlobals?.changeRight.addEventListener("click", () =>
 
 let finalMessageTimeout: number | undefined;
 
-function getRanMessage(type: "win" | "loss"): string {
-  if (
-    !dictionaries.gambaMessages[type === "win" ? "winMessages" : "lossMessages"]
-  ) {
-    return "Message not available.";
-  }
-
-  const filteredMessage =
-    dictionaries.gambaMessages[type === "win" ? "winMessages" : "lossMessages"];
-  const randomIndex = Math.floor(Math.random() * filteredMessage.length);
-  return filteredMessage[randomIndex].message;
-}
-
 function handleChange(direction: string): void {
   switch (direction) {
     case "left":

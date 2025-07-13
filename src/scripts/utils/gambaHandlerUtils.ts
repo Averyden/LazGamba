@@ -17,3 +17,16 @@ gambaButton.addEventListener("click", () => {
   }
   handler.handleGambaCalc();
 });
+
+export function getRanMessage(type: "win" | "loss"): string {
+  if (
+    !dictionaries.gambaMessages[type === "win" ? "winMessages" : "lossMessages"]
+  ) {
+    return "Message not available.";
+  }
+
+  const filteredMessage =
+    dictionaries.gambaMessages[type === "win" ? "winMessages" : "lossMessages"];
+  const randomIndex = Math.floor(Math.random() * filteredMessage.length);
+  return filteredMessage[randomIndex].message;
+}
