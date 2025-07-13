@@ -177,6 +177,7 @@ uiSharedGlobals?.changeRight.addEventListener("click", () =>
 
 let finalMessageTimeout: number | undefined;
 
+//TODO: Move these functions into the util as they handle UI updates and not actual logic (same goes for the handleChange function)
 function handleChange(direction: string): void {
   switch (direction) {
     case "left":
