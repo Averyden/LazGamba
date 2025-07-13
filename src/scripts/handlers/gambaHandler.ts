@@ -1,4 +1,17 @@
-class GambaHandler {
+import {
+  internalSharedGlobals,
+  uiSharedGlobals,
+  dictionaries,
+  images,
+  globalFunctions,
+} from "../important/globals";
+
+import { initializeSelectedGambaCase } from "../important/init";
+import { adjustCoins } from "./currencyHandler";
+import { maybeInjectHeavenlyCase } from "./rareOccurancesHandler";
+import { getRanMessage } from "../utils/gambaHandlerUtils";
+
+export class GambaHandler {
   private pricePerGamba: number = 50;
   private jackpotNumber: number = 0;
   private jackpotRange: number[] = [];
@@ -8,19 +21,19 @@ class GambaHandler {
   private heavenInjected: boolean = false;
 
   constructor() {
-    if (!selectedGambaCase) {
+    if (!internalSharedGlobals.selectedGambaCase) {
       console.warn("selectedGambaCase is not yet defined, using default case.");
       this.updateCase({ gId: -1, cost: 50, winMult: 2, rate: 10 });
     } else {
-      this.updateCase(selectedGambaCase);
+      this.updateCase(internalSharedGlobals.selectedGambaCase);
     }
   }
 
   updateCase(curCase: any): void {
     if (!curCase) {
-      popup.show(
+      internalSharedGlobals.popup.show(
         "error",
-        `Error in updating variables, as no case was selected. <br>(error ${popup.errorCodes["updateVarFail"]})`
+        `Error in updating variables, as no case was selected. <br>(error ${internalSharedGlobals.popup.errorCodes["updateVarFail"]})`
       );
       console.error(
         "Error in updating variables:\nNo case was selected\n\nDefaulting..."
@@ -63,13 +76,13 @@ class GambaHandler {
     if (!this.heavenInjected && activeCase.gId === 9999) {
       initializeSelectedGambaCase(activeCase.gId);
       this.heavenInjected = true;
-      namelbl.classList.add("rainbow");
+      uiSharedGlobals.namelbl.classList.add("rainbow");
       hideCaseChangeButtons();
     } else if (this.heavenInjected === true && activeCase.gId === 9999) {
       this.heavenInjected = false;
-      initializeSelectedGambaCase(cachedID);
+      initializeSelectedGambaCase(internalSharedGlobals.cachedID);
       showCaseChangeButtons();
-      namelbl.classList.remove("rainbow");
+      uiSharedGlobals.namelbl.classList.remove("rainbow");
     }
 
     if (!adjustCoins(-activeCase.cost)) {
@@ -81,7 +94,7 @@ class GambaHandler {
 
     let chance = 0;
 
-    updateCoinDisplay();
+    globalFunctions.updateCoinDisplay();
 
     gambaStatus.classList.remove("disappear");
     gambaStatus.innerHTML = "";
@@ -105,8 +118,8 @@ class GambaHandler {
     const dynamicRange = Array.from({ length: clampedLength }, (_, i) => i);
     const gambaWin = dynamicRange.includes(chance);
 
-    if (Object.keys(gambaMessages).length === 0) {
-      await loadGambaMessages();
+    if (Object.keys(dictionaries.gambaMessages).length === 0) {
+      await globalFunctions.loadGambaMessages();
     }
 
     setTimeout(() => {
@@ -123,16 +136,22 @@ class GambaHandler {
 
     setTimeout(() => {
       this.heavenInjected
-        ? (pricelbl.innerHTML = "Next spin is free!")
-        : ` Price to spin: ${selectedGambaCase.cost}`;
+        ? (uiSharedGlobals.pricelbl.innerHTML = "Next spin is free!")
+        : ` Price to spin: ${internalSharedGlobals.selectedGambaCase.cost}`;
       gambaImg.classList.remove("spinningAnim");
 
       if (gambaWin) {
-        gambaStatus.innerHTML = getRanMessage("win");
+        gambaStatus.innerHTML = getRanMessage(
+          "win",
+          dictionaries.gambaMessages
+        );
         adjustCoins(activeCase.cost * activeCase.winMult);
-        updateCoinDisplay();
+        globalFunctions.updateCoinDisplay();
       } else {
-        gambaStatus.innerHTML = getRanMessage("loss");
+        gambaStatus.innerHTML = getRanMessage(
+          "loss",
+          dictionaries.gambaMessages
+        );
       }
     }, 2000);
 
@@ -145,118 +164,70 @@ class GambaHandler {
   }
 }
 
-//* Get document elements
-const changeRight = document.getElementById(
-  "changeCaseRight"
-) as HTMLButtonElement;
-const changeLeft = document.getElementById(
-  "changeCaseleft"
-) as HTMLButtonElement;
-const gamba = document.getElementById("gambaBtn") as HTMLButtonElement;
-
-let handler: GambaHandler;
-
-gamba.addEventListener("click", () => {
-  if (!handler) {
-    popup.show(
-      "error",
-      `Error when handling gamba calculations, handler is not yet initialized. <br>(error ${popup.errorCodes["handlerNotInitWhenHandlingCalc"]})`
-    );
-    console.error("Handler not initialized yet.");
-    return;
-  }
-  handler.handleGambaCalc();
-});
-
-changeLeft.addEventListener("click", () => handleChange("left"));
-changeRight.addEventListener("click", () => handleChange("right"));
+uiSharedGlobals?.changeLeft.addEventListener("click", () =>
+  handleChange("left")
+);
+uiSharedGlobals?.changeRight.addEventListener("click", () =>
+  handleChange("right")
+);
 
 let finalMessageTimeout: number | undefined;
 
-function getRanMessage(type: "win" | "loss"): string {
-  if (!gambaMessages[type === "win" ? "winMessages" : "lossMessages"]) {
-    return "Message not available.";
-  }
-
-  const filteredMessage =
-    gambaMessages[type === "win" ? "winMessages" : "lossMessages"];
-  const randomIndex = Math.floor(Math.random() * filteredMessage.length);
-  return filteredMessage[randomIndex].message;
-}
-
+//TODO: Move these functions into the util as they handle UI updates and not actual logic (same goes for the handleChange function)
 function handleChange(direction: string): void {
   switch (direction) {
     case "left":
-      initializeSelectedGambaCase((caseID -= 1));
+      initializeSelectedGambaCase((internalSharedGlobals.caseID -= 1));
 
-      if (caseID <= 0) {
-        changeLeft.style.transform = "translateY(10000%)";
+      if (internalSharedGlobals.caseID <= 0) {
+        uiSharedGlobals.changeLeft.style.transform = "translateY(10000%)";
       }
 
-      if (caseID < maxCases) {
-        changeRight.style.transform = "translateY(0%)";
+      if (internalSharedGlobals.caseID < internalSharedGlobals.maxCases) {
+        uiSharedGlobals.changeRight.style.transform = "translateY(0%)";
       }
 
       break;
 
     case "right":
-      if (caseID <= 0) {
-        changeLeft.style.transform = "translateY(0%)";
+      if (internalSharedGlobals.caseID <= 0) {
+        uiSharedGlobals.changeLeft.style.transform = "translateY(0%)";
       }
 
-      if (caseID >= maxCases - 1) {
+      if (internalSharedGlobals.caseID >= internalSharedGlobals.maxCases - 1) {
         // we remove 1 from it because it doesnt actually update, woops
-        changeRight.style.transform = "translateY(10000%)";
+        uiSharedGlobals.changeRight.style.transform = "translateY(10000%)";
       }
 
-      initializeSelectedGambaCase((caseID += 1));
+      initializeSelectedGambaCase((internalSharedGlobals.caseID += 1));
 
       break;
     default:
-      popup.show(
+      internalSharedGlobals.popup.show(
         "error",
-        `Invalid case switch request. <br>(error ${popup.errorCodes["invalidLeftRightResult"]})`
+        `Invalid case switch request. <br>(error ${internalSharedGlobals.popup.errorCodes["invalidLeftRightResult"]})`
       );
       console.error("Invalid request sent to change");
       break;
   }
-  updateButtonState(caseID);
-}
-
-function updateButtonState(gId: number): void {
-  const isUnlocked = isGambaUnlocked(gId);
-
-  if (isUnlocked) {
-    gamba.disabled = false;
-    gamba.style.opacity = "1";
-
-    setTimeout(() => {
-      purchaseBtn.style.transform = "translateY(10000%)";
-    }, 500);
-  } else {
-    gamba.disabled = true;
-    gamba.style.opacity = "0.5";
-    setTimeout(() => {
-      purchaseBtn.style.transform = "translateY(0%)";
-    }, 500);
-  }
+  globalFunctions.updateButtonState(internalSharedGlobals.caseID);
 }
 
 function hideCaseChangeButtons(): void {
-  changeLeft.style.transform = "translateY(10000%)";
-  changeRight.style.transform = "translateY(10000%)";
+  uiSharedGlobals.changeLeft.style.transform = "translateY(10000%)";
+  uiSharedGlobals.changeRight.style.transform = "translateY(10000%)";
 }
 
 function showCaseChangeButtons(): void {
-  if (cachedID <= 0) {
-    changeLeft.style.transform = "translateY(10000%)";
+  if (internalSharedGlobals.cachedID <= 0) {
+    uiSharedGlobals.changeLeft.style.transform = "translateY(10000%)";
   } else {
-    changeLeft.style.transform = "translateY(0%)";
+    uiSharedGlobals.changeLeft.style.transform = "translateY(0%)";
   }
 
-  if (cachedID >= maxCases - 1) {
-    changeRight.style.transform = "translateY(10000%)";
+  if (internalSharedGlobals.cachedID >= internalSharedGlobals.maxCases - 1) {
+    uiSharedGlobals.changeRight.style.transform = "translateY(10000%)";
   } else {
-    changeRight.style.transform = "translateY(0%)";
+    uiSharedGlobals.changeRight.style.transform = "translateY(0%)";
   }
 }
